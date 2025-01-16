@@ -1,6 +1,4 @@
-
 jQuery(document).ready(function() {
-  // Use event delegation for dynamically added elements
   jQuery('body').on('click', '.menu-item', function() {
       $(this).toggleClass('open').siblings().removeClass('open');
   });
@@ -8,9 +6,6 @@ jQuery(document).ready(function() {
     $('html').toggleClass('light-style layout-menu-fixed layout-menu-expanded');
 });
 });
-
-         
-
 (function(e, a) { for(var i in a) e[i] = a[i]; }(window, /******/ (function(modules) { // 
 
 // webpackBootstrap
