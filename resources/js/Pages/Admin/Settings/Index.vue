@@ -2,9 +2,8 @@
   <AdminLayout>
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Settings/</span> Edit
+        <span class="text-muted fw-light">Settings /</span> Edit
       </h4>
-
       <div class="row">
         <div class="col-xl">
           <div class="card mb-4">
@@ -15,80 +14,82 @@
               <small class="text-muted float-end">Manage settings</small>
             </div>
             <div class="card-body">
-              <form @submit.prevent="submit" enctype="multipart/form-data">
-                <!-- Avatar and File Upload Section -->
+              <form @submit.prevent="submit">
                 <div class="card-body">
                   <div
                     class="d-flex align-items-start align-items-sm-center gap-4"
                   >
                     <img
-                      :src="previewImage || propsAvatar"
-                      alt="user-avatar"
+                      :src="
+                        imagePreview || '/storage/' + props.settings.site_logo
+                      "
+                      alt="Website Logo"
                       class="d-block rounded"
                       height="100"
                       width="100"
-                      id="uploadedAvatar"
+                      id="uploadedLogo"
                     />
                     <div class="button-wrapper">
-                      <label
-                        for="upload"
-                        class="btn btn-primary me-2 mb-4"
-                        tabindex="0"
-                      >
-                        <span class="d-none d-sm-block">Upload new photo</span>
+                      <label for="upload" class="btn btn-primary me-2 mb-4">
+                        <span class="d-none d-sm-block">Upload New Logo</span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
                         <input
                           type="file"
                           id="upload"
-                          name="logo"
-                          class="account-file-input"
                           hidden
                           accept="image/png, image/jpeg, image/gif"
-                          @change="onFileChange"
+                          @change="handleImageUpload"
                         />
                       </label>
                       <button
                         type="button"
-                        class="btn btn-outline-secondary account-image-reset mb-4"
+                        class="btn btn-outline-secondary mb-4"
                         @click="resetImage"
                       >
                         <i class="bx bx-reset d-block d-sm-none"></i>
                         <span class="d-none d-sm-block">Reset</span>
                       </button>
                       <p class="text-muted mb-0">
-                        Allowed JPG, GIF, or PNG. Max size of 800KB.
+                        Allowed JPG, GIF, or PNG. Max size of 2MB.
                       </p>
                     </div>
                   </div>
-                </div>
-
-                <!-- Form Inputs Section -->
-                <div
-                  class="col-md-6"
-                  v-for="(label, key) in formFields"
-                  :key="key"
-                >
-                  <div class="mb-3">
-                    <label :for="key" class="form-label">{{ label }}</label>
-                    <input
-                      v-if="key !== 'about'"
-                      type="text"
-                      class="form-control"
-                      :id="key"
-                      v-model="form[key]"
-                    />
-                    <textarea
-                      v-else
-                      class="form-control"
-                      :id="key"
-                      v-model="form[key]"
-                    ></textarea>
+                  <div v-if="errors.logo" class="text-danger mt-2">
+                    {{ errors.logo }}
                   </div>
                 </div>
-
-                <!-- Submit Button -->
+                <div class="row">
+                  <template v-for="(field, index) in fields" :key="index">
+                    <div :class="field.col">
+                      <div class="form-group mb-3">
+                        <label :for="field.id">{{ field.label }}</label>
+                        <input
+                          v-if="field.type !== 'textarea'"
+                          :type="field.type"
+                          :id="field.id"
+                          :placeholder="field.placeholder"
+                          v-model="form[field.model]"
+                          :class="field.class"
+                          :required="field.required"
+                        />
+                        <textarea
+                          v-else
+                          :id="field.id"
+                          :rows="field.rows"
+                          :placeholder="field.placeholder"
+                          v-model="form[field.model]"
+                          :class="field.class"
+                          :required="field.required"
+                        ></textarea>
+                        <div v-if="errors[field.model]" class="text-danger">
+                          {{ errors[field.model] }}
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
                 <button type="submit" class="btn btn-primary">
-                  Save Settings
+                  Update Settings
                 </button>
               </form>
             </div>
@@ -98,10 +99,10 @@
     </div>
   </AdminLayout>
 </template>
-  
-  <script setup>
+
+<script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
@@ -112,110 +113,137 @@ const props = defineProps({
 });
 
 const form = useForm({
-  site: props.settings.site_name,
+  website_name: props.settings.site_name,
   email: props.settings.email,
   phone: props.settings.phone,
   address: props.settings.address,
-  facebook: props.settings.facebook_url,
-  instagram: props.settings.instagram_url,
-  youtube: props.settings.youtube_url,
-  twitter: props.settings.twitter_url,
   about: props.settings.about,
+  facebook_url: props.settings.facebook_url,
+  twitter_url: props.settings.twitter_url,
+  instagram_url: props.settings.instagram_url,
+  youtube_url: props.settings.youtube_url,
+  logo: null,
 });
 
-const formFields = {
-  site_name: "Site Name",
-  email: "Email",
-  phone: "Phone",
-  address: "Address",
-  facebook: "Facebook",
-  instagram: "Instagram",
-  youtube: "YouTube",
-  twitter: "Twitter",
-  about: "About",
-};
+const errors = ref({});
+const imagePreview = ref(null);
 
-const avatarPreview = ref(
-  props.settings.site_logo || "/backend/assets/img/avatars/1.png"
-);
-const previewImage = ref(null);
-const propsAvatar = props.avatar || "/backend/assets/img/avatars/1.png";
+const fields = [
+  {
+    id: "websiteName",
+    label: "Website Name",
+    type: "text",
+    placeholder: "Enter website name",
+    model: "website_name",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "Enter website email",
+    model: "email",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    type: "text",
+    placeholder: "Enter website phone",
+    model: "phone",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "address",
+    label: "Address",
+    type: "text",
+    placeholder: "Enter website address",
+    model: "address",
+    col: "col-md-8",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "facebook",
+    label: "Facebook",
+    type: "url",
+    placeholder: "Enter Facebook URL",
+    model: "facebook_url",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "twitter",
+    label: "Twitter",
+    type: "url",
+    placeholder: "Enter Twitter URL",
+    model: "twitter_url",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "instagram",
+    label: "Instagram",
+    type: "url",
+    placeholder: "Enter Instagram URL",
+    model: "instagram_url",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "youtube",
+    label: "YouTube",
+    type: "url",
+    placeholder: "Enter YouTube URL",
+    model: "youtube_url",
+    col: "col-md-4",
+    class: "form-control",
+    required: true,
+  },
+  {
+    id: "about",
+    label: "About",
+    type: "textarea",
+    rows: 4,
+    placeholder: "Enter About info",
+    model: "about",
+    col: "col-md-12",
+    class: "form-control",
+    required: true,
+  },
+];
 
-// Submit function
-const submit = () => {
-  // Create a new FormData object to handle file uploads
-  const formData = new FormData();
-
-  // Append the regular form fields to the FormData
-  formData.append("site", form.site);
-  formData.append("email", form.email);
-  formData.append("phone", form.phone);
-  formData.append("address", form.address);
-  formData.append("facebook", form.facebook);
-  formData.append("instagram", form.instagram);
-  formData.append("youtube", form.youtube);
-  formData.append("twitter", form.twitter);
-  formData.append("about", form.about);
-
-  // Append the image file (if any) to the FormData
-  if (previewImage.value) {
-    const imageFile = dataURLtoBlob(previewImage.value);
-    formData.append("site_logo", imageFile, "site_logo.png");
-  }
-
-  // Use Inertia's form method to submit the FormData
-  form.post(route("settings.update"), {
-    data: formData,
-    onSuccess: () => {
-      console.log("Settings saved successfully");
-    },
-    onError: (errors) => {
-      console.error(errors);
-    },
-    headers: {
-      "Content-Type": "multipart/form-data", // This is important for file uploads
-    },
-  });
-};
-
-// File upload handler
-const onFileChange = (event) => {
+const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
-    if (!["image/jpeg", "image/png", "image/gif"].includes(file.type)) {
-      alert("Please upload a valid image file (JPG, PNG, or GIF).");
-      return;
-    }
-    if (file.size > 800 * 1024) {
-      alert("File size exceeds 800KB.");
-      return;
-    }
-
+    form.logo = file;
     const reader = new FileReader();
     reader.onload = (e) => {
-      previewImage.value = e.target.result; // Update preview image
+      imagePreview.value = e.target.result;
     };
     reader.readAsDataURL(file);
   }
 };
 
-// Reset image handler
 const resetImage = () => {
-  previewImage.value = null; // Reset to original avatar
+  form.logo = null;
+  imagePreview.value = null;
 };
 
-// Utility function to convert Base64 string to Blob
-const dataURLtoBlob = (dataURL) => {
-  const [mime, base64Data] = dataURL.split(",");
-  const byteString = atob(base64Data);
-  const arrayBuffer = new ArrayBuffer(byteString.length);
-  const uint8Array = new Uint8Array(arrayBuffer);
-
-  for (let i = 0; i < byteString.length; i++) {
-    uint8Array[i] = byteString.charCodeAt(i);
-  }
-
-  return new Blob([uint8Array], { type: mime.split(":")[1] });
+const submit = () => {
+  if (!form.logo) delete form.logo;
+  form.post(route("settings.update"), {
+    preserveScroll: true,
+  });
 };
+// End of script
 </script>
-  
