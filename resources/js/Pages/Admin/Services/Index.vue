@@ -1,211 +1,247 @@
 <template>
-    <Head title="Edit Service" />
-    <AdminLayout>
-      <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4">
-          <span class="text-muted fw-light">Home /</span> Edit Service
-        </h4>
-        <div class="row">
-          <div class="col-xl">
-            <div class="card mb-4">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Edit Service</h5>
-                <small class="text-muted float-end">Update service details</small>
-              </div>
-              <div class="card-body">
-                <form @submit.prevent="submit">
-                  <div class="card-body">
-                    <div class="d-flex align-items-start align-items-sm-center gap-4">
-                      <img
-                        :src="imagePreview || '/storage/' + props.service.image"
-                        alt="Service Image"
-                        class="d-block rounded"
-                        style="width: 300px;height: 100px; object-fit: cover;"
-                        id="uploadedServiceImage"
-                      />
-                      <div class="button-wrapper">
-                        <label for="upload" class="btn btn-primary me-2 mb-4">
-                          <span class="d-none d-sm-block">Upload New Image</span>
-                          <i class="bx bx-upload d-block d-sm-none"></i>
-                          <input
-                            type="file"
-                            id="upload"
-                            hidden
-                            accept="image/png, image/jpeg, image/gif"
-                            @change="handleImageUpload"
-                          />
-                        </label>
-                        <button
-                          type="button"
-                          class="btn btn-outline-secondary mb-4"
-                          @click="resetImage"
-                        >
-                          <i class="bx bx-reset d-block d-sm-none"></i>
-                          <span class="d-none d-sm-block">Reset</span>
-                        </button>
-                        <p class="text-muted mb-0">
-                          Allowed JPG, GIF, or PNG. Max size of 1MB.
-                        </p>
-                      </div>
-                    </div>
-                    <div v-if="errors.image" class="text-danger mt-2">
-                      {{ errors.image }}
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="title"
-                          v-model="form.title"
-                        />
-                        <div v-if="errors.title" class="text-danger mt-2">
-                          {{ errors.title }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="subtitle" class="form-label">Subtitle</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="subtitle"
-                          v-model="form.subtitle"
-                        />
-                        <div v-if="errors.subtitle" class="text-danger mt-2">
-                          {{ errors.subtitle }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea
-                          class="form-control"
-                          id="description"
-                          v-model="form.description"
-                        ></textarea>
-                        <div v-if="errors.description" class="text-danger mt-2">
-                          {{ errors.description }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="button" class="form-label">Button Title</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="button"
-                          v-model="form.button"
-                        />
-                        <div v-if="errors.button" class="text-danger mt-2">
-                          {{ errors.button }}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="link" class="form-label">Link</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="link"
-                          v-model="form.link"
-                        />
-                        <div v-if="errors.link" class="text-danger mt-2">
-                          {{ errors.link }}
-                        </div>
-                      </div>
+  <Head title="Services" />
+  <AdminLayout>
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">
+        <span class="text-muted fw-light">Home /</span> Services
+      </h4>
+
+      <div class="mb-3 text-end">
+        <Link :href="route('services.create')" class="btn btn-primary">
+          <i class="bx bx-plus"></i> Add Service
+        </Link>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">Add New Service</h5>
+        </div>
+        <div class="card-body">
+          <div v-if="!props.services.data.length" class="text-center py-5">
+            <h5 class="mt-3">No services available</h5>
+            <p class="text-muted">Please add a service to display here.</p>
+          </div>
+
+          <div class="row" v-else>
+            <div
+              v-for="service in props.services.data"
+              :key="service.id"
+              class="col-md-4 mb-4"
+            >
+              <div class="card shadow-sm">
+                <img
+                  :src="
+                    service.image
+                      ? '/storage/' + service.image
+                      : '/images/default-image.jpg'
+                  "
+                  class="card-img-top"
+                  alt="Service Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{ service.title }}</h5>
+
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <i :class="service.icon"></i>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-sm btn-light dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Actions
+                      </button>
+                      <ul
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <li>
+                          <Link
+                            :href="route('services.edit', service.id)"
+                            class="dropdown-item"
+                            >Edit</Link
+                          >
+                        </li>
+                        <li>
+                          <a
+                            @click="confirmDelete(service.id)"
+                            class="dropdown-item"
+                            >Delete</a
+                          >
+                        </li>
+                        <li>
+                          <Link
+                            :href="route('services.show', service.id)"
+                            class="dropdown-item"
+                            >Details</Link
+                          >
+                        </li>
+                      </ul>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Update Service</button>
-                </form>
+                </div>
               </div>
             </div>
           </div>
+
+          <!-- Pagination Links -->
+          <div
+            v-if="props.services.last_page > 1"
+            class="d-flex justify-content-center mt-3"
+          >
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <!-- Previous Page Link -->
+                <li
+                  class="page-item"
+                  :class="{ disabled: !props.services.prev_page_url }"
+                >
+                  <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="changePage(props.services.prev_page_url)"
+                  >
+                    Previous
+                  </a>
+                </li>
+
+                <!-- Loop through Pages -->
+                <li
+                  v-for="page in totalPages"
+                  :key="page"
+                  :class="['page-item', { active: currentPage === page }]"
+                >
+                  <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="changePageTo(page)"
+                  >
+                    {{ page }}
+                  </a>
+                </li>
+
+                <!-- Next Page Link -->
+                <li
+                  class="page-item"
+                  :class="{ disabled: !props.services.next_page_url }"
+                >
+                  <a
+                    class="page-link"
+                    href="#"
+                    @click.prevent="changePage(props.services.next_page_url)"
+                  >
+                    Next
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
-    </AdminLayout>
-  </template>
+    </div>
+  </AdminLayout>
+</template>
   
   <script setup>
-  import AdminLayout from "@/Layouts/AdminLayout.vue";
-  import { Head } from '@inertiajs/vue3';
-  import { ref } from "vue";
-  import { useForm } from "@inertiajs/vue3";
-  import { useToast } from 'vue-toastification';
-  
-  const props = defineProps({
-    service: {
-      type: Object,
-      required: true,
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+import Swal from "sweetalert2"; // Import SweetAlert2
+import { Head, useForm, Link } from "@inertiajs/vue3";
+import { useToast } from "vue-toastification";
+import { ref, computed } from "vue";
+
+const props = defineProps({
+  services: {
+    type: Object,
+    required: true,
+  },
+});
+
+const toast = useToast();
+const form = useForm({
+  name: "",
+  image: null,
+});
+
+const currentPage = ref(props.services.current_page); // Track the current page
+const totalPages = computed(() => {
+  // Calculate the total pages based on props
+  return Array.from({ length: props.services.last_page }, (_, i) => i + 1);
+});
+
+// Change page to the selected URL
+const changePage = (url) => {
+  if (url) {
+    form.get(
+      route("services.index", { page: new URL(url).searchParams.get("page") }),
+      {
+        preserveScroll: true,
+      }
+    );
+  }
+};
+
+// Change page to the specific page
+const changePageTo = (page) => {
+  form.get(route("services.index", { page }), {
+    preserveScroll: true,
+  });
+};
+
+// Delete a service
+const deleteService = (serviceId) => {
+  form.delete(route("services.destroy", serviceId), {
+    preserveScroll: true,
+    onSuccess: () => {
+      toast.success("Service Deleted Successfully");
+    },
+    onError: (err) => {
+      toast.error("Error: " + err.message);
     },
   });
-  
-  const toast = useToast();
-  
-  const form = useForm({
-    title: props.service.title,
-    subtitle: props.service.subtitle,
-    description: props.service.description,
-    button: props.service.button,
-    link: props.service.link,
-    image: null, // Will hold the image file
+};
+
+// Confirm before deleting a service
+const confirmDelete = (serviceId) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteService(serviceId); // Call the delete method if confirmed
+    }
   });
+};
+
+// Function to truncate the description
+const truncateText = (text, maxLength) => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+};
+</script>
   
-  const errors = ref({});
-  const imagePreview = ref(null);
-  
-  // Handle image upload
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      form.image = file; // Assign file to form data
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        imagePreview.value = e.target.result; // Set the preview
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  
-  // Reset the image
-  const resetImage = () => {
-    form.image = null;
-    imagePreview.value = null;
-  };
-  
-  // Submit form
-  const submit = () => {
-    // Create FormData to send both text fields and file
-    const data = new FormData();
-    data.append("title", form.title);
-    data.append("subtitle", form.subtitle);
-    data.append("description", form.description);
-    data.append("button", form.button);
-    data.append("link", form.link);
-  
-    // Append image if available
-    if (form.image) {
-      data.append("image", form.image);
-    }
-  
-    // Submit data using POST method to backend
-    form.post(route("service.update"), {
-      data, // Use FormData here
-      preserveScroll: true,
-      onSuccess: () => {
-        toast.success('Service Updated Successfully');
-      },
-      onError: (err) => {
-        toast.error('Error updating service: ' + err.message);
-      },
-    });
-  };
-  </script>
-  
+  <style scoped>
+.card {
+  height: 100%;
+}
+.card.shadow-lg {
+  border-radius: 15px;
+}
+.card.shadow-sm {
+  border-radius: 10px;
+}
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+}
+</style>
