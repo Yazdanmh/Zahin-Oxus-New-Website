@@ -19,7 +19,6 @@ class SettingController extends Controller
     }
     public function update(Request $request)
     {
-        // return $request->all();
         // Validate the request data
         $validatedData = $request->validate([
             'website_name' => 'required|string|max:255',
@@ -41,7 +40,7 @@ class SettingController extends Controller
             return redirect()->back()->withErrors('Settings not found.');
         }
 
-        // Update settings fields
+      
         $settings->update([
             'site_name' => $validatedData['website_name'],
             'email' => $validatedData['email'] ?? null,

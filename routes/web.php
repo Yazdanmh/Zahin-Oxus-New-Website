@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\backend\SettingController;
+use App\Http\Controllers\backend\HeroController;
+use App\Http\Controllers\backend\FriendsController;
+use App\Http\Controllers\backend\ServicesController;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,9 +17,19 @@ Route::get('/', function () {
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
-    });
+    })->name('dashboard.index');
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+    Route::get('/hero', [HeroController::class, 'index'])->name('hero.index');
+    Route::post('/hero', [HeroController::class, 'update'])->name('hero.update');
+
+    Route::get('/friends', [FriendsController::class, 'index'])->name('friends.index');
+    Route::post('/friends', [FriendsController::class, 'update'])->name('friends.update');
+    Route::post('/friends', [FriendsController::class, 'store'])->name('friends.store');
+    Route::delete('/friends/{id}', [FriendsController::class, 'destroy'])->name('friends.destroy');
+    Route::resource('services', ServicesController::class);
+
 
 });
 Route::middleware('auth')->group(function () {

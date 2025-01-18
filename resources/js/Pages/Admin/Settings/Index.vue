@@ -1,4 +1,5 @@
 <template>
+  <Head title="Setting" />
   <AdminLayout>
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
@@ -102,8 +103,10 @@
 
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { Head } from '@inertiajs/vue3';
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { useToast } from 'vue-toastification';
 
 const props = defineProps({
   settings: {
@@ -111,7 +114,7 @@ const props = defineProps({
     required: true,
   },
 });
-
+const toast = useToast();
 const form = useForm({
   website_name: props.settings.site_name,
   email: props.settings.email,
@@ -243,7 +246,10 @@ const submit = () => {
   if (!form.logo) delete form.logo;
   form.post(route("settings.update"), {
     preserveScroll: true,
+    onSuccess: () => {
+      toast.success('Setting Updated Successfully');
+    },
   });
 };
-// End of script
+
 </script>
