@@ -5,6 +5,12 @@ use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\HeroController;
 use App\Http\Controllers\backend\FriendsController;
 use App\Http\Controllers\backend\ServicesController;
+use App\Http\Controllers\backend\CounterController;
+use App\Http\Controllers\backend\TestimonailsController;
+use App\Http\Controllers\backend\ProjectController;
+use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\PortfolioController;
+
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,14 +34,24 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::post('/friends', [FriendsController::class, 'update'])->name('friends.update');
     Route::post('/friends', [FriendsController::class, 'store'])->name('friends.store');
     Route::delete('/friends/{id}', [FriendsController::class, 'destroy'])->name('friends.destroy');
-
-    // Route::resource('services', ServicesController::class);
-    Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
-    Route::get('/services/create', [ServicesController::class, 'create'])->name('services.create');
-    Route::post('/services', [ServicesController::class, 'store'])->name('services.store');
-    Route::get('/services/show/{id}', [ServicesController::class, 'show'])->name('services.show');
-    Route::get('/services/edit/{id}', [ServicesController::class, 'edit'])->name('services.edit');
+   
+    Route::resource('/services', ServicesController::class);
     Route::post('/services/edit/{id}', [ServicesController::class, 'update'])->name('services.update');
+
+    Route::get('/counter', [CounterController::class, 'index'])->name('counter.index'); 
+    Route::post('/counter', [CounterController::class, 'update'])->name('counter.update'); 
+
+    Route::resource('/testimonails', TestimonailsController::class); 
+    Route::post('/testimonails/{id}', [TestimonailsController::class, 'update'])->name('testimonails.update'); 
+    
+    Route::resource('/projects', ProjectController::class); 
+    Route::post('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update'); 
+
+    Route::resource('/categories', CategoryController::class);
+
+    Route::resource('/portfolio', PortfolioController::class); 
+    Route::post('/portfolio/{id}', [ProjectController::class, 'update'])->name('portfolio.update'); 
+    
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

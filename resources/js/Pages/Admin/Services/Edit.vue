@@ -57,7 +57,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="mb-3">
                       <label for="title" class="form-label">Title</label>
                       <input
@@ -88,25 +88,33 @@
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="icon" class="form-label">Icon</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="icon"
-                        v-model="form.icon"
-                      />
+                      <div class="d-flex align-items-center gap-3">
+                        <!-- Icon Input -->
+                        <input
+                          type="text"
+                          class="form-control w-50"
+                          id="icon"
+                          v-model="form.icon"
+                          placeholder="Enter icon class (e.g., bx bx-home)"
+                        />
+                        <!-- Preview -->
+                        <i :class="form.icon" style="font-size: 2rem"></i>
+                        <!-- Link Button -->
+                        <a
+                          href="https://boxicons.com/"
+                          class="btn btn-info"
+                          target="_blank"
+                          title="Browse Icons"
+                        >
+                          Browse Icons
+                        </a>
+                      </div>
                       <div v-if="errors.icon" class="text-danger mt-2">
                         {{ errors.icon }}
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="">
-                      <label for="">Icon Preview</label>
-                      <p>
-                        <i :class="form.icon" style="font-size: 2rem"></i>
-                      </p>
-                    </div>
-                  </div>
+
                   <div class="col-md-12">
                     <div class="mb-3">
                       <label for="description" class="form-label">
@@ -115,6 +123,7 @@
                       <textarea
                         class="form-control"
                         id="description"
+                        rows="5"
                         v-model="form.description"
                       ></textarea>
                       <div v-if="errors.description" class="text-danger mt-2">
@@ -123,9 +132,18 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                  Update Service
-                </button>
+                <div class="d-flex justify-content-end gap-3 mt-4">
+                  <Link
+                    :href="route('services.index')"
+                    class="btn btn-outline-secondary"
+                    @click="cancel"
+                  >
+                     Cancel
+                </Link>
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bx bx-pencil mr-2"></i>Update Service
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -137,7 +155,7 @@
 
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head , Link} from "@inertiajs/vue3";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";

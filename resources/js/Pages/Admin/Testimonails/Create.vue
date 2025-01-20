@@ -1,9 +1,9 @@
 <template>
-  <Head title="Create Service" />
+  <Head title="Create Testimonial" />
   <AdminLayout>
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Home /</span> Services / Create
+        <span class="text-muted fw-light">Home /</span> Testimonial / Create
       </h4>
       <div class="row">
         <div class="col-xl">
@@ -11,8 +11,8 @@
             <div
               class="card-header d-flex justify-content-between align-items-center"
             >
-              <h5 class="mb-0">Create Service</h5>
-              <small class="text-muted float-end">Add a new service</small>
+              <h5 class="mb-0">Create Testimonial</h5>
+              <small class="text-muted float-end">Add a new Testimonial</small>
             </div>
             <div class="card-body">
               <form @submit.prevent="submit">
@@ -23,7 +23,7 @@
                     <img
                       v-if="imagePreview"
                       :src="imagePreview"
-                      alt="Service Image Preview"
+                      alt="Testimonial Image Preview"
                       class="d-block rounded"
                       style="width: 300px; height: 100px; object-fit: cover"
                       id="uploadedImage"
@@ -58,77 +58,65 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-4">
                     <div class="mb-3">
-                      <label for="title" class="form-label">Title</label>
+                      <label for="name" class="form-label">Name</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="title"
-                        v-model="form.title"
-                        placeholder="Enter service title"
+                        id="name"
+                        v-model="form.name"
+                        placeholder="Enter testimonial name"
                       />
-                      <div v-if="errors.title" class="text-danger mt-2">
-                        {{ errors.title }}
+                      <div v-if="errors.name" class="text-danger mt-2">
+                        {{ errors.name }}
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+               
+                  <div class="col-md-4">
                     <div class="mb-3">
-                      <label for="subtitle" class="form-label">Subtitle</label>
+                      <label for="position" class="form-label">Position</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="subtitle"
-                        v-model="form.subtitle"
-                        placeholder="Enter service subtitle"
+                        id="position"
+                        v-model="form.position"
+                        placeholder="Enter position"
                       />
-                      <div v-if="errors.subtitle" class="text-danger mt-2">
-                        {{ errors.subtitle }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="icon" class="form-label">Icon</label>
-                      <div class="d-flex align-items-center gap-3">
-                        <input
-                          type="text"
-                          class="form-control w-50"
-                          id="icon"
-                          v-model="form.icon"
-                          placeholder="Enter icon class (e.g., bx bx-home)"
-                        />
-                        <i :class="form.icon" style="font-size: 2rem"></i>
-                        <a
-                          href="https://boxicons.com/"
-                          class="btn btn-info"
-                          target="_blank"
-                          title="Browse Icons"
-                        >
-                          Browse Icons
-                        </a>
-                      </div>
-                      <div v-if="errors.icon" class="text-danger mt-2">
-                        {{ errors.icon }}
+                      <div v-if="errors.position" class="text-danger mt-2">
+                        {{ errors.position }}
                       </div>
                     </div>
                   </div>
 
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="stars" class="form-label">Stars</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="stars"
+                        v-model="form.stars"
+                        placeholder="Enter number of stars"
+                      />
+                      <div v-if="errors.stars" class="text-danger mt-2">
+                        {{ errors.stars }}
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-12">
                     <div class="mb-3">
-                      <label for="description" class="form-label">
-                        Description
-                      </label>
+                      <label for="message" class="form-label"> Message </label>
                       <textarea
                         class="form-control"
-                        id="description"
-                        rows="5"
-                        v-model="form.description"
-                        placeholder="Enter service description"
+                        id="message"
+                        rows="3"
+                        v-model="form.message"
+                        placeholder="Enter testimonial message"
                       ></textarea>
-                      <div v-if="errors.description" class="text-danger mt-2">
-                        {{ errors.description }}
+                      <div v-if="errors.message" class="text-danger mt-2">
+                        {{ errors.message }}
                       </div>
                     </div>
                   </div>
@@ -139,10 +127,10 @@
                     class="btn btn-outline-secondary"
                     @click="cancel"
                   >
-                     Cancel
+                    Cancel
                   </button>
                   <button type="submit" class="btn btn-primary">
-                    <i class="bx bx-save"></i> Create Service
+                    <i class="bx bx-save"></i> Add Testimonial
                   </button>
                 </div>
               </form>
@@ -153,8 +141,8 @@
     </div>
   </AdminLayout>
 </template>
-
-<script setup>
+  
+  <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
@@ -164,10 +152,10 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 
 const form = useForm({
-  title: "",
-  subtitle: "",
-  description: "",
-  icon: "",
+  name: "",
+  position: "",
+  message: "",
+  stars: "",
   image: null,
 });
 
@@ -177,6 +165,11 @@ const imagePreview = ref(null);
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
+    if (file.size > 1048576) {
+      // 1MB in bytes
+      toast.error("File size exceeds the 1MB limit.");
+      return;
+    }
     form.image = file;
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -195,18 +188,45 @@ const cancel = () => {
   window.history.back(); // Navigate to the previous page
 };
 
+const validateForm = () => {
+  errors.value = {}; // Reset errors
+  if (!form.name) {
+    errors.value.name = "Name is required";
+  }
+  if (!form.message) {
+    errors.value.message = "Message is required";
+  }
+  if (!form.stars) {
+    errors.value.stars = "Stars are required";
+  }
+  if (!form.position) {
+    errors.value.position = "Position is required";
+  }
+  return Object.keys(errors.value).length === 0; 
+};
+
 const submit = () => {
-  form.post(route("services.store"), {
-    preserveScroll: true, // Preserve the scroll position
+  if (!validateForm()) {
+    return;
+  }
+  form.post(route("testimonails.store"), {
+    preserveScroll: true,
     onSuccess: () => {
-      toast.success("Service Created Successfully"); // Show success message
+      toast.success("Testimonial Created Successfully");
     },
     onError: (err) => {
-      toast.error("Error: " + err); // Show error message
+      // Assuming the validation errors are returned in err.response.data.errors
+      if (err.response && err.response.data && err.response.data.errors) {
+        errors.value = err.response.data.errors; // Set the errors to be displayed
+      } else {
+        toast.error("An error occurred: " + (err.message || "Unknown error"));
+      }
     },
   });
 };
-</script>
 
-<style scoped>
+</script>
+  
+  <style scoped>
 </style>
+  

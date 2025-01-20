@@ -26,7 +26,10 @@ class ServicesController extends Controller
     public function show($id)
     {
         $service = Services::findOrFail($id);
-        return response()->json($service);
+
+        return Inertia::render('Admin/Services/Details', [
+            'service' => $service
+        ]);
     }
 
     public function edit($id)

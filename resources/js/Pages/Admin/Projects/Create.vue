@@ -1,9 +1,9 @@
 <template>
-  <Head title="Create Service" />
+  <Head title="Create Project" />
   <AdminLayout>
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Home /</span> Services / Create
+        <span class="text-muted fw-light">Home /</span> Project / Create
       </h4>
       <div class="row">
         <div class="col-xl">
@@ -11,8 +11,8 @@
             <div
               class="card-header d-flex justify-content-between align-items-center"
             >
-              <h5 class="mb-0">Create Service</h5>
-              <small class="text-muted float-end">Add a new service</small>
+              <h5 class="mb-0">Create Project</h5>
+              <small class="text-muted float-end">Add a new Project</small>
             </div>
             <div class="card-body">
               <form @submit.prevent="submit">
@@ -23,7 +23,7 @@
                     <img
                       v-if="imagePreview"
                       :src="imagePreview"
-                      alt="Service Image Preview"
+                      alt="Project Image Preview"
                       class="d-block rounded"
                       style="width: 300px; height: 100px; object-fit: cover"
                       id="uploadedImage"
@@ -57,75 +57,68 @@
                     {{ errors.image }}
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="mb-3">
-                      <label for="title" class="form-label">Title</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="title"
-                        v-model="form.title"
-                        placeholder="Enter service title"
-                      />
-                      <div v-if="errors.title" class="text-danger mt-2">
-                        {{ errors.title }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="subtitle" class="form-label">Subtitle</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="subtitle"
-                        v-model="form.subtitle"
-                        placeholder="Enter service subtitle"
-                      />
-                      <div v-if="errors.subtitle" class="text-danger mt-2">
-                        {{ errors.subtitle }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="mb-3">
-                      <label for="icon" class="form-label">Icon</label>
-                      <div class="d-flex align-items-center gap-3">
-                        <input
-                          type="text"
-                          class="form-control w-50"
-                          id="icon"
-                          v-model="form.icon"
-                          placeholder="Enter icon class (e.g., bx bx-home)"
-                        />
-                        <i :class="form.icon" style="font-size: 2rem"></i>
-                        <a
-                          href="https://boxicons.com/"
-                          class="btn btn-info"
-                          target="_blank"
-                          title="Browse Icons"
-                        >
-                          Browse Icons
-                        </a>
-                      </div>
-                      <div v-if="errors.icon" class="text-danger mt-2">
-                        {{ errors.icon }}
-                      </div>
-                    </div>
-                  </div>
 
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        v-model="form.name"
+                        placeholder="Enter project name"
+                      />
+                      <div v-if="errors.name" class="text-danger mt-2">
+                        {{ errors.name }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="category_id" class="form-label"
+                        >Category</label
+                      >
+                      <select
+                        id="category_id"
+                        class="form-select"
+                        v-model="form.category_id"
+                      >
+                        <option>Select Category</option>
+                        <option
+                          v-for="category in categories"
+                          :key="category.id"
+                          :value="category.id"
+                        >
+                          {{ category.title }}
+                        </option>
+                      </select>
+
+                      <div v-if="errors.category_id" class="text-danger mt-2">
+                        {{ errors.category_id }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-center">
+                    <Link
+                      :href="route('categories.index')"
+                      class="btn btn-link btn-sm"
+                     
+                    >
+                      <i class="bx bx-cog"></i> Manage Categories
+                    </Link>
+                  </div>
                   <div class="col-md-12">
                     <div class="mb-3">
-                      <label for="description" class="form-label">
-                        Description
-                      </label>
+                      <label for="description" class="form-label"
+                        >Description</label
+                      >
                       <textarea
                         class="form-control"
                         id="description"
-                        rows="5"
+                        rows="3"
                         v-model="form.description"
-                        placeholder="Enter service description"
+                        placeholder="Enter project description"
                       ></textarea>
                       <div v-if="errors.description" class="text-danger mt-2">
                         {{ errors.description }}
@@ -133,16 +126,17 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="d-flex justify-content-end gap-3 mt-4">
                   <button
                     type="button"
                     class="btn btn-outline-secondary"
                     @click="cancel"
                   >
-                     Cancel
+                    Cancel
                   </button>
                   <button type="submit" class="btn btn-primary">
-                    <i class="bx bx-save"></i> Create Service
+                    <i class="bx bx-save"></i> Add Project
                   </button>
                 </div>
               </form>
@@ -153,21 +147,26 @@
     </div>
   </AdminLayout>
 </template>
-
-<script setup>
+  
+  <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, useForm, Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
+const props = defineProps({
+  categories: {
+    type: Array,
+    required: true,
+  },
+});
+
 const form = useForm({
-  title: "",
-  subtitle: "",
+  name: "",
   description: "",
-  icon: "",
+  category_id: null,
   image: null,
 });
 
@@ -177,6 +176,11 @@ const imagePreview = ref(null);
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
+    if (file.size > 1048576) {
+      // 1MB in bytes
+      toast.error("File size exceeds the 1MB limit.");
+      return;
+    }
     form.image = file;
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -195,18 +199,42 @@ const cancel = () => {
   window.history.back(); // Navigate to the previous page
 };
 
+
+
+const validateForm = () => {
+  errors.value = {}; // Reset errors
+  if (!form.name) {
+    errors.value.name = "Name is required";
+  }
+  if (!form.description) {
+    errors.value.description = "Description is required";
+  }
+  if (!form.category_id) {
+    errors.value.category_id = "Category is required";
+  }
+  return Object.keys(errors.value).length === 0;
+};
+
 const submit = () => {
-  form.post(route("services.store"), {
-    preserveScroll: true, // Preserve the scroll position
+  if (!validateForm()) {
+    return;
+  }
+  form.post(route("projects.store"), {
+    preserveScroll: true,
     onSuccess: () => {
-      toast.success("Service Created Successfully"); // Show success message
+      toast.success("Project Created Successfully");
     },
     onError: (err) => {
-      toast.error("Error: " + err); // Show error message
+      if (err.response && err.response.data && err.response.data.errors) {
+        errors.value = err.response.data.errors; // Set the errors to be displayed
+      } else {
+        toast.error("An error occurred: " + (err.message || "Unknown error"));
+      }
     },
   });
 };
 </script>
-
-<style scoped>
+  
+  <style scoped>
 </style>
+  

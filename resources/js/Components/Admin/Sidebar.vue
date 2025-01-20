@@ -23,7 +23,11 @@
         :class="{
           'menu-item': true,
           'active open':
-            isActiveRoute('hero.index') || isActiveRoute('friends.index') || isActiveRoute('services.index'),
+            isActiveRoute('hero.index') ||
+            isActiveRoute('friends.index') ||
+            isActiveRoute('services.index') ||
+            isActiveRoute('testimonails.index') ||
+            isActiveRoute('counter.index'),
         }"
       >
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -58,9 +62,45 @@
               <div>Services</div>
             </Link>
           </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('counter.index'),
+            }"
+          >
+            <Link :href="route('counter.index')" class="menu-link">
+              <div>Counter</div>
+            </Link>
+          </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('testimonails.index'),
+            }"
+          >
+            <Link :href="route('testimonails.index')" class="menu-link">
+              <div>Testimonails</div>
+            </Link>
+          </li>
         </ul>
       </li>
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('projects.index') }"
+      >
+        <Link :href="route('projects.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div>Project</div>
+        </Link>
+      </li>
 
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('portfolio.index') }"
+      >
+        <Link :href="route('portfolio.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div>Portfolio</div>
+        </Link>
+      </li>
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Settings</span>
       </li>
