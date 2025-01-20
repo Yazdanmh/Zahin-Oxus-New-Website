@@ -1,0 +1,61 @@
+@use '../utils' as *;
+
+/*=============================
+    	27. Features
+===============================*/
+.features {
+    &__area {
+        margin-top: -110px;
+    }
+    &__item {
+        border: 1px solid #E0E1E9;
+        background: var(--tg-color-white-default);
+        padding: 40px 40px;
+        @include transition(.3s);
+        @media #{$lg} {
+            padding: 30px 25px;
+        }
+        @media #{$md} {
+            padding: 35px 35px;
+        }
+        &-top {
+            @include flexbox();
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+            & .title {
+                margin-bottom: 0;
+                font-size: 20px;
+                font-weight: 600;
+                text-transform: capitalize;
+            }
+        }
+        &:hover {
+            transform: translateY(-5px);
+            & .features__icon {
+                & i {
+                    transform: rotateY(180deg);
+                }
+            }
+        }
+    }
+    &__icon {
+        width: 70px;
+        height: 70px;
+        @include flexbox();
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        color: var(--tg-theme-primary);
+        background: var(--tg-color-gray-1);
+        flex: 0 0 auto;
+        & i {
+            @include transition(.5s);
+        }
+    }
+    &__content {
+        & p {
+            margin-bottom: 0;
+        }
+    }
+}

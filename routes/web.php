@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Client/Index');
+    return Inertia::render('Client/Home/Index');
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -34,24 +34,23 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::post('/friends', [FriendsController::class, 'update'])->name('friends.update');
     Route::post('/friends', [FriendsController::class, 'store'])->name('friends.store');
     Route::delete('/friends/{id}', [FriendsController::class, 'destroy'])->name('friends.destroy');
-   
+
     Route::resource('/services', ServicesController::class);
     Route::post('/services/edit/{id}', [ServicesController::class, 'update'])->name('services.update');
 
-    Route::get('/counter', [CounterController::class, 'index'])->name('counter.index'); 
-    Route::post('/counter', [CounterController::class, 'update'])->name('counter.update'); 
+    Route::get('/counter', [CounterController::class, 'index'])->name('counter.index');
+    Route::post('/counter', [CounterController::class, 'update'])->name('counter.update');
 
-    Route::resource('/testimonails', TestimonailsController::class); 
-    Route::post('/testimonails/{id}', [TestimonailsController::class, 'update'])->name('testimonails.update'); 
-    
-    Route::resource('/projects', ProjectController::class); 
-    Route::post('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update'); 
+    Route::resource('/testimonails', TestimonailsController::class);
+    Route::post('/testimonails/{id}', [TestimonailsController::class, 'update'])->name('testimonails.update');
+
+    Route::resource('/projects', ProjectController::class);
+    Route::post('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
 
     Route::resource('/categories', CategoryController::class);
 
-    Route::resource('/portfolio', PortfolioController::class); 
-    Route::post('/portfolio/{id}', [ProjectController::class, 'update'])->name('portfolio.update'); 
-    
+    Route::resource('/portfolio', PortfolioController::class);
+    Route::post('/portfolio/{id}', [ProjectController::class, 'update'])->name('portfolio.update');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
