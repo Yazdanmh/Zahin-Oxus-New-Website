@@ -1,18 +1,17 @@
 <template>
-  <Head title="Home"/>
+  <Head title="Home" />
   <ClientLayout :setting="props.setting">
-    <Hero :hero="props.hero"/>
-    <Friends :friends="props.friends"/>
-    <About/>
-    <Services :services="services"/>
+    <Hero :hero="props.hero" />
+    <Friends :friends="props.friends" />
+    <About :about="props.about" :counter="props.counter" />
+    <Services :services="services" />
     <CTA />
     <History />
-    <Counter :counter="props.counter"/>
+    <Counter :counter="props.counter" />
     <Video />
-    <Projects :projects = "props.projects" :categories="props.categories"/>
+    <Projects :projects="props.projects" :categories="props.categories" />
     <CTA2 />
-    <Testimonial :testimonials="props.testimonials"/>
-
+    <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
   </ClientLayout>
 </template>
 
@@ -33,38 +32,40 @@ import Projects from "@/Pages/Client/Home/Projects.vue";
 
 const props = defineProps({
   hero: {
-    type: Object,  // Changed from Array to Object
+    type: Object, // Changed from Array to Object
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
-  }, 
-  friends:{
-    type:Object, 
-    required:true, 
-  }, 
-  services:{
-    type:Object, 
-    required:true, 
-  }, 
-  counter:{
-    type:Object, 
-    required:true, 
-  }, 
-  projects:{
-    type:Object, 
-    required:true, 
-  }, 
-  categories:{
-    type:Object, 
-    required:true, 
-  }, 
-  testimonials:{
-    type:Object, 
-    required:true, 
-  }, 
-
-
-}); 
+  setting: {
+    type: Object,
+    required: true,
+  },
+  friends: {
+    type: Object,
+    required: true,
+  },
+  services: {
+    type: Object,
+    required: true,
+  },
+  counter: {
+    type: Object,
+    required: true,
+  },
+  projects: {
+    type: Object,
+    required: true,
+  },
+  categories: {
+    type: Object,
+    required: true,
+  },
+  testimonials: {
+    type: Object,
+    required: true,
+  },
+  about: {
+    type: Object,
+    required: true,
+  },
+});
 </script>

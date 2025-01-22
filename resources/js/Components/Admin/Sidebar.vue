@@ -101,6 +101,12 @@
           <div>Portfolio</div>
         </Link>
       </li>
+      <li :class="{ 'menu-item': true, active: isActiveRoute('about.index') }">
+        <Link :href="route('about.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <div>About</div>
+        </Link>
+      </li>
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Settings</span>
       </li>

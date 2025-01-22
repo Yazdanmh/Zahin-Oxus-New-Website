@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\AboutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\HeroController;
@@ -20,8 +21,9 @@ use Inertia\Inertia;
 
 Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/contact-us',[ContactController::class, 'index'])->name('contact.index');
-    Route::post('/contact-us',[ContactController::class, 'store'])->name('contact.store');
+    Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
+    Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -55,6 +57,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::resource('/portfolio', PortfolioController::class);
     Route::post('/portfolio/{id}', [ProjectController::class, 'update'])->name('portfolio.update');
+
+    Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+    Route::post('/about', [AboutController::class, 'update'])->name('about.update');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

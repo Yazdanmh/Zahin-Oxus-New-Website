@@ -8,11 +8,12 @@
             <div class="tg-header__top-info">
               <ul class="list-wrap">
                 <li v-if="props.setting.address">
-                  <i class="flaticon-placeholder"></i>{{props.setting.address}}
+                  <i class="flaticon-placeholder"></i
+                  >{{ props.setting.address }}
                 </li>
                 <li v-if="props.setting.email">
                   <i class="flaticon-envelope"></i
-                  ><a href="mailto:info@gmail.com">{{props.setting.email}}</a>
+                  ><a href="mailto:info@gmail.com">{{ props.setting.email }}</a>
                 </li>
               </ul>
             </div>
@@ -23,7 +24,7 @@
               <ul class="list-wrap">
                 <li v-if="props.setting.phone">
                   <i class="flaticon-telephone"></i
-                  ><a href="tel:0123456789">{{props.setting.phone}}</a>
+                  ><a href="tel:0123456789">{{ props.setting.phone }}</a>
                 </li>
                 <li>
                   <div class="tg-header__top-social">
@@ -78,7 +79,9 @@
               <nav class="tgmenu__nav">
                 <div class="logo">
                   <a href="index.html"
-                    ><img :src="'/storage/' + props.setting.site_logo" alt="Logo"
+                    ><img
+                      :src="'/storage/' + props.setting.site_logo"
+                      alt="Logo"
                   /></a>
                 </div>
                 <div
@@ -86,20 +89,21 @@
                 >
                   <ul class="navigation">
                     <li><Link href="/">Home</Link></li>
-                   
+
                     <li class="menu-item-has-children">
                       <a href="#">About Us</a>
                       <ul class="sub-menu">
                         <li><a href="about.html">Our Mission</a></li>
                         <li><a href="team.html">Our Vision</a></li>
-                        <li><a href="team-details.html">About ZOCS</a></li>
-                        
+                        <li>
+                          <Link :href="route('home.about')">About ZOCS</Link>
+                        </li>
                       </ul>
                     </li>
                     <li><a href="contact.html">Services</a></li>
                     <li><a href="contact.html">Trainings</a></li>
                     <li><a href="contact.html">Portfolio</a></li>
-                    
+
                     <li><Link href="contact-us">Contact</Link></li>
                   </ul>
                 </div>
@@ -180,8 +184,6 @@
     </div>
     <div class="tgmobile__menu-backdrop"></div>
     <!-- End Mobile Menu -->
-
-
 
     <!-- offCanvas-menu -->
     <div class="offCanvas__info">
@@ -309,12 +311,11 @@
   <!-- header-area-end -->
 </template>
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link } from "@inertiajs/vue3";
 const props = defineProps({
-  setting:{
-    type:Object, 
-    required:true, 
-  }
-})
-
+  setting: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
