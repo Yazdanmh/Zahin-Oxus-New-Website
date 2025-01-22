@@ -10,14 +10,18 @@ use App\Http\Controllers\backend\TestimonailsController;
 use App\Http\Controllers\backend\ProjectController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\PortfolioController;
-
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Middleware\ShareGlobalData;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Client/Home/Index');
+Route::middleware([ShareGlobalData::class])->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/contact-us',[ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact-us',[ContactController::class, 'store'])->name('contact.store');
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {

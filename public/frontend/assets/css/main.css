@@ -4464,8 +4464,8 @@ textarea {
   }
 }
 .banner__mask-img {
-  -webkit-mask-image: url(../img/banner/mask_img.svg);
-  mask-image: url(../img/banner/mask_img.svg);
+  -webkit-mask-image: url('/frontend/assets/img/banner/mask_img.svg');
+  mask-image: url('/frontend/assets/img/banner/mask_img.svg');
   -webkit-mask-size: 100%;
   mask-size: 100%;
   -webkit-mask-repeat: no-repeat;

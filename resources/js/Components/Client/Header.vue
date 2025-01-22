@@ -7,29 +7,29 @@
           <div class="col-lg-7">
             <div class="tg-header__top-info">
               <ul class="list-wrap">
-                <li>
-                  <i class="flaticon-placeholder"></i>256 Avenue, Mark Street,
-                  NewYork City
+                <li v-if="props.setting.address">
+                  <i class="flaticon-placeholder"></i>{{props.setting.address}}
                 </li>
-                <li>
+                <li v-if="props.setting.email">
                   <i class="flaticon-envelope"></i
-                  ><a href="mailto:info@gmail.com">info@gmail.com</a>
+                  ><a href="mailto:info@gmail.com">{{props.setting.email}}</a>
                 </li>
               </ul>
             </div>
           </div>
+
           <div class="col-lg-5">
             <div class="tg-header__top-right">
               <ul class="list-wrap">
-                <li>
+                <li v-if="props.setting.phone">
                   <i class="flaticon-telephone"></i
-                  ><a href="tel:0123456789">+123 4884 4889</a>
+                  ><a href="tel:0123456789">{{props.setting.phone}}</a>
                 </li>
                 <li>
                   <div class="tg-header__top-social">
                     <ul class="list-wrap">
                       <li>
-                        <a href="https://www.facebook.com/" target="_blank"
+                        <a :href="props.setting.facebook_url" target="_blank"
                           ><img
                             src="/frontend/assets/img/icons/facebook.svg"
                             alt=""
@@ -37,7 +37,7 @@
                         /></a>
                       </li>
                       <li>
-                        <a href="https://x.com/home" target="_blank"
+                        <a :href="props.setting.twitter_url" target="_blank"
                           ><img
                             src="/frontend/assets/img/icons/twitter.svg"
                             alt=""
@@ -45,7 +45,7 @@
                         /></a>
                       </li>
                       <li>
-                        <a href="https://www.instagram.com/" target="_blank"
+                        <a :href="props.setting.instagram_url" target="_blank"
                           ><img
                             src="/frontend/assets/img/icons/instagram.svg"
                             alt=""
@@ -78,51 +78,29 @@
               <nav class="tgmenu__nav">
                 <div class="logo">
                   <a href="index.html"
-                    ><img src="/frontend/assets/img/logo/logo.svg" alt="Logo"
+                    ><img :src="'/storage/' + props.setting.site_logo" alt="Logo"
                   /></a>
                 </div>
                 <div
                   class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex"
                 >
                   <ul class="navigation">
-                    <li
-                      class="active menu-item-has-children tg-mega-menu-has-children"
-                    >
-                      <a href="#">Home</a>
-                    </li>
+                    <li><Link href="/">Home</Link></li>
+                   
                     <li class="menu-item-has-children">
-                      <a href="#">Pages</a>
+                      <a href="#">About Us</a>
                       <ul class="sub-menu">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="team.html">Team page</a></li>
-                        <li><a href="team-details.html">Team Details</a></li>
-                        <li><a href="shop.html">Shop page</a></li>
-                        <li><a href="shop-details.html">Shop Details</a></li>
-                        <li><a href="blog.html">Blog post</a></li>
-                        <li>
-                          <a href="blog-details.html">Blog post Details</a>
-                        </li>
+                        <li><a href="about.html">Our Mission</a></li>
+                        <li><a href="team.html">Our Vision</a></li>
+                        <li><a href="team-details.html">About ZOCS</a></li>
+                        
                       </ul>
                     </li>
-                    <li class="menu-item-has-children">
-                      <a href="#">Services</a>
-                      <ul class="sub-menu">
-                        <li><a href="services.html">Our Services</a></li>
-                        <li>
-                          <a href="services-details.html">Services Details</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="menu-item-has-children">
-                      <a href="#">Portfolio</a>
-                      <ul class="sub-menu">
-                        <li><a href="project.html">Portfolio Page</a></li>
-                        <li>
-                          <a href="project-details.html">Portfolio Details</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">Services</a></li>
+                    <li><a href="contact.html">Trainings</a></li>
+                    <li><a href="contact.html">Portfolio</a></li>
+                    
+                    <li><Link href="contact-us">Contact</Link></li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">
@@ -203,81 +181,7 @@
     <div class="tgmobile__menu-backdrop"></div>
     <!-- End Mobile Menu -->
 
-    <!-- header-search -->
-    <div class="search__popup">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="search__wrapper">
-              <div class="search__close">
-                <button type="button" class="search-close-btn">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M17 1L1 17"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                    <path
-                      d="M1 1L17 17"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-              <div class="search__form">
-                <form action="#">
-                  <div class="search__input">
-                    <input
-                      class="search-input-field"
-                      type="text"
-                      placeholder="Type keywords here"
-                    />
-                    <span class="search-focus-border"></span>
-                    <button>
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M9.55 18.1C14.272 18.1 18.1 14.272 18.1 9.55C18.1 4.82797 14.272 1 9.55 1C4.82797 1 1 4.82797 1 9.55C1 14.272 4.82797 18.1 9.55 18.1Z"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                        <path
-                          d="M19.0002 19.0002L17.2002 17.2002"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="search-popup-overlay"></div>
-    <!-- header-search-end -->
+
 
     <!-- offCanvas-menu -->
     <div class="offCanvas__info">
@@ -404,3 +308,13 @@
   </header>
   <!-- header-area-end -->
 </template>
+<script setup>
+import { Link } from '@inertiajs/vue3';
+const props = defineProps({
+  setting:{
+    type:Object, 
+    required:true, 
+  }
+})
+
+</script>

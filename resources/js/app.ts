@@ -1,14 +1,16 @@
-
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createApp, DefineComponent, h } from 'vue';
+import { createApp, DefineComponent, h, nextTick } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';  // Ensure CSS is imported
 import 'boxicons/css/boxicons.min.css';
+import AOS from 'aos';  // Import AOS
+import WOW from 'wow.js';  // Import WOW.js
+import 'aos/dist/aos.css';  // Import AOS styles
+import 'wow.js/css/libs/animate.css';  // Import WOW.js styles
 
-
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Zahin Oxus';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -30,6 +32,17 @@ createInertiaApp({
 
         app.use(plugin);
         app.use(ZiggyVue);
+
+        nextTick(() => {
+            AOS.init({
+                duration: 1200,  
+                easing: 'ease-in-out',
+                once: true,  
+            });
+
+
+            new WOW().init();
+        });
 
         app.mount(el);
     },
