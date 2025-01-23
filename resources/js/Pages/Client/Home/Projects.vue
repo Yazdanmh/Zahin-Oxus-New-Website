@@ -23,12 +23,12 @@
                             <div class="project__content-left">
                                 <!-- Dynamically display the category title -->
                                 <span>{{ getCategoryTitle(project.category_id) }}</span>
-                                <h2 class="title"><a :href="'#'">{{ project.name }}</a></h2>
+                                <h2 class="title"><a :href="route('project.show', project.slug)">{{ project.name }}</a></h2>
                             </div>
                             <div class="project__content-arrow">
-                                <a :href="project.detailsLink">
+                                <Link :href="route('project.show', project.slug)">
                                     <img src="/frontend/assets/img/icons/right_arrow.svg" alt="" class="injectable">
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -48,6 +48,8 @@
 </template>
 
 <script setup>
+import { Link } from '@inertiajs/vue3';
+
 const props = defineProps({
     projects: {
         type: Object,
@@ -58,10 +60,7 @@ const props = defineProps({
         required: true,
     }
 })
-
-// Helper function to get the category title by id
 const getCategoryTitle = (categoryId) => {
-    // Find the category by its id from the categories prop
     const category = props.categories.find(cat => cat.id === categoryId);
     return category ? category.title : 'Unknown Category';
 }

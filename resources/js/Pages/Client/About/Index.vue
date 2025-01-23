@@ -27,13 +27,13 @@
                     <a href="tel:0123456789">{{ props.setting.phone }}</a>
                   </div>
                 </div>
-                <a href="contact.html" class="tg-btn tg-btn-three tg-border-btn"
+                <Link :href="route('contact.index')" class="tg-btn tg-btn-three tg-border-btn"
                   >Read More
                   <img
                     src="assets/img/icons/right_arrow.svg"
                     alt=""
                     class="injectable"
-                /></a>
+                /></Link>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
   
   <script setup>
 import ClientLayout from "@/Layouts/ClientLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import Breadcrumb from "@/Components/Client/Breadcrumb.vue";
 import About from "@/Components/Client/About.vue";
 import Testimonial from "@/Components/Client/Testimonial.vue";

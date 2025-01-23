@@ -70,7 +70,7 @@
                 {{ about.title }}
               </h2>
             </div>
-            <p>{{ about.description }}</p>
+            <p>{{ truncatedDescription(about.description) }}</p>
             <!-- Features List -->
             <div class="about__inner-wrap">
               <div class="about__inner-content">
@@ -99,14 +99,14 @@
               </div>
             </div>
             <div class="about__content-bottom">
-              <a href="about.html" class="tg-btn">
+              <Link :href="route('home.about')" class="tg-btn">
                 Explore Our Company
                 <img
                   src="/frontend/assets/img/icons/right_arrow.svg"
                   alt="Arrow Icon"
                   class="injectable"
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -118,6 +118,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
   about: {
@@ -136,4 +137,11 @@ const featuresList = computed(() => {
     ? props.about.features.split(",").map((item) => item.trim())
     : [];
 });
+
+const truncatedDescription = (description) => {
+  if (description && description.length > 500) {
+    return description.substring(0, 500) + '...';
+  }
+  return description;
+};
 </script>

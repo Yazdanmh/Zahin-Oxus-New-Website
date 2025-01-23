@@ -41,7 +41,7 @@
     </div>
     <div class="counter__shape">
       <img
-        src="assets/img/images/counter__shape.svg"
+        src="/frontend/assets/img/images/counter__shape.svg"
         alt="shape"
         data-aos="fade-up-left"
         data-aos-delay="400"

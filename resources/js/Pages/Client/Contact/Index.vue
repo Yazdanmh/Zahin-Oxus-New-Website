@@ -114,15 +114,15 @@
                       <a href="tel:0123456789">{{ props.setting.phone }}</a>
                     </div>
                   </div>
-                  <a
-                    href="contact.html"
+                  <Link
+                    :href="route('contact.index')"
                     class="tg-btn tg-btn-three tg-border-btn"
                     >Read More
                     <img
                       src="assets/img/icons/right_arrow.svg"
                       alt=""
                       class="injectable"
-                  /></a>
+                  /></Link>
                 </div>
               </div>
             </div>
@@ -137,7 +137,7 @@
   </template>
   
   <script setup>
-  import { useForm } from "@inertiajs/vue3";
+  import { Link, useForm } from "@inertiajs/vue3";
   import { ref } from "vue";  
   import ClientLayout from "@/Layouts/ClientLayout.vue";
   import { Head } from "@inertiajs/vue3";

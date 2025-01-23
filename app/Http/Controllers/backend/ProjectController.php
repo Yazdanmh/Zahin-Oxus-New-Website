@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia; 
 use Illuminate\Support\Facades\Storage;
-
+use Str; 
 class ProjectController extends Controller
 {
     public function index(){
@@ -36,6 +36,7 @@ class ProjectController extends Controller
             'description' => $request->input('description'), 
             'category_id' => $request->input('category_id'), 
             'image' => $imagePath,
+            'slug' => Str::slug($request->input('name')),
         ]);
         return redirect()->route('projects.index');
     }
@@ -62,6 +63,7 @@ class ProjectController extends Controller
         $project->name = $request->name; 
         $project->description = $request->description; 
         $project->category_id = $request->category_id; 
+        $project->slug = Str::slug($request->name);
         if ($request->hasFile('image')) {
             if ($project->image) {
                 Storage::disk('public')->delete($project->image);
@@ -69,11 +71,9 @@ class ProjectController extends Controller
             $imagePath = $request->file('image')->store('projects', 'public');
             $project->image = $imagePath;
         }
-
         $project->save();  
         return redirect()->route('projects.index');
     }
-
     public function destroy($id){
         $project = Project::findOrFail($id); 
         if ($project->image) {
@@ -81,7 +81,6 @@ class ProjectController extends Controller
         }
         $project->delete(); 
         return redirect()->route('projects.index');
-
     }
     public function show($id){
         $project = Project::findOrFail($id); 

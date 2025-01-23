@@ -1,3 +1,8 @@
+<script setup >
+import { Link } from '@inertiajs/vue3';
+
+</script>
+
 <template>
     <!-- cta-area -->
     <section class="cta__area-two">
@@ -12,7 +17,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="cta__btn-two">
-                                <a href="contact.html" class="tg-btn tg-hover-btn">Contact With Us <img src="assets/img/icons/right_arrow.svg" alt="" class="injectable"></a>
+                                <Link :href="route('contact.index')" class="tg-btn tg-hover-btn">Contact With Us <img src="/frontend/assets/img/icons/right_arrow.svg" alt="" class="injectable"></Link>
                             </div>
                         </div>
                     </div>

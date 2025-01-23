@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image')->notnull(); 
             $table->string('icon'); 
             $table->text('description');
+            $table->string('slug'); 
             $table->timestamps();
         });
     }

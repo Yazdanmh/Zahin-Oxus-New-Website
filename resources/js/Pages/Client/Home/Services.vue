@@ -32,17 +32,17 @@
               </div>
               <div class="services__content">
                 <h3 class="title">
-                  <a :href="'#'">{{ service.title }}</a>
+                  <a :href="'#'">{{ service.subtitle }}</a>
                 </h3>
-                <p>{{ truncatedDescription(service.description) }}</p>>
-                <a :href="'#'" class="link-btn">
+                <p>{{ truncatedDescription(service.title) }}</p>
+                <Link :href="route('service.show', service.slug)" class="link-btn">
                   Read More
                   <img
                     src="/frontend/assets/img/icons/right_arrow.svg"
                     alt=""
                     class="injectable"
                   />
-                </a>
+                </Link>
               </div>
               <div class="services__item-shape">
                 <img
@@ -57,7 +57,7 @@
       <div class="services__bottom-content text-center mt-70">
         <p>
           Discover Our Financial Services.
-          <a href="services.html">Explore All Services</a>
+          <Link :href="route('service.index')">Explore All Services</Link>
         </p>
       </div>
     </div>
@@ -80,6 +80,8 @@
 </template>
 
 <script setup>
+import { Link } from '@inertiajs/vue3';
+
 const props = defineProps({
   services: {
     type: Object,

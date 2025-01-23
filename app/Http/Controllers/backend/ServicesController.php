@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Services;
 use Illuminate\Support\Facades\Storage;
-
+use Str; 
 class ServicesController extends Controller
 {
     public function index()
@@ -22,7 +22,29 @@ class ServicesController extends Controller
     {
         return Inertia::render('Admin/Services/Create');
     }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'icon' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
 
+        $imagePath = $request->file('image')->store('services', 'public');
+
+        Services::create([
+            'title' => $request->input('title'),
+            'subtitle' => $request->input('subtitle'),
+            'image' => $imagePath,
+            'icon' => $request->input('icon'),
+            'description' => $request->input('description'),
+            'slug' => Str::slug($request->input('title')),
+        ]);
+
+        return redirect()->route('services.index');
+    }
     public function show($id)
     {
         $service = Services::findOrFail($id);
@@ -66,12 +88,12 @@ class ServicesController extends Controller
         $service->subtitle = $validatedData['subtitle'] ?? $service->subtitle;
         $service->description = $validatedData['description'] ?? $service->description;
         $service->icon = $validatedData['icon'] ?? $service->icon;
-
+        $service->slug = Str::slug($validatedData['title']);
         // Handle image upload
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($service->image && Storage::exists('public/' . $service->image)) {
-                Storage::delete('public/' . $service->image);
+            
+            if ($service->image) {
+                Storage::disk('public')->delete($service->image);
             }
 
             // Store new image and update the path
@@ -86,28 +108,7 @@ class ServicesController extends Controller
             ->with('success', 'Service updated successfully.');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
-            'icon' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
-
-        $imagePath = $request->file('image')->store('services', 'public');
-
-        Services::create([
-            'title' => $request->input('title'),
-            'subtitle' => $request->input('subtitle'),
-            'image' => $imagePath,
-            'icon' => $request->input('icon'),
-            'description' => $request->input('description'),
-        ]);
-
-        return redirect()->route('services.index');
-    }
+    
 
     public function destroy($id)
     {

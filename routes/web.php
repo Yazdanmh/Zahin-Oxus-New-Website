@@ -12,7 +12,9 @@ use App\Http\Controllers\backend\ProjectController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\PortfolioController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
@@ -24,6 +26,10 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
     Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
+    Route::get('/services/all', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('service.show');
+    Route::get('/projects/all',[ProjectsController::class, 'index'])->name('project.index');
+    Route::get('/projects/{slug}',[ProjectsController::class, 'show'])->name('project.show');
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
