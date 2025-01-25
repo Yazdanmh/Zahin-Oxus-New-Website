@@ -26,45 +26,9 @@
                 <div class="project__details-info-wrap">
                   <h4 class="sidebar__widget-title">Project Information</h4>
                   <ul class="list-wrap">
-                    <li><span>Date:</span>{{props.project.date}}</li>
+                    
                     <li><span>Category:</span>{{ getCategoryTitle(props.project.category_id)}}</li>
-                    <li class="social">
-                      <span>Share:</span>
-                      <ul class="list-wrap">
-                        <li>
-                          <a href="#"
-                            ><img
-                              src="/frontend/assets/img/icons/facebook.svg"
-                              alt=""
-                              class="injectable"
-                          /></a>
-                        </li>
-                        <li>
-                          <a href="#"
-                            ><img
-                              src="/frontend/assets/img/icons/instagram.svg"
-                              alt=""
-                              class="injectable"
-                          /></a>
-                        </li>
-                        <li>
-                          <a href="#"
-                            ><img
-                              src="/frontend/assets/img/icons/twitter.svg"
-                              alt=""
-                              class="injectable"
-                          /></a>
-                        </li>
-                        <li>
-                          <a href="#"
-                            ><img
-                              src="/frontend/assets/img/icons/pinterest.svg"
-                              alt=""
-                              class="injectable"
-                          /></a>
-                        </li>
-                      </ul>
-                    </li>
+                    
                   </ul>
                 </div>
               </div>

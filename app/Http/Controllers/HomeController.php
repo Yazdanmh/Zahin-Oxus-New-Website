@@ -10,6 +10,7 @@ use App\Models\Friend;
 use App\Models\Services;
 use App\Models\Counter;
 use App\Models\Project;
+use App\Models\Training;
 use App\Models\Category;
 use App\Models\Testimonial;
 
@@ -25,6 +26,8 @@ class HomeController extends Controller
         $categories = Category::all();
         $testimonials = Testimonial::all();
         $about = About::first();
+        $trainings = Training::paginate(4);
+
         return Inertia::render('Client/Home/Index', [
             'hero' => $hero,
             'friends' => $friends,
@@ -34,6 +37,7 @@ class HomeController extends Controller
             'categories' => $categories,
             'testimonials' => $testimonials,
             'about' => $about,
+            'trainings' => $trainings, 
         ]);
     }
     public function about()

@@ -26,6 +26,13 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import Sidebar from  "@/Components/Admin/Sidebar.vue"; 
 import Navbar from  "@/Components/Admin/Navbar.vue"; 
+onMounted(() => {
+  const script = document.createElement("script");
+  script.src = "/backend/assets/js/main.js";
+  script.async = true; 
+  document.head.appendChild(script);
+});
 </script>

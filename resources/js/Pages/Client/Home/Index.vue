@@ -12,6 +12,7 @@
     <Projects :projects="props.projects" :categories="props.categories" />
     <CTA2 />
     <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
+    <Trainings :trainings="props.trainings" />
   </ClientLayout>
 </template>
 
@@ -28,6 +29,7 @@ import Testimonial from "@/Components/Client/Testimonial.vue";
 import Services from "@/Pages/Client/Home/Services.vue";
 import History from "@/Pages/Client/Home/History.vue";
 import Video from "@/Pages/Client/Home/Video.vue";
+import Trainings from "@/Pages/Client/Home/Trainings.vue";
 import Projects from "@/Pages/Client/Home/Projects.vue";
 
 const props = defineProps({
@@ -64,6 +66,10 @@ const props = defineProps({
     required: true,
   },
   about: {
+    type: Object,
+    required: true,
+  },
+  trainings: {
     type: Object,
     required: true,
   },

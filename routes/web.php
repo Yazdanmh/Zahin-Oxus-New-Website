@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\backend\AboutController;
+use App\Http\Controllers\backend\TrainingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\HeroController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TrainingsController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
@@ -28,8 +30,13 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
     Route::get('/services/all', [ServiceController::class, 'index'])->name('service.index');
     Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('service.show');
+
     Route::get('/projects/all',[ProjectsController::class, 'index'])->name('project.index');
     Route::get('/projects/{slug}',[ProjectsController::class, 'show'])->name('project.show');
+
+    Route::get('/trainings/all',[TrainingsController::class, 'index'])->name('trainings.index');
+    Route::get('/trainings/{slug}',[TrainingsController::class, 'show'])->name('trainings.show');
+
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -66,6 +73,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
     Route::post('/about', [AboutController::class, 'update'])->name('about.update');
+
+    Route::resource('/training', TrainingController::class);
+    Route::post('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

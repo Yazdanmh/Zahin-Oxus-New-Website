@@ -31,7 +31,7 @@
         }"
       >
         <a href="javascript:void(0);" class="menu-link menu-toggle">
-          <i class="menu-icon tf-icons bx bx-dock-top"></i>
+          <i class="menu-icon tf-icons bx bx-home-alt"></i>
           <div>Home</div>
         </a>
         <ul class="menu-sub">
@@ -84,11 +84,12 @@
           </li>
         </ul>
       </li>
+
       <li
         :class="{ 'menu-item': true, active: isActiveRoute('projects.index') }"
       >
         <Link :href="route('projects.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <i class="menu-icon tf-icons bx bx-briefcase"></i> <!-- Updated icon -->
           <div>Project</div>
         </Link>
       </li>
@@ -97,16 +98,27 @@
         :class="{ 'menu-item': true, active: isActiveRoute('portfolio.index') }"
       >
         <Link :href="route('portfolio.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <i class="menu-icon tf-icons bx bx-archive"></i> <!-- Updated icon -->
           <div>Portfolio</div>
         </Link>
       </li>
+
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('training.index') }"
+      >
+        <Link :href="route('training.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bx-book"></i> <!-- Updated icon -->
+          <div>Training</div>
+        </Link>
+      </li>
+
       <li :class="{ 'menu-item': true, active: isActiveRoute('about.index') }">
         <Link :href="route('about.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-cog"></i>
+          <i class="menu-icon tf-icons bx bx-user"></i> <!-- Updated icon -->
           <div>About</div>
         </Link>
       </li>
+
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Settings</span>
       </li>
@@ -126,15 +138,12 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
 
-// Get current page data
 const { url, currentRouteName } = usePage();
 
-// Helper function to check if the route is active
 function isActiveRoute(routeName) {
-  // Explicitly check for the URL that includes '/admin' + the route name path
   const routePath = route(routeName)
     .replace(window.location.origin, "")
-    .replace(/^\/+/, "/"); // Normalize URL
+    .replace(/^\/+/, "/"); 
   return url.includes(routePath);
 }
 </script>

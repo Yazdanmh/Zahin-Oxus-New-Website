@@ -1,7 +1,7 @@
 <template>
     <!-- breadcrumb-area -->
     <section class="breadcrumb__area">
-      <div class="breadcrumb__bg" data-background="assets/img/bg/breadcrumb__bg.jpg"></div>
+      <div class="breadcrumb__bg" data-background="/frontend/assets/img/bg/breadcrumb__bg.jpg"></div>
       <div class="container">
         <div class="row">
           <div class="col-12">

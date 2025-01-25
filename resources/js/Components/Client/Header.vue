@@ -101,7 +101,7 @@
                       </ul>
                     </li>
                     <li><Link :href="route('service.index')">Services</Link></li>
-                    <li><a href="contact.html">Trainings</a></li>
+                    <li><a :href="route('trainings.index')">Trainings</a></li>
                     <li><a href="contact.html">Portfolio</a></li>
 
                     <li><Link href="contact-us">Contact</Link></li>
