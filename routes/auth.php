@@ -9,24 +9,25 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Middleware\ShareGlobalData;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    
-
     Route::get('/auth/login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+        ->name('login')
+        ->middleware(ShareGlobalData::class);
 
     Route::post('/auth/login', [AuthenticatedSessionController::class, 'store']);
+    Route::get('/auth/forgot-password', [PasswordResetLinkController::class, 'create'])
+        ->name('password.request')
+        ->middleware(ShareGlobalData::class);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->name('password.request');
-
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    Route::post('/auth/forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->name('password.reset');
+        ->name('password.reset')
+        ->middleware(ShareGlobalData::class);
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');

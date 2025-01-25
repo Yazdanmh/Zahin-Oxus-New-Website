@@ -12,11 +12,11 @@
         <div class="col-lg-6 col-md-4">
           <div class="section__btn text-end mb-30">
             <a
-              href="trainings.html"
+              :href="route('trainings.index')"
               class="tg-btn tg-btn-four tg-btn-six tg-btn-lavender"
               >See All Trainings
               <img
-                src="assets/img/icons/right_arrow02.svg"
+                src="/frontend/assets/img/icons/right_arrow02.svg"
                 alt=""
                 class="injectable"
             /></a>

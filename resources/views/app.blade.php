@@ -7,9 +7,12 @@
     <title inertia>{{ config('app.name', 'Zahin Oxus') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
-    @if (request()->is('admin/*'))
+
+
+
+    @if (request()->is('admin/*') || request()->is('auth/*'))
         <!-- Admin-specific styles -->
+        <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/pages/page-auth.css') }}" />
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/fonts/boxicons.css') }}">
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/core.css') }}">
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/theme-default.css') }}">
@@ -43,7 +46,7 @@
 <body class="font-sans antialiased">
     @inertia
 
-    @if (request()->is('admin/*'))
+    @if (request()->is('admin/*') || request()->is('auth/*'))
         <!-- Admin-specific scripts -->
         <script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>
         <script src="{{ asset('backend/assets/vendor/libs/popper/popper.js') }}"></script>
