@@ -8,7 +8,10 @@
             <div class="footer__widget">
               <div class="footer__logo">
                 <a href="index.html"
-                  ><img :src="'/storage/' + props.setting.site_logo" alt="logo" style="max-width:70px;"
+                  ><img
+                    :src="'/storage/' + props.setting.site_logo"
+                    alt="logo"
+                    style="max-width: 70px"
                 /></a>
               </div>
               <div class="footer__content">
@@ -16,6 +19,7 @@
                   {{ props.setting.about }}
                 </p>
               </div>
+
               <div class="footer__social">
                 <ul class="list-wrap">
                   <li>
@@ -24,7 +28,7 @@
                         src="/frontend/assets/img/icons/facebook.svg"
                         alt=""
                         class="injectable"
-                        style="width: 50px; height: 30px;"
+                        style="width: 50px; height: 30px"
                     /></a>
                   </li>
                   <li>
@@ -33,7 +37,7 @@
                         src="/frontend/assets/img/icons/twitter.svg"
                         alt=""
                         class="injectable"
-                         style="width: 50px; height: 30px;"
+                        style="width: 50px; height: 30px"
                     /></a>
                   </li>
                   <li>
@@ -42,17 +46,17 @@
                         src="/frontend/assets/img/icons/instagram.svg"
                         alt=""
                         class="injectable"
-                         style="width: 50px; height: 30px;"
+                        style="width: 50px; height: 30px"
                     /></a>
                   </li>
-                  
+
                   <li>
                     <a :href="props.setting.youtube_url" target="_blank"
                       ><img
                         src="/frontend/assets/img/icons/youtube.svg"
                         alt=""
                         class="injectable"
-                         style="width: 50px; height: 30px;"
+                        style="width: 50px; height: 30px"
                     /></a>
                   </li>
                 </ul>
@@ -63,11 +67,10 @@
             <div class="footer__widget">
               <h4 class="footer__widget-title">About Company</h4>
               <ul class="footer__widget-link list-wrap">
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="about.html">Sustainability</a></li>
-                <li><a href="about.html">Leadership</a></li>
-                <li><a href="about.html">Team News & Media</a></li>
-                <li><a href="about.html">Careers</a></li>
+                <li><a :href="route('home.about')">About Us</a></li>
+                <li><a :href="route('about.mission')">Our Misions</a></li>
+                <li><a :href="route('about.vision')">Our Vision</a></li>
+                <li><a :href="route('project.index')">Projects</a></li>
               </ul>
             </div>
           </div>
@@ -75,11 +78,10 @@
             <div class="footer__widget">
               <h4 class="footer__widget-title">Quick links</h4>
               <ul class="footer__widget-link list-wrap">
-                <li><a href="about.html">How it’s Work</a></li>
-                <li><a href="contact.html">Partners</a></li>
-                <li><a href="contact.html">Testimonials</a></li>
-                <li><a href="project.html">Case Studiesa</a></li>
-                <li><a href="contact.html">Pricing</a></li>
+                <li><a :href="route('contact.index')">Contact Us</a></li>
+                <li><a :href="route('service.index')">Services</a></li>
+                <li><a :href="route('trainings.index')">Trainings</a></li>
+                <li><a :href="route('home')">Testimonials</a></li>
               </ul>
             </div>
           </div>
@@ -135,9 +137,9 @@
 
 <script setup>
 const props = defineProps({
-    setting:{
-        type:Object, 
-        required:true, 
-    }
-})
+  setting: {
+    type: Object,
+    required: true,
+  },
+});
 </script>

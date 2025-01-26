@@ -53,14 +53,6 @@
                             class="injectable"
                         /></a>
                       </li>
-                      <li>
-                        <a href="https://www.pinterest.com/" target="_blank"
-                          ><img
-                            src="/frontend/assets/img/icons/pinterest.svg"
-                            alt=""
-                            class="injectable"
-                        /></a>
-                      </li>
                     </ul>
                   </div>
                 </li>
@@ -78,11 +70,11 @@
             <div class="tgmenu__wrap">
               <nav class="tgmenu__nav">
                 <div class="logo">
-                  <a href="index.html"
+                  <Link :href="route('home')"
                     ><img
                       :src="'/storage/' + props.setting.site_logo"
                       alt="Logo"
-                  /></a>
+                  /></Link>
                 </div>
                 <div
                   class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex"
@@ -93,25 +85,30 @@
                     <li class="menu-item-has-children">
                       <a href="#">About Us</a>
                       <ul class="sub-menu">
-                        <li> <Link :href="route('about.mission')">Our Mission</Link></li>
-                        <li><Link :href="route('about.vision')">Our Vision</Link></li>
+                        <li>
+                          <Link :href="route('about.mission')"
+                            >Our Mission</Link
+                          >
+                        </li>
+                        <li>
+                          <Link :href="route('about.vision')">Our Vision</Link>
+                        </li>
                         <li>
                           <Link :href="route('home.about')">About ZOCS</Link>
-                         
-                          
                         </li>
                       </ul>
                     </li>
-                    <li><Link :href="route('service.index')">Services</Link></li>
+                    <li>
+                      <Link :href="route('service.index')">Services</Link>
+                    </li>
+                    <li><a :href="route('project.index')">Projects</a></li>
                     <li><a :href="route('trainings.index')">Trainings</a></li>
-                
 
                     <li><Link href="contact-us">Contact</Link></li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">
                   <ul class="list-wrap">
-                    
                     <li class="offCanvas-menu">
                       <a href="#" class="menu-tigger">
                         <span></span>
@@ -146,35 +143,38 @@
       <nav class="tgmobile__menu-box">
         <div class="close-btn"><i class="tg-flaticon-close-1"></i></div>
         <div class="nav-logo">
-          <a href="index.html"
-            ><img src="/frontend/assets/img/logo/logo.svg" alt="Logo"
+          <a :href="route('home')"
+            ><img
+              :src="'/storage/' + props.setting.site_logo"
+              alt="Logo"
+              style="max-width: 50px"
           /></a>
         </div>
-        <div class="tgmobile__search">
-          <form action="#">
-            <input type="text" placeholder="Search here..." />
-            <button><i class="fas fa-search"></i></button>
-          </form>
-        </div>
+
         <div class="tgmobile__menu-outer">
           <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
         </div>
         <div class="social-links">
           <ul class="list-wrap">
             <li>
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a :href="props.setting.facebook_url"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
             </li>
             <li>
-              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a :href="props.setting.twitter_url"
+                ><i class="fab fa-twitter"></i
+              ></a>
             </li>
             <li>
-              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a :href="props.setting.instagram_url"
+                ><i class="fab fa-instagram"></i
+              ></a>
             </li>
             <li>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a :href="props.setting.youtube_url"
+                ><i class="fab fa-youtube"></i
+              ></a>
             </li>
           </ul>
         </div>
@@ -204,7 +204,7 @@
           {{ props.setting.about }}
         </p>
       </div>
-   
+
       <div class="offCanvas__side-info">
         <div class="contact-list">
           <i class="flaticon-placeholder"></i>
@@ -216,7 +216,9 @@
         </div>
         <div class="contact-list">
           <i class="flaticon-envelope"></i>
-          <a :href="'mailto:' + props.setting.email">{{ props.setting.email }}</a>
+          <a :href="'mailto:' + props.setting.email">{{
+            props.setting.email
+          }}</a>
         </div>
       </div>
       <div class="offCanvas__social">

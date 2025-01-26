@@ -16,14 +16,14 @@
       <div class="swiper-container services-active fix">
         <div class="swiper-wrapper">
           <!-- Loop through services dynamically -->
-          <div 
+          <div
             class="swiper-slide"
             v-for="(service, index) in services.data"
             :key="index"
           >
-          <div class="services__item shine__animate-item">
+            <div class="services__item shine__animate-item">
               <div class="services__thumb shine__animate-link">
-                <a :href="'#'">
+                <a :href="route('service.show', service.slug)">
                   <img :src="'/storage/' + service.image" alt="img" />
                 </a>
                 <div class="services__icon">
@@ -32,10 +32,15 @@
               </div>
               <div class="services__content">
                 <h3 class="title">
-                  <a :href="'#'">{{ service.subtitle }}</a>
+                  <a :href="route('service.show', service.slug)">{{
+                    service.subtitle
+                  }}</a>
                 </h3>
                 <p>{{ truncatedDescription(service.title) }}</p>
-                <Link :href="route('service.show', service.slug)" class="link-btn">
+                <Link
+                  :href="route('service.show', service.slug)"
+                  class="link-btn"
+                >
                   Read More
                   <img
                     src="/frontend/assets/img/icons/right_arrow.svg"
@@ -80,19 +85,18 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
   services: {
     type: Object,
     required: true,
   },
-})
+});
 const truncatedDescription = (description) => {
   if (description && description.length > 100) {
-    return description.substring(0, 100) + '...';
+    return description.substring(0, 100) + "...";
   }
   return description;
 };
-
 </script>

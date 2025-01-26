@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware([ShareGlobalData::class])->group(function () {
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
     Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
@@ -33,15 +33,13 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/services/all', [ServiceController::class, 'index'])->name('service.index');
     Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('service.show');
 
-    Route::get('/projects/all',[ProjectsController::class, 'index'])->name('project.index');
-    Route::get('/projects/{slug}',[ProjectsController::class, 'show'])->name('project.show');
+    Route::get('/projects/all', [ProjectsController::class, 'index'])->name('project.index');
+    Route::get('/projects/{slug}', [ProjectsController::class, 'show'])->name('project.show');
 
-    Route::get('/trainings/all',[TrainingsController::class, 'index'])->name('trainings.index');
-    Route::get('/trainings/{slug}',[TrainingsController::class, 'show'])->name('trainings.show');
+    Route::get('/trainings/all', [TrainingsController::class, 'index'])->name('trainings.index');
+    Route::get('/trainings/{slug}', [TrainingsController::class, 'show'])->name('trainings.show');
     Route::get('/trainings/apply/{slug}', [TrainingsController::class, 'apply'])->name('trainings.apply');
     Route::post('/trainings/apply/{id}', [TrainingsController::class, 'apply_store'])->name('trainings.apply_store');
-
-
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {

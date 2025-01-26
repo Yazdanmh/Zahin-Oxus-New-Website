@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             // CounterSeeder::class,
             // AboutSeeder::class,
             // OurMissionSeeder::class, 
-            // OurVisionSeeder::class, 
+            OurVisionSeeder::class,
         );
     }
 }

@@ -24,10 +24,10 @@ return new class extends Migration
             $table->timestamps();
             // Define foreign key constraint
             $table->foreign('training_id')
-            ->references('id')
-            ->on('trainings')
-            ->onDelete('cascade');
-                });
+                ->references('id')
+                ->on('trainings')
+                ->onDelete('cascade');
+        });
     }
 
     /**
