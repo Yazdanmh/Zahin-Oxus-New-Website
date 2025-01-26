@@ -25,6 +25,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/auth/forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
 
+    Route::get('/auth/test', [NewPasswordController::class, 'test'])
+    ->middleware(ShareGlobalData::class);
+
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset')
         ->middleware(ShareGlobalData::class);
@@ -45,7 +48,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+    Route::get('/auth/confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);

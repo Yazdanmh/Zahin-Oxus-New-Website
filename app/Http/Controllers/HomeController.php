@@ -13,6 +13,8 @@ use App\Models\Project;
 use App\Models\Training;
 use App\Models\Category;
 use App\Models\Testimonial;
+use App\Models\OurMission;
+use App\Models\OurVision;
 
 class HomeController extends Controller
 {
@@ -51,6 +53,16 @@ class HomeController extends Controller
             'counter' => $counter,
             'testimonials' => $testimonials,
             'friends' => $friends,
+        ]);
+    }
+    public function OurMission(){
+        return Inertia::render('Client/About/Mission',[
+            'our_mission' => OurMission::first(), 
+        ]);
+    }
+    public function OurVision(){
+        return Inertia::render('Client/About/Vision',[
+            'our_vision' => OurVision::first(), 
         ]);
     }
 }

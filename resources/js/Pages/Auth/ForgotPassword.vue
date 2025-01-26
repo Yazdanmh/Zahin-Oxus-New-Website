@@ -30,7 +30,6 @@ const submit = () => {
   <GuestLayout>
     <Head title="Forgot Password" />
     <!-- Content -->
-
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner py-4">
@@ -61,7 +60,7 @@ const submit = () => {
               </p>
               <div
                 v-if="status"
-                class="mb-4 text-sm font-medium text-green-600"
+                class="mb-4 text-sm font-medium text-success"
               >
                 {{ props.status }}
               </div>
@@ -110,7 +109,7 @@ const submit = () => {
         </div>
       </div>
     </div>
-
     <!-- / Content -->
+    
   </GuestLayout>
 </template>

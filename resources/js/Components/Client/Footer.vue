@@ -13,50 +13,46 @@
               </div>
               <div class="footer__content">
                 <p>
-                  Felis consquat magnis fames sagittis ultrices plasodales
-                  porttitor quisque ultrice tempor turpis.
+                  {{ props.setting.about }}
                 </p>
               </div>
               <div class="footer__social">
                 <ul class="list-wrap">
                   <li>
-                    <a href="https://www.facebook.com/" target="_blank"
+                    <a :href="props.setting.facebook_url" target="_blank"
                       ><img
                         src="/frontend/assets/img/icons/facebook.svg"
                         alt=""
                         class="injectable"
+                        style="width: 50px; height: 30px;"
                     /></a>
                   </li>
                   <li>
-                    <a href="https://x.com/home" target="_blank"
+                    <a :href="props.setting.twitter_url" target="_blank"
                       ><img
                         src="/frontend/assets/img/icons/twitter.svg"
                         alt=""
                         class="injectable"
+                         style="width: 50px; height: 30px;"
                     /></a>
                   </li>
                   <li>
-                    <a href="https://www.instagram.com/" target="_blank"
+                    <a :href="props.setting.instagram_url" target="_blank"
                       ><img
                         src="/frontend/assets/img/icons/instagram.svg"
                         alt=""
                         class="injectable"
+                         style="width: 50px; height: 30px;"
                     /></a>
                   </li>
+                  
                   <li>
-                    <a href="https://www.pinterest.com/" target="_blank"
-                      ><img
-                        src="/frontend/assets/img/icons/pinterest.svg"
-                        alt=""
-                        class="injectable"
-                    /></a>
-                  </li>
-                  <li>
-                    <a href="https://www.youtube.com/" target="_blank"
+                    <a :href="props.setting.youtube_url" target="_blank"
                       ><img
                         src="/frontend/assets/img/icons/youtube.svg"
                         alt=""
                         class="injectable"
+                         style="width: 50px; height: 30px;"
                     /></a>
                   </li>
                 </ul>

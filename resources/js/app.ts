@@ -9,6 +9,7 @@ import AOS from 'aos';  // Import AOS
 import WOW from 'wow.js';  // Import WOW.js
 import 'aos/dist/aos.css';  // Import AOS styles
 import 'wow.js/css/libs/animate.css';  // Import WOW.js styles
+import 'quill/dist/quill.snow.css'; // For the Snow theme
 
 const appName = import.meta.env.VITE_APP_NAME || 'Zahin Oxus';
 

@@ -84,7 +84,50 @@
           </li>
         </ul>
       </li>
+      <li
+        :class="{
+          'menu-item': true,
+          'active open':
+            isActiveRoute('about.index') ||
+            isActiveRoute('ourmission') ||
+            isActiveRoute('ourvision')
+        }"
+      >
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-user"></i>
+          <div>About</div>
+        </a>
+        <ul class="menu-sub">
+          <li
+            :class="{ 'menu-item': true, active: isActiveRoute('about.index') }"
+          >
+            <Link :href="route('about.index')" class="menu-link">
+              <div>About ZOCS</div>
+            </Link>
+          </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('ourmission'),
+            }"
+          >
+            <Link :href="route('ourmission')" class="menu-link">
+              <div>Our Mission</div>
+            </Link>
+          </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('ourvision'),
+            }"
+          >
+            <Link :href="route('ourvision')" class="menu-link">
+              <div>Our Vision</div>
+            </Link>
+          </li>
 
+        </ul>
+      </li>
       <li
         :class="{ 'menu-item': true, active: isActiveRoute('projects.index') }"
       >
@@ -111,13 +154,8 @@
           <div>Training</div>
         </Link>
       </li>
+     
 
-      <li :class="{ 'menu-item': true, active: isActiveRoute('about.index') }">
-        <Link :href="route('about.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-user"></i> <!-- Updated icon -->
-          <div>About</div>
-        </Link>
-      </li>
 
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Settings</span>

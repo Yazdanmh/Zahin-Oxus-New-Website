@@ -2,6 +2,10 @@
 import { ref } from "vue";
 import { useForm, Link } from "@inertiajs/vue3";
 const props = defineProps({
+  status: {
+    type: String,
+    required: false, // Optional, no need to mark with `?`
+  },
   setting: {
     type: Object,
     required: true, // Required, explicitly marked
@@ -54,7 +58,12 @@ const submit = () => {
             <p class="mb-4">
               Please sign-in to your account and start the adventure
             </p>
-
+            <div
+                v-if="status"
+                class="mb-4 text-sm font-medium text-success"
+              >
+                {{ props.status }}
+              </div>
             <!-- Display Error Message -->
             <div class="text-start mb-4">
               <p

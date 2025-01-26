@@ -93,29 +93,27 @@
                     <li class="menu-item-has-children">
                       <a href="#">About Us</a>
                       <ul class="sub-menu">
-                        <li><a href="about.html">Our Mission</a></li>
-                        <li><a href="team.html">Our Vision</a></li>
+                        <li> <Link :href="route('about.mission')">Our Mission</Link></li>
+                        <li><Link :href="route('about.vision')">Our Vision</Link></li>
                         <li>
                           <Link :href="route('home.about')">About ZOCS</Link>
+                         
+                          
                         </li>
                       </ul>
                     </li>
                     <li><Link :href="route('service.index')">Services</Link></li>
                     <li><a :href="route('trainings.index')">Trainings</a></li>
-                    <li><a href="contact.html">Portfolio</a></li>
+                
 
                     <li><Link href="contact-us">Contact</Link></li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">
                   <ul class="list-wrap">
-                    <li class="header-search">
-                      <a href="javascript:void(0)" class="search-open-btn"
-                        ><i class="flaticon-search"></i
-                      ></a>
-                    </li>
+                    
                     <li class="offCanvas-menu">
-                      <a href="shop.html" class="menu-tigger">
+                      <a href="#" class="menu-tigger">
                         <span></span>
                         <span></span>
                         <span></span>
@@ -198,85 +196,39 @@
       </div>
       <div class="offCanvas__logo mb-30">
         <a href="index.html"
-          ><img src="/frontend/assets/img/logo/logo.svg" alt="Logo"
+          ><img :src="'/storage/' + props.setting.site_logo" alt="Logo"
         /></a>
       </div>
       <div class="offCanvas__content">
         <p>
-          Businorem ipsum dolor sit amet cons interdum quam duis variuy time
-          honored tradition etting .
+          {{ props.setting.about }}
         </p>
       </div>
-      <div class="offCanvas__img">
-        <ul class="list-wrap">
-          <li>
-            <a href="javascript:void(0)"
-              ><img
-                src="/frontend/assets/img/images/footer_insta01.jpg"
-                alt="img"
-            /></a>
-          </li>
-          <li>
-            <a href="javascript:void(0)"
-              ><img
-                src="/frontend/assets/img/images/footer_insta02.jpg"
-                alt="img"
-            /></a>
-          </li>
-          <li>
-            <a href="javascript:void(0)"
-              ><img
-                src="/frontend/assets/img/images/footer_insta03.jpg"
-                alt="img"
-            /></a>
-          </li>
-          <li>
-            <a href="javascript:void(0)"
-              ><img
-                src="/frontend/assets/img/images/footer_insta04.jpg"
-                alt="img"
-            /></a>
-          </li>
-          <li>
-            <a href="javascript:void(0)"
-              ><img
-                src="/frontend/assets/img/images/footer_insta05.jpg"
-                alt="img"
-            /></a>
-          </li>
-          <li>
-            <a href="javascript:void(0)"
-              ><img
-                src="/frontend/assets/img/images/footer_insta06.jpg"
-                alt="img"
-            /></a>
-          </li>
-        </ul>
-      </div>
+   
       <div class="offCanvas__side-info">
         <div class="contact-list">
           <i class="flaticon-placeholder"></i>
-          <p>Sydney Harbour Circular City of Sydney,Australia.</p>
+          <p>{{ props.setting.address }}</p>
         </div>
         <div class="contact-list">
           <i class="flaticon-telephone"></i>
-          <a href="tel:0123456789">+123 888 9999</a>
+          <a :href="'tel:' + props.setting.phone">{{ props.setting.phone }}</a>
         </div>
         <div class="contact-list">
           <i class="flaticon-envelope"></i>
-          <a href="mailto:info@beeko.com">info@beeko.com</a>
+          <a :href="'mailto:' + props.setting.email">{{ props.setting.email }}</a>
         </div>
       </div>
       <div class="offCanvas__social">
         <h6 class="title">Follow us</h6>
         <ul class="list-wrap">
           <li>
-            <a href="https://www.facebook.com/" target="_blank"
+            <Link :href="props.setting.facebook_url" target="_blank"
               ><img
                 src="/frontend/assets/img/icons/facebook.svg"
                 alt=""
                 class="injectable"
-            /></a>
+            /></Link>
           </li>
           <li>
             <a href="https://x.com/home" target="_blank"

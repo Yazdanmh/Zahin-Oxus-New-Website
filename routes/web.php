@@ -28,6 +28,8 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
     Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
+    Route::get('/our-mission', [HomeController::class, 'OurMission'])->name('about.mission');
+    Route::get('/our-vision', [HomeController::class, 'OurVision'])->name('about.vision');
     Route::get('/services/all', [ServiceController::class, 'index'])->name('service.index');
     Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('service.show');
 
@@ -36,6 +38,9 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 
     Route::get('/trainings/all',[TrainingsController::class, 'index'])->name('trainings.index');
     Route::get('/trainings/{slug}',[TrainingsController::class, 'show'])->name('trainings.show');
+    Route::get('/trainings/apply/{slug}', [TrainingsController::class, 'apply'])->name('trainings.apply');
+    Route::post('/trainings/apply/{id}', [TrainingsController::class, 'apply_store'])->name('trainings.apply_store');
+
 
 });
 
@@ -73,6 +78,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
     Route::post('/about', [AboutController::class, 'update'])->name('about.update');
+
+    Route::get('/about/ourmission', [AboutController::class, 'mission'])->name('ourmission');
+    Route::post('/about/ourmission', [AboutController::class, 'mission_store'])->name('ourmission');
+
+    Route::get('/about/ourvission', [AboutController::class, 'vision'])->name('ourvision');
+    Route::post('/about/ourvission', [AboutController::class, 'vision_store'])->name('ourvision');
 
     Route::resource('/training', TrainingController::class);
     Route::post('/training/{id}', [TrainingController::class, 'update'])->name('training.update');

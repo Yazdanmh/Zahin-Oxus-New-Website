@@ -1,3 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~quill/dist/quill.snow.css"; /* You can also use bubble or core */

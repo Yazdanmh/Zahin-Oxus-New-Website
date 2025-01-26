@@ -78,10 +78,10 @@
                 <template v-if="new Date() < new Date(training.end_date)">
                   <!-- If the training has a form, show Apply button -->
                   <template v-if="training.has_form">
-                    <a
-                      href="route('trainings.apply', training.slug)"
+                    <Link
+                      :href="route('trainings.apply', training.slug)"
                       class="tg-btn tg-btn-six"
-                      >Apply</a
+                      >Apply</Link
                     >
                   </template>
                 </template>
@@ -112,6 +112,8 @@
 </template>
   
 <script setup>
+import { Link } from '@inertiajs/vue3';
+
 const props = defineProps({
   trainings: {
     type: Object,

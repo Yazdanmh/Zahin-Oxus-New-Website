@@ -74,7 +74,7 @@
                     <!-- If the training has a form, show Apply button -->
                     <template v-if="training.has_form">
                       <Link
-                        href="route('trainings.apply', training.slug)"
+                        :href="route('trainings.apply', training.slug)"
                         class="tg-btn tg-btn-six"
                         >Apply</Link
                       >
