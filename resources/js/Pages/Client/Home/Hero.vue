@@ -35,6 +35,7 @@
                 :src="'/storage/' + props.hero.image"
                 alt="img"
                 class="main-img"
+                style="width:400px;"
               />
               <img
                 src="/frontend/assets/img/banner/hero_shape01.svg"

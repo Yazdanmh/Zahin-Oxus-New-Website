@@ -104,7 +104,7 @@
                     <li><a :href="route('project.index')">Projects</a></li>
                     <li><a :href="route('trainings.index')">Trainings</a></li>
 
-                    <li><Link href="contact-us">Contact</Link></li>
+                    <li><Link :href="route('contact.index')">Contact</Link></li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">
@@ -117,13 +117,13 @@
                       </a>
                     </li>
                     <li class="header-btn">
-                      <a href="contact.html" class="tg-btn"
+                      <Link :href="route('contact.index')" class="tg-btn"
                         ><img
                           src="/frontend/assets/img/icons/comment.svg"
                           alt=""
                           class="injectable"
                         />
-                        Start Consult</a
+                        Start Consult</Link
                       >
                     </li>
                   </ul>

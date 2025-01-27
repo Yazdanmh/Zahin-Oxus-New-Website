@@ -6,7 +6,7 @@
     <About :about="props.about" :counter="props.counter" />
     <Services :services="services" />
     <CTA />
-    <History />
+    <History :history = "props.history"/>
     <Counter :counter="props.counter" />
     <Video />
     <Projects :projects="props.projects" :categories="props.categories" />
@@ -70,6 +70,10 @@ const props = defineProps({
     required: true,
   },
   trainings: {
+    type: Object,
+    required: true,
+  },
+  history: {
     type: Object,
     required: true,
   },

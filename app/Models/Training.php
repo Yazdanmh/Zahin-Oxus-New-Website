@@ -12,4 +12,9 @@ class Training extends Model
     {
         return $this->hasMany(TrainingParticipants::class);
     }
+    
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

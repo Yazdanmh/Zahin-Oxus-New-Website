@@ -130,45 +130,45 @@
               </div>
               <div class="services__details-content-top">
                 <p>
-                <strong>Start Date:</strong>
-                {{
-                  new Date(props.training.start_date).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )
-                }}
-                &nbsp;|&nbsp;
-                <strong>End Date:</strong>
-                {{
-                  new Date(props.training.end_date).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )
-                }}
-              </p>
-              <!-- Check if the current date is before the end_date -->
-              <template v-if="new Date() < new Date(training.end_date)">
-                    <!-- If the training has a form, show Apply button -->
-                    <template v-if="training.has_form">
-                      <Link
-                        :href="route('trainings.apply', training.slug)"
-                        class="tg-btn tg-btn-six"
-                        >Apply</Link
-                      >
-                    </template>
+                  <strong>Start Date:</strong>
+                  {{
+                    new Date(props.training.start_date).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )
+                  }}
+                  &nbsp;|&nbsp;
+                  <strong>End Date:</strong>
+                  {{
+                    new Date(props.training.end_date).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )
+                  }}
+                </p>
+                <!-- Check if the current date is before the end_date -->
+                <template v-if="new Date() < new Date(training.end_date)">
+                  <!-- If the training has a form, show Apply button -->
+                  <template v-if="training.has_form">
+                    <Link
+                      :href="route('trainings.apply', training.slug)"
+                      class="tg-btn tg-btn-six"
+                      >Apply</Link
+                    >
                   </template>
-                  <!-- If the current date is after the end_date, mark as expired -->
-                  <template v-else>
-                    <span class="expired-text" style="color: red">Expired</span>
-                  </template>
+                </template>
+                <!-- If the current date is after the end_date, mark as expired -->
+                <template v-else>
+                  <span class="expired-text" style="color: red">Expired</span>
+                </template>
                 <h2 class="title">{{ props.training.name }}</h2>
                 <p>
                   {{ props.training.description }}

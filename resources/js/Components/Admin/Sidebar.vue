@@ -27,6 +27,7 @@
             isActiveRoute('friends.index') ||
             isActiveRoute('services.index') ||
             isActiveRoute('testimonails.index') ||
+            isActiveRoute('history.index') ||
             isActiveRoute('counter.index'),
         }"
       >
@@ -40,6 +41,13 @@
           >
             <Link :href="route('hero.index')" class="menu-link">
               <div>Hero</div>
+            </Link>
+          </li>
+          <li
+            :class="{ 'menu-item': true, active: isActiveRoute('history.index') }"
+          >
+            <Link :href="route('history.index')" class="menu-link">
+              <div>History</div>
             </Link>
           </li>
           <li
@@ -154,6 +162,19 @@
           <div>Training</div>
         </Link>
       </li>
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('certificate.index') }"
+      >
+        <Link :href="route('certificate.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-graduation"></i> <!-- Updated icon -->
+          <div>Certificates</div>
+        </Link>
+      </li>
+      
+ 
+
+      
+
      
 
 

@@ -12,11 +12,15 @@ use App\Http\Controllers\backend\TestimonailsController;
 use App\Http\Controllers\backend\ProjectController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\PortfolioController;
+use App\Http\Controllers\backend\CertificatesControlller;
+use App\Http\Controllers\backend\HistoryController;
+
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrainingsController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
@@ -40,6 +44,13 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/trainings/{slug}', [TrainingsController::class, 'show'])->name('trainings.show');
     Route::get('/trainings/apply/{slug}', [TrainingsController::class, 'apply'])->name('trainings.apply');
     Route::post('/trainings/apply/{id}', [TrainingsController::class, 'apply_store'])->name('trainings.apply_store');
+    
+
+    Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
+    Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify');
+
+    Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
+
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
@@ -76,6 +87,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
     Route::post('/about', [AboutController::class, 'update'])->name('about.update');
+    
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+    Route::post('/history', [HistoryController::class, 'update'])->name('history.update');
 
     Route::get('/about/ourmission', [AboutController::class, 'mission'])->name('ourmission');
     Route::post('/about/ourmission', [AboutController::class, 'mission_store'])->name('ourmission');
@@ -85,11 +99,14 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::resource('/training', TrainingController::class);
     Route::post('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
+
+    Route::resource('/certificate', CertificatesControlller::class);
+
 });
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

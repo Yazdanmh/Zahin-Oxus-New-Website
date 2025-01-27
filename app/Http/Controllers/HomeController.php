@@ -15,20 +15,23 @@ use App\Models\Category;
 use App\Models\Testimonial;
 use App\Models\OurMission;
 use App\Models\OurVision;
+use App\Models\Newsletter;
+use App\Models\History;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $hero = Hero::first();
+        $hero = Hero::select('title', 'subtitle', 'description', 'image', 'button', 'link')->first();
         $friends = Friend::all();
-        $services = Services::paginate(4);
+        $services = Services::select('title', 'subtitle', 'description', 'image','icon', 'slug')->paginate(4);
         $counter = Counter::first();
         $projects = Project::paginate(4);
         $categories = Category::all();
         $testimonials = Testimonial::all();
         $about = About::first();
         $trainings = Training::paginate(4);
+        $history = History::first(); 
 
         return Inertia::render('Client/Home/Index', [
             'hero' => $hero,
@@ -40,6 +43,7 @@ class HomeController extends Controller
             'testimonials' => $testimonials,
             'about' => $about,
             'trainings' => $trainings, 
+            'history' => $history, 
         ]);
     }
     public function about()
@@ -65,4 +69,19 @@ class HomeController extends Controller
             'our_vision' => OurVision::first(), 
         ]);
     }
+    public function subscribe(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|unique:newsletters,email',
+        ]);
+
+        Newsletter::create([
+            'email' => $validated['email'],
+            'subscribed_at' => now(),
+        ]);
+
+        return back()->with('success', 'Thank you for subscribing to our newsletter!');
+    }
+
+    
 }
