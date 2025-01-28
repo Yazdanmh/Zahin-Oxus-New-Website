@@ -1,7 +1,10 @@
 <template>
   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-      <a href="index.html" class="app-brand-link"> Zahin Oxus </a>
+      <a href="index.html" class="app-brand-link">
+        <!-- {{ props.setting.site_name }} -->
+        Zahin Oxus
+      </a>
     </div>
     <div class="menu-inner-shadow"></div>
     <ul class="menu-inner py-1">
@@ -44,7 +47,10 @@
             </Link>
           </li>
           <li
-            :class="{ 'menu-item': true, active: isActiveRoute('history.index') }"
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('history.index'),
+            }"
           >
             <Link :href="route('history.index')" class="menu-link">
               <div>History</div>
@@ -98,7 +104,7 @@
           'active open':
             isActiveRoute('about.index') ||
             isActiveRoute('ourmission') ||
-            isActiveRoute('ourvision')
+            isActiveRoute('ourvision'),
         }"
       >
         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -133,14 +139,14 @@
               <div>Our Vision</div>
             </Link>
           </li>
-
         </ul>
       </li>
       <li
         :class="{ 'menu-item': true, active: isActiveRoute('projects.index') }"
       >
         <Link :href="route('projects.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-briefcase"></i> <!-- Updated icon -->
+          <i class="menu-icon tf-icons bx bx-briefcase"></i>
+          <!-- Updated icon -->
           <div>Project</div>
         </Link>
       </li>
@@ -149,7 +155,8 @@
         :class="{ 'menu-item': true, active: isActiveRoute('portfolio.index') }"
       >
         <Link :href="route('portfolio.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-archive"></i> <!-- Updated icon -->
+          <i class="menu-icon tf-icons bx bx-archive"></i>
+          <!-- Updated icon -->
           <div>Portfolio</div>
         </Link>
       </li>
@@ -158,34 +165,33 @@
         :class="{ 'menu-item': true, active: isActiveRoute('training.index') }"
       >
         <Link :href="route('training.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bx-book"></i> <!-- Updated icon -->
+          <i class="menu-icon tf-icons bx bx-book"></i>
+          <!-- Updated icon -->
           <div>Training</div>
         </Link>
       </li>
       <li
-        :class="{ 'menu-item': true, active: isActiveRoute('certificate.index') }"
+        :class="{
+          'menu-item': true,
+          active: isActiveRoute('certificate.index'),
+        }"
       >
         <Link :href="route('certificate.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-graduation"></i> <!-- Updated icon -->
+          <i class="menu-icon tf-icons bx bxs-graduation"></i>
+          <!-- Updated icon -->
           <div>Certificates</div>
         </Link>
       </li>
-      
+
       <li
         :class="{ 'menu-item': true, active: isActiveRoute('galleries.index') }"
       >
         <Link :href="route('galleries.index')" class="menu-link">
-          <i class="menu-icon tf-icons bx bxs-image"></i> <!-- Updated icon -->
+          <i class="menu-icon tf-icons bx bxs-image"></i>
+          <!-- Updated icon -->
           <div>Gallery</div>
         </Link>
       </li>
-      
- 
-
-      
-
-     
-
 
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Settings</span>
@@ -206,12 +212,18 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
 
+const props = defineProps({
+  setting: {
+    type: Object,
+    required: true,
+  },
+});
 const { url, currentRouteName } = usePage();
 
 function isActiveRoute(routeName) {
   const routePath = route(routeName)
     .replace(window.location.origin, "")
-    .replace(/^\/+/, "/"); 
+    .replace(/^\/+/, "/");
   return url.includes(routePath);
 }
 </script>

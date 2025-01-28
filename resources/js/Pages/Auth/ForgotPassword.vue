@@ -58,10 +58,7 @@ const submit = () => {
                 address and we will email you a password reset link that will
                 allow you to choose a new one.
               </p>
-              <div
-                v-if="status"
-                class="mb-4 text-sm font-medium text-success"
-              >
+              <div v-if="status" class="mb-4 text-sm font-medium text-success">
                 {{ props.status }}
               </div>
               <form
@@ -110,6 +107,5 @@ const submit = () => {
       </div>
     </div>
     <!-- / Content -->
-    
   </GuestLayout>
 </template>

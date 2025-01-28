@@ -46,18 +46,17 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/trainings/{slug}', [TrainingsController::class, 'show'])->name('trainings.show');
     Route::get('/trainings/apply/{slug}', [TrainingsController::class, 'apply'])->name('trainings.apply');
     Route::post('/trainings/apply/{id}', [TrainingsController::class, 'apply_store'])->name('trainings.apply_store');
-    
+
 
     Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
     Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify');
-    
+
     Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
 
     Route::get('/gallery/all', [GalleryController::class, 'index'])->name('gallery.index');
-
 });
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth', ShareGlobalData::class])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard.index');
@@ -91,7 +90,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
     Route::post('/about', [AboutController::class, 'update'])->name('about.update');
-    
+
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
     Route::post('/history', [HistoryController::class, 'update'])->name('history.update');
 
@@ -109,11 +108,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::resource('/galleries', GalleriesController::class);
     Route::post('/galleries/{id}', [GalleriesController::class, 'update'])->name('galleries.update');
-
 });
 Route::middleware('auth')->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

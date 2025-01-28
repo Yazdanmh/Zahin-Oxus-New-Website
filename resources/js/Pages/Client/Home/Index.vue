@@ -6,7 +6,7 @@
     <About :about="props.about" :counter="props.counter" :fulltext="false" />
     <Services :services="services" />
     <CTA />
-    <History :history = "props.history"/>
+    <History v-if="props.history" :history="props.history" />
     <Counter :counter="props.counter" />
     <Video />
     <Projects :projects="props.projects" :categories="props.categories" />

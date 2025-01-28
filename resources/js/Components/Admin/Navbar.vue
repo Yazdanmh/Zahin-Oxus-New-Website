@@ -80,10 +80,10 @@
               <div class="dropdown-divider"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <Link class="dropdown-item" :href="route('profile.edit')">
                 <i class="bx bx-user me-2"></i>
                 <span class="align-middle">My Profile</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a class="dropdown-item" href="#">
@@ -120,7 +120,7 @@
   </nav>
 </template>
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 const form = useForm({});
 
 const logout = () => {

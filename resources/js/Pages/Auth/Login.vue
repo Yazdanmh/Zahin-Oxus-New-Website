@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useForm, Link } from "@inertiajs/vue3";
+import { useForm, Link, Head } from "@inertiajs/vue3";
 const props = defineProps({
   status: {
     type: String,
@@ -33,6 +33,7 @@ const submit = () => {
 </script>
 
 <template>
+  <Head title="Login" />
   <div class="container" style="max-width: 700px">
     <div class="authentication-wrapper authentication-basic container-p-y">
       <div class="authentication-inner">
@@ -54,16 +55,13 @@ const submit = () => {
               </a>
             </div>
             <!-- /Logo -->
-            <h4 class="mb-2">Welcome to Sneat! 👋</h4>
+            <h4 class="mb-2">Welcome to {{ props.setting.site_name }}! 👋</h4>
             <p class="mb-4">
               Please sign-in to your account and start the adventure
             </p>
-            <div
-                v-if="status"
-                class="mb-4 text-sm font-medium text-success"
-              >
-                {{ props.status }}
-              </div>
+            <div v-if="status" class="mb-4 text-sm font-medium text-success">
+              {{ props.status }}
+            </div>
             <!-- Display Error Message -->
             <div class="text-start mb-4">
               <p

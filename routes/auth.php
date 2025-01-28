@@ -13,9 +13,15 @@ use App\Http\Middleware\ShareGlobalData;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+
     Route::get('/auth/login', [AuthenticatedSessionController::class, 'create'])
         ->name('login')
         ->middleware(ShareGlobalData::class);
+
+    Route::get('register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::post('/auth/login', [AuthenticatedSessionController::class, 'store']);
     Route::get('/auth/forgot-password', [PasswordResetLinkController::class, 'create'])
@@ -26,7 +32,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.email');
 
     Route::get('/auth/test', [NewPasswordController::class, 'test'])
-    ->middleware(ShareGlobalData::class);
+        ->middleware(ShareGlobalData::class);
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset')
