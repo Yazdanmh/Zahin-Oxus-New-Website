@@ -14,6 +14,7 @@ use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\PortfolioController;
 use App\Http\Controllers\backend\CertificatesControlller;
 use App\Http\Controllers\backend\HistoryController;
+use App\Http\Controllers\backend\GalleriesController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProjectsController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
@@ -48,8 +50,10 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 
     Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
     Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify');
-
+    
     Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
+
+    Route::get('/gallery/all', [GalleryController::class, 'index'])->name('gallery.index');
 
 });
 
@@ -101,6 +105,10 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::post('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
 
     Route::resource('/certificate', CertificatesControlller::class);
+    Route::post('/certificate/{id}', [CertificatesControlller::class, 'update'])->name('certificate.update');
+
+    Route::resource('/galleries', GalleriesController::class);
+    Route::post('/galleries/{id}', [GalleriesController::class, 'update'])->name('galleries.update');
 
 });
 Route::middleware('auth')->group(function () {

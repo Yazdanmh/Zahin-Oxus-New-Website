@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('certificate_name');
             $table->date('issue_date');
             $table->string('for_who'); 
+            $table->string('certificate_file')->nullable(); 
             $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
             $table->timestamps(); 
         });

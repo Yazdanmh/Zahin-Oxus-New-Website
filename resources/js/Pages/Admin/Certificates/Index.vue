@@ -30,9 +30,17 @@
                   />
                 </div>
                 <div class="col-md-3">
-                  <select v-model="selectedTraining" @change="applyFilter" class="form-select">
+                  <select
+                    v-model="selectedTraining"
+                    @change="applyFilter"
+                    class="form-select"
+                  >
                     <option value="">All Trainings</option>
-                    <option v-for="training in trainings" :key="training.id" :value="training.id">
+                    <option
+                      v-for="training in trainings"
+                      :key="training.id"
+                      :value="training.id"
+                    >
                       {{ training.name }}
                     </option>
                   </select>
@@ -58,6 +66,8 @@
                       <th>For Who</th>
                       <th>Training</th>
                       <th>Issue Date</th>
+                      <th>Certificate File</th>
+                      <!-- New Column -->
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -72,10 +82,23 @@
                       <td>{{ certificate.for_who || "N/A" }}</td>
                       <td>{{ certificate.training.name || "N/A" }}</td>
                       <td>{{ certificate.issue_date || "N/A" }}</td>
-
+                      <td>
+                        <a
+                          v-if="certificate.certificate_file"
+                          :href="'/storage/' + certificate.certificate_file"
+                          target="_blank"
+                          download
+                          class="btn btn-sm btn-outline-primary"
+                        >
+                          Download
+                        </a>
+                        <span v-else class="text-muted">No file</span>
+                      </td>
                       <td>
                         <Link :href="route('certificate.edit', certificate.id)">
-                          <span class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2">
+                          <span
+                            class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
+                          >
                             <i class="icon-base bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
@@ -89,7 +112,7 @@
                     </tr>
                     <!-- Empty state if no certificates are found -->
                     <tr v-if="!filteredCertificates.length">
-                      <td colspan="7" class="text-center">
+                      <td colspan="8" class="text-center">
                         No certificates found
                       </td>
                     </tr>
@@ -98,14 +121,22 @@
               </div>
 
               <!-- Pagination Links -->
-              <div class="d-flex justify-content-center mt-3">
+              <div
+                v-if="props.certificates.total > 0"
+                class="d-flex justify-content-center mt-3"
+              >
                 <nav aria-label="Page navigation">
                   <ul class="pagination">
-                    <li class="page-item" :class="{ disabled: !props.certificates.prev_page_url }">
+                    <li
+                      class="page-item"
+                      :class="{ disabled: !props.certificates.prev_page_url }"
+                    >
                       <a
                         class="page-link"
                         href="#"
-                        @click.prevent="changePage(props.certificates.prev_page_url)"
+                        @click.prevent="
+                          changePage(props.certificates.prev_page_url)
+                        "
                       >
                         Previous
                       </a>
@@ -125,11 +156,16 @@
                       </a>
                     </li>
 
-                    <li class="page-item" :class="{ disabled: !props.certificates.next_page_url }">
+                    <li
+                      class="page-item"
+                      :class="{ disabled: !props.certificates.next_page_url }"
+                    >
                       <a
                         class="page-link"
                         href="#"
-                        @click.prevent="changePage(props.certificates.next_page_url)"
+                        @click.prevent="
+                          changePage(props.certificates.next_page_url)
+                        "
                       >
                         Next
                       </a>
@@ -162,15 +198,21 @@ const props = defineProps({
   },
 });
 
-const searchQuery = ref('');
-const selectedTraining = ref('');
-const selectedDate = ref('');
+const searchQuery = ref("");
+const selectedTraining = ref("");
+const selectedDate = ref("");
 
 const filteredCertificates = computed(() => {
-  return props.certificates.data.filter(certificate => {
-    const matchesSearch = certificate.certificate_name.toLowerCase().includes(searchQuery.value.toLowerCase());
-    const matchesTraining = selectedTraining.value ? certificate.training.id === selectedTraining.value : true;
-    const matchesDate = selectedDate.value ? certificate.issue_date === selectedDate.value : true;
+  return props.certificates.data.filter((certificate) => {
+    const matchesSearch = certificate.certificate_name
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase());
+    const matchesTraining = selectedTraining.value
+      ? certificate.training.id === selectedTraining.value
+      : true;
+    const matchesDate = selectedDate.value
+      ? certificate.issue_date === selectedDate.value
+      : true;
 
     return matchesSearch && matchesTraining && matchesDate;
   });

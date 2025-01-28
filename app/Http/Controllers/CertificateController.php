@@ -20,18 +20,17 @@ class CertificateController extends Controller
         if ($certificate) {
             return Inertia::render('Client/Certificates/CertificateVerified', [
                 'verified' => true,
-                'certificate' => $certificate, 
+                'certificate' => $certificate,
             ]);
         } else {
             return Inertia::render('Client/Certificates/CertificateVerified', [
                 'verified' => false,
+                'certificate' => null, // Ensuring consistency
                 'message' => 'Certificate not found',
             ]);
         }
     }
+
+    }
     
 
-
-
-
-}

@@ -3,7 +3,7 @@
   <ClientLayout :setting="props.setting">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'About ZOSC'" :nav="nav" />
-    <About :about="props.about" :counter="props.counter" />
+    <About :about="props.about" :counter="props.counter" :fulltext="true" />
     <!-- cta-area -->
     <section class="cta__area-two">
       <div class="container">

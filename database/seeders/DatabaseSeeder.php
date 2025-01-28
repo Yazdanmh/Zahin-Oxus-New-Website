@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             // AboutSeeder::class,
             // OurMissionSeeder::class, 
             // OurVisionSeeder::class,
-            HistorySeeder::class,
+            // HistorySeeder::class,
         );
     }
 }

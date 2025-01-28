@@ -3,7 +3,7 @@
   <ClientLayout :setting="props.setting">
     <Hero :hero="props.hero" />
     <Friends :friends="props.friends" />
-    <About :about="props.about" :counter="props.counter" />
+    <About :about="props.about" :counter="props.counter" :fulltext="false" />
     <Services :services="services" />
     <CTA />
     <History :history = "props.history"/>

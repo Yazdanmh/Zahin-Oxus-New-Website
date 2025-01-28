@@ -171,6 +171,15 @@
         </Link>
       </li>
       
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('galleries.index') }"
+      >
+        <Link :href="route('galleries.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-image"></i> <!-- Updated icon -->
+          <div>Gallery</div>
+        </Link>
+      </li>
+      
  
 
       

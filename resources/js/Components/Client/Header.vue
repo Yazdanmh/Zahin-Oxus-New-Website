@@ -104,27 +104,25 @@
                     <li><a :href="route('project.index')">Projects</a></li>
                     <li><a :href="route('trainings.index')">Trainings</a></li>
 
-                    <li><Link :href="route('contact.index')">Contact</Link></li>
+                    <li><Link :href="route('gallery.index')">Gallery</Link></li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">
                   <ul class="list-wrap">
-                    <li class="offCanvas-menu">
-                      <a href="#" class="menu-tigger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </a>
-                    </li>
                     <li class="header-btn">
-                      <Link :href="route('contact.index')" class="tg-btn"
-                        ><img
-                          src="/frontend/assets/img/icons/comment.svg"
-                          alt=""
-                          class="injectable"
-                        />
-                        Start Consult</Link
+                      <a
+                        :href="route('certificate.verify')"
+                        class="tg-btn"
+                        data-toggle="popover"
+                        title="Verify Certificate"
+                        data-content="Click here to verify your certificate and achievements."
                       >
+                        <img
+                          src="/frontend/assets/img/icons/checklist (1).png"
+                          alt=""
+                        />
+                        Verify Certificate
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -150,7 +148,18 @@
               style="max-width: 50px"
           /></a>
         </div>
-
+        <div class="p-2">
+          <a
+            :href="route('certificate.verify')"
+            class="tg-btn"
+            data-toggle="popover"
+            title="Verify Certificate"
+            data-content="Click here to verify your certificate and achievements."
+          >
+            <img src="/frontend/assets/img/icons/checklist (1).png" alt="" />
+            Verify Certificate
+          </a>
+        </div>
         <div class="tgmobile__menu-outer">
           <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
         </div>
@@ -182,85 +191,6 @@
     </div>
     <div class="tgmobile__menu-backdrop"></div>
     <!-- End Mobile Menu -->
-
-    <!-- offCanvas-menu -->
-    <div class="offCanvas__info">
-      <div class="offCanvas__close-icon menu-close">
-        <button>
-          <img
-            src="/frontend/assets/img/icons/times.svg"
-            alt=""
-            class="injectable"
-          />
-        </button>
-      </div>
-      <div class="offCanvas__logo mb-30">
-        <a href="index.html"
-          ><img :src="'/storage/' + props.setting.site_logo" alt="Logo"
-        /></a>
-      </div>
-      <div class="offCanvas__content">
-        <p>
-          {{ props.setting.about }}
-        </p>
-      </div>
-
-      <div class="offCanvas__side-info">
-        <div class="contact-list">
-          <i class="flaticon-placeholder"></i>
-          <p>{{ props.setting.address }}</p>
-        </div>
-        <div class="contact-list">
-          <i class="flaticon-telephone"></i>
-          <a :href="'tel:' + props.setting.phone">{{ props.setting.phone }}</a>
-        </div>
-        <div class="contact-list">
-          <i class="flaticon-envelope"></i>
-          <a :href="'mailto:' + props.setting.email">{{
-            props.setting.email
-          }}</a>
-        </div>
-      </div>
-      <div class="offCanvas__social">
-        <h6 class="title">Follow us</h6>
-        <ul class="list-wrap">
-          <li>
-            <Link :href="props.setting.facebook_url" target="_blank"
-              ><img
-                src="/frontend/assets/img/icons/facebook.svg"
-                alt=""
-                class="injectable"
-            /></Link>
-          </li>
-          <li>
-            <a href="https://x.com/home" target="_blank"
-              ><img
-                src="/frontend/assets/img/icons/twitter.svg"
-                alt=""
-                class="injectable"
-            /></a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/" target="_blank"
-              ><img
-                src="/frontend/assets/img/icons/instagram.svg"
-                alt=""
-                class="injectable"
-            /></a>
-          </li>
-          <li>
-            <a href="https://www.pinterest.com/" target="_blank"
-              ><img
-                src="/frontend/assets/img/icons/pinterest.svg"
-                alt=""
-                class="injectable"
-            /></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="offCanvas__overly"></div>
-    <!-- offCanvas-menu-end -->
   </header>
   <!-- header-area-end -->
 </template>
@@ -273,3 +203,6 @@ const props = defineProps({
   },
 });
 </script>
+
+<style scoped>
+</style>

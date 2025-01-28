@@ -28,7 +28,7 @@
             >
               <h2 class="count">{{ counter.years_of_experience }}+</h2>
               <span>
-                Of Experience <br />
+                Years Of Experience <br />
                 in This Field
               </span>
             </div>
@@ -70,7 +70,8 @@
                 {{ about.title }}
               </h2>
             </div>
-            <p>{{ truncatedDescription(about.description) }}</p>
+            <p>
+              {{ props.fulltext ?about.description : truncatedDescription(about.description) }}</p>
             <!-- Features List -->
             <div class="about__inner-wrap">
               <div class="about__inner-content">
@@ -129,6 +130,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  fulltext:{
+    type:Boolean, 
+    required:true, 
+  }
 });
 
 // Generate features list from props.about.features
