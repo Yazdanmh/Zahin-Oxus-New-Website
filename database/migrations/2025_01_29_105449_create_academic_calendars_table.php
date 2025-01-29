@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('academic_calendars', function (Blueprint $table) {
             $table->id();
+            $table->string('title'); 
             $table->string('file');
             $table->timestamps();
         });

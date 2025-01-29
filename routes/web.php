@@ -58,8 +58,8 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
     Route::get('/gallery/all', [GalleryController::class, 'index'])->name('gallery.index');
 
-    Route::get('/events', [EventsController::class, 'index'])->name('events.index'); 
-    Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.show'); 
+    Route::get('/events', [EventsController::class, 'index'])->name('events.index');
+    Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.show');
 
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
 });
@@ -117,11 +117,12 @@ Route::middleware(['auth', ShareGlobalData::class])->prefix('admin')->group(func
     Route::resource('/galleries', GalleriesController::class);
     Route::post('/galleries/{id}', [GalleriesController::class, 'update'])->name('galleries.update');
 
-    Route::resource('/news', NewsController::class); 
+    Route::resource('/news', NewsController::class);
     Route::post('/news/{id}', [NewsController::class, 'update'])->name('news.update');
 
     Route::get('/academic-calendar', [AcademicCalendarController::class, 'index'])->name('calendars.index');
-    Route::post('/academic-calendar', [AcademicCalendarController::class, 'store'])->name('calendars.index');
+    Route::post('/academic-calendar', [AcademicCalendarController::class, 'store'])->name('calendars.store');
+    Route::delete('/academic-calendar/{id}', [AcademicCalendarController::class, 'destroy'])->name('calendars.destroy');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
