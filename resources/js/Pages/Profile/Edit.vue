@@ -40,13 +40,7 @@ defineProps<{
                   ><i class="bx bx-bell me-1"></i> Notifications</a
                 >
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="pages-account-settings-connections.html"
-                  ><i class="bx bx-link-alt me-1"></i> Connections</a
-                >
-              </li>
+
             </ul>
 
             <div class="my-3">

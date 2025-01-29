@@ -57,6 +57,7 @@ class AboutController extends Controller
     }
 
     public function mission(){
+
         $our_mission = OurMission::first(); 
         return Inertia::render('Admin/About/Mission', [
             'our_mission' => $our_mission,
@@ -88,7 +89,6 @@ class AboutController extends Controller
     }
     public function vision_store(Request $request)
     {
-
         $request->validate([
             'our_vision' => 'required|string',
         ]);

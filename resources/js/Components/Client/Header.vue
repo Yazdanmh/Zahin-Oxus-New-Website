@@ -101,10 +101,11 @@
                     <li>
                       <Link :href="route('service.index')">Services</Link>
                     </li>
-                    <li><a :href="route('project.index')">Projects</a></li>
+                    <li><a :href="route('calendar.index')">Academic Calendar</a></li>
                     <li><a :href="route('trainings.index')">Trainings</a></li>
 
                     <li><Link :href="route('gallery.index')">Gallery</Link></li>
+                    <li><Link :href="route('events.index')">Events</Link></li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">

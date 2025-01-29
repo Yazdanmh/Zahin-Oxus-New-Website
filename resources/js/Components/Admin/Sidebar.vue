@@ -192,9 +192,28 @@
           <div>Gallery</div>
         </Link>
       </li>
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('news.index') }"
+      >
+        <Link :href="route('news.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-image"></i>
+          <!-- Updated icon -->
+          <div>News</div>
+        </Link>
+      </li>
+      <li
+        :class="{ 'menu-item': true, active: isActiveRoute('calendars.index') }"
+      >
+        <Link :href="route('calendars.index')" class="menu-link">
+          <i class="menu-icon tf-icons bx bxs-image"></i>
+          <!-- Updated icon -->
+          <div>Academic Calendar</div>
+        </Link>
+      </li>
 
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">Settings</span>
+        
       </li>
 
       <li

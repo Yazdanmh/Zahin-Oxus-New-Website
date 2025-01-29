@@ -15,14 +15,18 @@ use App\Http\Controllers\backend\PortfolioController;
 use App\Http\Controllers\backend\CertificatesControlller;
 use App\Http\Controllers\backend\HistoryController;
 use App\Http\Controllers\backend\GalleriesController;
+use App\Http\Controllers\backend\NewsController;
+use App\Http\Controllers\backend\AcademicCalendarController;
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\EventsController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
@@ -52,8 +56,12 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify');
 
     Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
-
     Route::get('/gallery/all', [GalleryController::class, 'index'])->name('gallery.index');
+
+    Route::get('/events', [EventsController::class, 'index'])->name('events.index'); 
+    Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.show'); 
+
+    Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
 });
 
 Route::middleware(['auth', ShareGlobalData::class])->prefix('admin')->group(function () {
@@ -108,6 +116,12 @@ Route::middleware(['auth', ShareGlobalData::class])->prefix('admin')->group(func
 
     Route::resource('/galleries', GalleriesController::class);
     Route::post('/galleries/{id}', [GalleriesController::class, 'update'])->name('galleries.update');
+
+    Route::resource('/news', NewsController::class); 
+    Route::post('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+
+    Route::get('/academic-calendar', [AcademicCalendarController::class, 'index'])->name('calendars.index');
+    Route::post('/academic-calendar', [AcademicCalendarController::class, 'store'])->name('calendars.index');
 });
 Route::middleware('auth')->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');

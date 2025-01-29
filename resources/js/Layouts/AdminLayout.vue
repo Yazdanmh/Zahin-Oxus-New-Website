@@ -1,16 +1,13 @@
 <template>
   <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        <!-- Menu -->
         <Sidebar/>
-        <!-- / Menu -->
-        <!-- Layout container -->
         <div class="layout-page">
-          <!-- Navbar -->
           <Navbar/>
           <!-- / Navbar -->
           <!-- Content wrapper -->
           <div class="content-wrapper">
+      
             <!-- Content -->
               <slot></slot>
             <!-- / Content -->
@@ -29,6 +26,10 @@
 import { onMounted } from "vue";
 import Sidebar from  "@/Components/Admin/Sidebar.vue"; 
 import Navbar from  "@/Components/Admin/Navbar.vue"; 
+
+const props = defineProps({
+
+})
 onMounted(() => {
   
 });
