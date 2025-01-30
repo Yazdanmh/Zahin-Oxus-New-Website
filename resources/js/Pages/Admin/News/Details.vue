@@ -1,6 +1,6 @@
 <template>
     <Head title="News Detials" />
-    <AdminLayout>
+    <AdminLayout :setting="props.setting" :user="props.user">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> News / Details
@@ -43,7 +43,6 @@
                         <h6 class="fw-bold">Title:</h6>
                         <p class="text-muted">{{ props.news.title || "Untitled" }}</p>
                       </div>
-    
                       <div class="col-md-6 mb-3">
                         <h6 class="fw-bold">Status:</h6>
                         <p class="text-muted">
@@ -53,6 +52,12 @@
                           {{ props.news.is_published ? "Published" : "Drafted" }}
                         </p>
                       </div>
+                      <div class="col-md-6 mb-3">
+                        <h6 class="fw-bold">Tags:</h6>
+                        <p class="text-muted">{{ props.news.tags || "Untitled" }}</p>
+                      </div>
+    
+                      
                     </div>
                   </div>
     
@@ -78,6 +83,14 @@
   
   const props = defineProps({
     news: Object, // Ensure the training has appropriate fields such as name, start_date, etc.
+    setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
+  },
   });
   </script>
   

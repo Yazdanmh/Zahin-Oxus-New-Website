@@ -1,6 +1,6 @@
 <template>
   <Head title="Service Details" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Services / Details
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-12">
                   <h6 class="text-muted">Description</h6>
-                  <p>{{ service.description }}</p>
+                  <p v-html="service.description"></p>
                 </div>
                 <div class="col-md-6">
                   <h6 class="text-muted">Icon</h6>
@@ -70,9 +70,22 @@
   <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
-import { usePage } from "@inertiajs/vue3";
 
-const { props } = usePage();
+const props = defineProps({
+  service:{
+    type:Object, 
+    required:true, 
+  },
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
+  },
+  
+})
 const service = props.service; // Assume service data is passed as a prop from the backend
 
 const goBack = () => {

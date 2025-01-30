@@ -1,6 +1,6 @@
 <template>
   <Head title="About" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> About
@@ -75,7 +75,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-4">
                     <div class="mb-3">
                       <label for="title" class="form-label">Title</label>
                       <input
@@ -83,6 +83,19 @@
                         class="form-control"
                         id="title"
                         v-model="form.title"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="mb-3">
+                      <label for="features" class="form-label"
+                        >Features (Comma Separated)</label
+                      >
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="features"
+                        v-model="form.features"
                       />
                     </div>
                   </div>
@@ -95,21 +108,11 @@
                         class="form-control"
                         id="description"
                         v-model="form.description"
+                        rows="5"
                       ></textarea>
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <div class="mb-3">
-                      <label for="features" class="form-label"
-                        >Features (Comma Separated)</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="features"
-                        v-model="form.features"
-                      ></textarea>
-                    </div>
-                  </div>
+                 
                 </div>
                 <button type="submit" class="btn btn-primary">
                   Update About
@@ -134,6 +137,14 @@ const props = defineProps({
   about: {
     type: Object,
     required: true,
+  },
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
   },
 });
 const toast = useToast();

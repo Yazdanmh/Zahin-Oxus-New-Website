@@ -1,9 +1,10 @@
 <template>
+  <Head title="Dashboard"/>
   <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        <Sidebar/>
+        <Sidebar :setting="props.setting"/>
         <div class="layout-page">
-          <Navbar/>
+          <Navbar :user="props.user"/>
           <!-- / Navbar -->
           <!-- Content wrapper -->
           <div class="content-wrapper">
@@ -26,11 +27,15 @@
 import { onMounted } from "vue";
 import Sidebar from  "@/Components/Admin/Sidebar.vue"; 
 import Navbar from  "@/Components/Admin/Navbar.vue"; 
-
+import { Head } from "@inertiajs/vue3";
 const props = defineProps({
-
+  user: {
+    type: Object,
+    required: true,
+  },
+  setting: {
+    type: Object,
+    required: true,
+  },
 })
-onMounted(() => {
-  
-});
 </script>

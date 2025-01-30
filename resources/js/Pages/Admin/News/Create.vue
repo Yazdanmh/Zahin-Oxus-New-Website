@@ -1,6 +1,6 @@
 <template>
     <Head title="Create News" />
-    <AdminLayout>
+    <AdminLayout :setting="props.setting" :user="props.user">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> News / Create
@@ -86,6 +86,7 @@
                       </div>
                     </div>
   
+
                     <!-- Toggle for is_published -->
                     <div class="col-md-2 d-flex align-items-center">
                       <div class="form-check form-switch mb-2">
@@ -113,6 +114,7 @@
                         </div>
                       </div>
                     </div>
+
                   </div>
   
                   <div class="d-flex justify-content-end gap-3 mt-4">
@@ -141,10 +143,20 @@
   import { Head, useForm } from "@inertiajs/vue3";
   import { ref } from "vue";
   import { useToast } from "vue-toastification";
-  import TextEditor from "@/Components/Admin/TextEditor.vue"; // Importing TextEditor
+  import TextEditor from "@/Components/Admin/TextEditor.vue";
   
   const toast = useToast();
+  const props = defineProps({
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
+  },
   
+})
   // Initialize the form with the necessary fields
   const form = useForm({
     title: "",

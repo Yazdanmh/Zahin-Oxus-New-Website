@@ -54,7 +54,7 @@
         <script src="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
         <script src="{{ asset('backend/assets/vendor/js/menu.js') }}"></script>
         <script src="{{ asset('backend/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-        <!-- <script src="{{ asset('backend/assets/js/main.js') }}"></script> -->
+        <script src="{{ asset('backend/assets/js/main.js') }}"></script>
         <script src="{{ asset('backend/assets/js/dashboards-analytics.js') }}"></script>
     @else
         <!-- Frontend scripts without defer -->

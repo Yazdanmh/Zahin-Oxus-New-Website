@@ -1,6 +1,6 @@
 <template>
   <Head title="Edit Training" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Training / Edit
@@ -126,22 +126,18 @@
                   </div>
 
                   <div class="col-md-12">
-                    <div class="mb-3">
-                      <label for="description" class="form-label"
-                        >Description</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="description"
-                        rows="3"
-                        v-model="form.description"
-                        placeholder="Enter training description"
-                      ></textarea>
-                      <div v-if="errors.description" class="text-danger mt-2">
-                        {{ errors.description }}
+                      <div class="mb-3">
+                        <!-- Bind the description to the TextEditor -->
+                        <TextEditor
+                          v-model="form.description"
+                          @editor-change="updateDescription"
+                        />
+                        <div v-if="errors.description" class="text-danger mt-2">
+                          {{ errors.description }}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                    
                 </div>
 
                 <div class="d-flex justify-content-end gap-3 mt-4">
@@ -172,9 +168,18 @@ import { ref } from "vue";
 import { useToast } from "vue-toastification";
 import axios from "axios";
 const toast = useToast();
+import TextEditor from "@/Components/Admin/TextEditor.vue";
 
 const props = defineProps({
   training: Object, // Make sure this matches the name passed from the backend
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
+  },
 });
 
 const form = useForm({

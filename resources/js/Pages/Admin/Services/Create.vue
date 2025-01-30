@@ -1,6 +1,6 @@
 <template>
   <Head title="Create Service" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Services / Create
@@ -9,6 +9,7 @@
         <div class="col-xl">
           <div class="card mb-4">
             <div
+
               class="card-header d-flex justify-content-between align-items-center"
             >
               <h5 class="mb-0">Create Service</h5>
@@ -115,23 +116,20 @@
                     </div>
                   </div>
 
+              
                   <div class="col-md-12">
-                    <div class="mb-3">
-                      <label for="description" class="form-label">
-                        Description
-                      </label>
-                      <textarea
-                        class="form-control"
-                        id="description"
-                        rows="5"
-                        v-model="form.description"
-                        placeholder="Enter service description"
-                      ></textarea>
-                      <div v-if="errors.description" class="text-danger mt-2">
-                        {{ errors.description }}
+                      <div class="mb-3">
+                        <!-- Bind the description to the TextEditor -->
+                        <TextEditor
+                          v-model="form.description"
+                          @editor-change="updateDescription"
+                          
+                        />
+                        <div v-if="errors.description" class="text-danger mt-2">
+                          {{ errors.description }}
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
                 <div class="d-flex justify-content-end gap-3 mt-4">
                   <button
@@ -160,7 +158,18 @@ import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
-
+import TextEditor from "@/Components/Admin/TextEditor.vue";
+const props = defineProps({
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
+  },
+  
+})
 const toast = useToast();
 
 const form = useForm({

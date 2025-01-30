@@ -1,6 +1,6 @@
 <template>
   <Head title="Edit Project" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Project / Edit
@@ -113,16 +113,11 @@
                   </div>
                   <div class="col-md-12">
                     <div class="mb-3">
-                      <label for="description" class="form-label"
-                        >Description</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="description"
-                        rows="3"
+                      <!-- Bind the description to the TextEditor -->
+                      <TextEditor
                         v-model="form.description"
-                        placeholder="Enter project description"
-                      ></textarea>
+                        @editor-change="updateDescription"
+                      />
                       <div v-if="errors.description" class="text-danger mt-2">
                         {{ errors.description }}
                       </div>
@@ -156,6 +151,7 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, useForm, Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
+import TextEditor from "@/Components/Admin/TextEditor.vue";
 
 const toast = useToast();
 
@@ -167,6 +163,14 @@ const props = defineProps({
   project: {
     type: Object,
     required: true,
+  },
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
   },
 });
 

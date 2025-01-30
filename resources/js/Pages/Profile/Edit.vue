@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineProps } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeleteUserForm from "./Partials/DeleteUserForm.vue";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
@@ -6,20 +7,23 @@ import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationFor
 import { Head } from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
-defineProps<{
+// Define the props type
+const props = defineProps<{
   mustVerifyEmail?: boolean;
   status?: string;
+  setting: object;
+  user: object;
 }>();
 </script>
 
 <template>
   <Head title="Profile" />
 
-  <AdminLayout>
+  <!-- Pass props to AdminLayout -->
+  <AdminLayout :setting="props.setting" :user="props.user">
     <!-- Content wrapper -->
     <div class="content-wrapper">
       <!-- Content -->
-
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Account Settings /</span> Account
@@ -40,13 +44,12 @@ defineProps<{
                   ><i class="bx bx-bell me-1"></i> Notifications</a
                 >
               </li>
-
             </ul>
 
             <div class="my-3">
               <UpdateProfileInformationForm
-                :must-verify-email="mustVerifyEmail"
-                :status="status"
+                :must-verify-email="props.mustVerifyEmail"
+                :status="props.status"
                 class="max-w-xl"
               />
               <UpdatePasswordForm class="max-w-xl" />

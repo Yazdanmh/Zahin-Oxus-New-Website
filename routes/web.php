@@ -28,6 +28,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\EventsController;
 use App\Http\Middleware\ShareGlobalData;
+use App\Http\Middleware\PassUserDataToViews;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -64,7 +65,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
 });
 
-Route::middleware(['auth', ShareGlobalData::class])->prefix('admin')->group(function () {
+Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard.index');
@@ -124,7 +125,7 @@ Route::middleware(['auth', ShareGlobalData::class])->prefix('admin')->group(func
     Route::post('/academic-calendar', [AcademicCalendarController::class, 'store'])->name('calendars.store');
     Route::delete('/academic-calendar/{id}', [AcademicCalendarController::class, 'destroy'])->name('calendars.destroy');
 });
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/admin/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

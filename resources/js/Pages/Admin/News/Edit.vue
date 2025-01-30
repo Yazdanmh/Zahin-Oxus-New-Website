@@ -1,6 +1,6 @@
 <template>
   <Head title="Edit News" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> News / Edit
@@ -155,6 +155,14 @@ const props = defineProps({
   news: {
     type: Object,
     required: true,
+  },
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
   },
 });
 

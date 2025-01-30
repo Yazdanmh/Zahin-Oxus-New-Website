@@ -1,6 +1,6 @@
 <template>
   <Head title="Portfolio Details" />
-  <AdminLayout>
+  <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Portfolio / Details
@@ -74,8 +74,8 @@
                 <div class="col-md-12">
                   <div class="mb-3">
                     <h6 class="fw-bold">Description:</h6>
-                    <p class="text-muted">
-                      {{ portfolio.description || "N/A" }}
+                    <p class="text-muted" v-html="portfolio.description">
+                     
                     </p>
                   </div>
                 </div>
@@ -93,7 +93,15 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
 const props = defineProps({
-  portfolio: Object, // Ensure the portfolio has category data
+  portfolio: Object, 
+  setting:{
+    type:Object, 
+    required:true, 
+  },
+  user:{
+    type:Object, 
+    required:true, 
+  },
 });
 </script>
 

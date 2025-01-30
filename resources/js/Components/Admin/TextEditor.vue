@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="editorContainer"></div>
+    <div ref="editorContainer" style="min-height: 100px;"></div>
   </div>
 </template>
 

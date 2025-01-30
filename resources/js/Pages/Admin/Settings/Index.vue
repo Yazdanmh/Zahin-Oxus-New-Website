@@ -1,6 +1,6 @@
 <template>
   <Head title="Setting" />
-  <AdminLayout>
+  <AdminLayout :setting = "props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Settings /</span> Edit
@@ -104,12 +104,20 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from '@inertiajs/vue3';
-import { ref } from "vue";
+import { ref, onMounted} from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from 'vue-toastification';
 
 const props = defineProps({
   settings: {
+    type: Object,
+    required: true,
+  },
+  user: {
+    type: Object,
+    required: true,
+  },
+  setting: {
     type: Object,
     required: true,
   },
