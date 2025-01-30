@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('training_participants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('training_id');
+            $table->unsignedBigInteger('training_id');
             $table->string('full_name');
             $table->string('email');
             $table->string('phone_number');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('organization');
             $table->string('position');
             $table->timestamps();
-            // Define foreign key constraint
+
             $table->foreign('training_id')
                 ->references('id')
                 ->on('trainings')
