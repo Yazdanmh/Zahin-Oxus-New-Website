@@ -17,6 +17,7 @@ use App\Http\Controllers\backend\HistoryController;
 use App\Http\Controllers\backend\GalleriesController;
 use App\Http\Controllers\backend\NewsController;
 use App\Http\Controllers\backend\AcademicCalendarController;
+use App\Http\Controllers\backend\DashboardController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AcademicController;
@@ -66,9 +67,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 });
 
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
