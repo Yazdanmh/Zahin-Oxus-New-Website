@@ -4,10 +4,11 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inertia\Inertia; 
-use App\Models\MOU; 
+use Inertia\Inertia;
+use App\Models\MOU;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
+use Str;
 
 class MOUController extends Controller
 {
@@ -35,8 +36,9 @@ class MOUController extends Controller
         ]);
     }
 
-    public function create(){
-        return Inertia::render('Admin/MOU/Create'); 
+    public function create()
+    {
+        return Inertia::render('Admin/MOU/Create');
     }
     public function store(Request $request)
     {
@@ -50,7 +52,7 @@ class MOUController extends Controller
             'status' => 'required|in:Active,Inactive,Pending',
             'mou_file' => 'required|file|mimes:pdf,docx,jpg,jpeg,png|max:10240',
         ]);
-    
+
         if ($validator->fails()) {
             // Pass errors directly in the Inertia response as 'errors'
             return Inertia::render('Admin/MOU/Create', [
@@ -58,7 +60,7 @@ class MOUController extends Controller
                 'form' => $request->all() // Pass form data to repopulate the fields
             ]);
         }
-    
+
         // Handle file upload if present
         $mouFilePath = null;
         if ($request->hasFile('mou_file')) {
@@ -73,20 +75,23 @@ class MOUController extends Controller
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
             'status' => $request->input('status'),
-            'mou_file' => $mouFilePath, // Store the file path if present
+            'mou_file' => $mouFilePath,
+            'slug' => Str::slug($request->input('title')),
         ]);
-    
+
+
         // Redirect back to the MOU list or a success page using Inertia
         return redirect()->route('mou.index')->with('success', 'MOU created successfully!');
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $mou = MOU::findOrFail($id);
         return Inertia::render('Admin/MOU/Edit', [
-            'mou' => $mou, 
+            'mou' => $mou,
         ]);
     }
-    
+
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -98,23 +103,22 @@ class MOUController extends Controller
             'status' => 'required|in:Active,Inactive,Pending',
             'mou_file' => 'nullable|file|mimes:pdf,docx,jpg,jpeg,png|max:10240',
         ]);
-        
+
         if ($validator->fails()) {
             return Inertia::render('Admin/MOU/Edit', [
                 'errors' => $validator->errors(),
-                'form' => $request->all(), 
+                'form' => $request->all(),
             ]);
         }
 
         $mou = MOU::findOrFail($id);
-        $mouFilePath = $mou->mou_file; 
+        $mouFilePath = $mou->mou_file;
         if ($request->hasFile('mou_file')) {
             if ($mou->mou_file) {
                 Storage::disk('public')->delete($mou->mou_file);
             }
             $mouFile = $request->file('mou_file');
             $mouFilePath = $mouFile->storeAs('mou_files', time() . '-' . $mouFile->getClientOriginalName(), 'public');
-
         }
         $mou->update([
             'title' => $request->input('title'),
@@ -123,7 +127,8 @@ class MOUController extends Controller
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
             'status' => $request->input('status'),
-            'mou_file' => $mouFilePath, 
+            'mou_file' => $mouFilePath,
+            'slug' => Str::slug($request->input('title')),
         ]);
         return redirect()->route('mou.index')->with('success', 'MOU updated successfully!');
     }
@@ -137,11 +142,11 @@ class MOUController extends Controller
         return redirect()->route('mou.index')->with('success', 'MOU deleted successfully!');
     }
 
-    public function show($id){
-        $mou = MOU::findOrFail($id); 
-        return Inertia::render('Admin/MOU/Details',[
-            'mou' => $mou, 
+    public function show($id)
+    {
+        $mou = MOU::findOrFail($id);
+        return Inertia::render('Admin/MOU/Details', [
+            'mou' => $mou,
         ]);
     }
-
 }

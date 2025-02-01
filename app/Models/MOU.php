@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MOU extends Model
 {
-    protected $fillable = ['title', 'description', 'parties_involved', 'start_date', 'end_date', 'mou_file', 'status']; 
+    protected $fillable = ['title', 'description', 'parties_involved', 'start_date', 'end_date', 'mou_file', 'status', 'slug'];
 }

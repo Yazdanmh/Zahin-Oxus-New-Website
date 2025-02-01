@@ -18,10 +18,10 @@ Route::middleware('guest')->group(function () {
         ->name('login')
         ->middleware(ShareGlobalData::class);
 
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create'])
+    //     ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::post('/auth/login', [AuthenticatedSessionController::class, 'store']);
     Route::get('/auth/forgot-password', [PasswordResetLinkController::class, 'create'])

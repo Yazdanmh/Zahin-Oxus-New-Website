@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('m_o_u_s', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); 
-            $table->longText('description'); 
-            $table->text('parties_involved'); 
+            $table->string('title');
+            $table->longText('description');
+            $table->text('parties_involved');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->string('mou_file'); 
-            $table->string('status'); 
-            $table->timestamps(); 
+            $table->string('mou_file');
+            $table->string('status');
+            $table->string('slug')->nullable();
+            $table->timestamps();
         });
     }
 

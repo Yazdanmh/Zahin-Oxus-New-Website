@@ -67,7 +67,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
     Route::get('/mous', [MOUsController::class, 'index'])->name('mous.index');
-
+    Route::get('/mous/{slug}', [MOUsController::class, 'show'])->name('mous.show');
 });
 
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
