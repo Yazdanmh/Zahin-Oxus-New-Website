@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia; 
-use App\Models\News; 
+use Inertia\Inertia;
+use App\Models\News;
 
 class EventsController extends Controller
 {
     public function index(Request $request)
     {
-        // Get the search query from the request
         $searchQuery = $request->input('search', '');
     
-        // Get all events, applying the search filter if a query is provided
-        $events = News::orderByDesc('created_at')->paginate(5);
-        $news = News::orderByDesc('created_at')
-                    ->where('title', 'like', '%' . $searchQuery . '%')  // Filter by title or any other attribute you want
+        // Pagination for events
+        $events = News::where('is_published', 1)
+                      ->orderByDesc('created_at')
+                      ->paginate(5);
+
+        // News query with search functionality
+        $news = News::where('is_published', 1)
+                    ->orderByDesc('created_at')
+                    ->where('title', 'like', '%' . $searchQuery . '%')
                     ->take(5)
                     ->get();
             
@@ -28,14 +32,15 @@ class EventsController extends Controller
     
     public function show(Request $request, $slug)
     {
-        $searchQuery = $request->input('search', '');  // Get search query from the request
-    
-        // Fetch the specific event based on the slug
+        $searchQuery = $request->input('search', '');  
+
+        // Fetch the specific event
         $event = News::where('slug', $slug)->firstOrFail();
     
-        // Get the recent events, applying the search query filter
-        $news = News::orderByDesc('created_at')
-                    ->where('title', 'like', '%' . $searchQuery . '%')  // Filter by title or other attributes
+        // News query with search functionality
+        $news = News::where('is_published', 1)
+                    ->orderByDesc('created_at')
+                    ->where('title', 'like', '%' . $searchQuery . '%')
                     ->take(5)
                     ->get();
             
@@ -44,6 +49,4 @@ class EventsController extends Controller
             'recent' => $news,  
         ]);
     }
-    
-
 }

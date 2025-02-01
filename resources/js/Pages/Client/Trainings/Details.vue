@@ -170,8 +170,8 @@
                   <span class="expired-text" style="color: red">Expired</span>
                 </template>
                 <h2 class="title">{{ props.training.name }}</h2>
-                <p>
-                  {{ props.training.description }}
+                <p v-html="props.training.description ">
+                  
                 </p>
               </div>
             </div>

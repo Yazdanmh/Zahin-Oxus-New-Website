@@ -18,6 +18,7 @@ use App\Http\Controllers\backend\GalleriesController;
 use App\Http\Controllers\backend\NewsController;
 use App\Http\Controllers\backend\AcademicCalendarController;
 use App\Http\Controllers\backend\DashboardController;
+use App\Http\Controllers\backend\MOUController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AcademicController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\TrainingsController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\MOUsController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Middleware\PassUserDataToViews;
 use App\Http\Controllers\EventController;
@@ -64,6 +66,8 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.show');
 
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
+    Route::get('/mous', [MOUsController::class, 'index'])->name('mous.index');
+
 });
 
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
@@ -123,6 +127,9 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::get('/academic-calendar', [AcademicCalendarController::class, 'index'])->name('calendars.index');
     Route::post('/academic-calendar', [AcademicCalendarController::class, 'store'])->name('calendars.store');
     Route::delete('/academic-calendar/{id}', [AcademicCalendarController::class, 'destroy'])->name('calendars.destroy');
+
+    Route::resource('/mou', MOUController::class);
+    Route::post('/mou/{id}', [MOUController::class, 'update'])->name('mou.update');
 });
 Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');

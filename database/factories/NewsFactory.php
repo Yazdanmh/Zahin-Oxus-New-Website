@@ -26,8 +26,9 @@ class NewsFactory extends Factory
             'title' => $this->faker->sentence,
             'content' => $this->faker->paragraph(5),
             'slug' => Str::slug($this->faker->sentence),
-            'image' => $this->faker->imageUrl(800, 600, 'nature'), // Adjust the size or source as needed
-            'is_published' => $this->faker->boolean(80), // 80% chance of being true
+            'image' => $this->faker->imageUrl(800, 600, 'nature'),
+            'is_published' => $this->faker->boolean(80), 
+            'tags' => implode(', ', $this->faker->words(5)),  
         ];
     }
 }

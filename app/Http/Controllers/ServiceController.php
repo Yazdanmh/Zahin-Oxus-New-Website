@@ -19,7 +19,7 @@ class ServiceController extends Controller
         $service = Services::where('slug', $slug)->firstOrFail();
         $services = Services::where('slug', '!=', $slug)
                             ->orderByDesc('created_at') 
-                            ->paginate(10);
+                            ->paginate(6);
     
         return Inertia::render('Client/Service/Details', [
             'service' => $service,

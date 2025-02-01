@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('m_o_u_s', function (Blueprint $table) {
             $table->id();
             $table->string('title'); 
-            $table->string('subtitle'); 
-            $table->string('image')->notnull(); 
-            $table->string('icon'); 
-            $table->longText('description');
-            $table->string('slug'); 
-            $table->timestamps();
+            $table->longText('description'); 
+            $table->text('parties_involved'); 
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('mou_file'); 
+            $table->string('status'); 
+            $table->timestamps(); 
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('m_o_u_s');
     }
 };

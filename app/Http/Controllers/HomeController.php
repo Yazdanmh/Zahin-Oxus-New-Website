@@ -24,7 +24,7 @@ class HomeController extends Controller
     {
         $hero = Hero::select('title', 'subtitle', 'description', 'image', 'button', 'link')->first();
         $friends = Friend::all();
-        $services = Services::select('title', 'subtitle', 'description', 'image','icon', 'slug')->paginate(4);
+        $services = Services::select('title', 'subtitle', 'description', 'image','icon', 'slug')->paginate(5);
         $counter = Counter::first();
         $projects = Project::paginate(4);
         $categories = Category::all();

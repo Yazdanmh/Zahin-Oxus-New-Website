@@ -30,7 +30,7 @@
               </div>
               <div class="services__content-two">
                 <h4 class="title">
-                  <a href="services-details.html">{{ service.subtitle }}</a>
+                  <Link :href="route('service.show', service.slug)">{{ service.subtitle }}</Link>
                 </h4>
                 <p>
                   {{ truncatedDescription(service.title) }}
@@ -38,7 +38,7 @@
                 <Link :href="route('service.show', service.slug)" class="tg-btn tg-btn-two"
                   >Read More
                   <img
-                    src="assets/img/icons/right_arrow.svg"
+                    src="/frontend/assets/img/icons/right_arrow.svg"
                     alt=""
                     class="injectable"
                 /></Link>

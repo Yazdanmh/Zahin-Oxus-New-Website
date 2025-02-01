@@ -70,48 +70,116 @@
             <div class="tgmenu__wrap">
               <nav class="tgmenu__nav">
                 <div class="logo">
-                  <Link :href="route('home')"
-                    ><img
+                  <Link :href="route('home')">
+                    <img
                       :src="'/storage/' + props.setting.site_logo"
                       alt="Logo"
-                  /></Link>
+                    />
+                  </Link>
                 </div>
                 <div
                   class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex"
                 >
                   <ul class="navigation">
-                    <li><Link href="/">Home</Link></li>
+                    <li :class="{ active: isActiveRoute('home') }">
+                      <Link href="/">Home</Link>
+                    </li>
 
-                    <li class="menu-item-has-children">
+                    <!-- About Us Section -->
+                    <li
+                      :class="{
+                        'menu-item-has-children': true,
+                        active:
+                          isActiveRoute('about.mission') ||
+                          isActiveRoute('about.vision') ||
+                          isActiveRoute('home.about'),
+                      }"
+                    >
                       <a href="#">About Us</a>
                       <ul class="sub-menu">
-                        <li>
+                        <li :class="{ active: isActiveRoute('about.mission') }">
                           <Link :href="route('about.mission')"
                             >Our Mission</Link
                           >
                         </li>
-                        <li>
+                        <li :class="{ active: isActiveRoute('about.vision') }">
                           <Link :href="route('about.vision')">Our Vision</Link>
                         </li>
-                        <li>
+                        <li :class="{ active: isActiveRoute('home.about') }">
                           <Link :href="route('home.about')">About ZOCS</Link>
                         </li>
                       </ul>
                     </li>
-                    <li>
-                      <Link :href="route('service.index')">Services</Link>
-                    </li>
-                    <li>
-                      <Link :href="route('calendar.index')"
-                        >Academic Calendar</Link
-                      >
-                    </li>
-                    <li>
-                      <Link :href="route('trainings.index')">Trainings</Link>
+
+                    <!-- Academic Section -->
+                    <li
+                      :class="{
+                        'menu-item-has-children': true,
+                        active: isActiveRoute('calendar.index'),
+                      }"
+                    >
+                      <a href="#">Academic</a>
+                      <ul class="sub-menu">
+                        <li
+                          :class="{ active: isActiveRoute('calendar.index') }"
+                        >
+                          <Link :href="route('calendar.index')"
+                            >Academic Calendar</Link
+                          >
+                        </li>
+                        <li
+                          :class="{ active: isActiveRoute('mous.index') }"
+                        >
+                          <Link :href="route('mous.index')">MOU</Link>
+                        </li>
+                      </ul>
                     </li>
 
-                    <li><Link :href="route('gallery.index')">Gallery</Link></li>
-                    <li><Link :href="route('events.index')">Events</Link></li>
+                    <!-- Training & Services Section -->
+                    <li
+                      :class="{
+                        'menu-item-has-children': true,
+                        active:
+                          isActiveRoute('service.index') ||
+                          isActiveRoute('trainings.index') ,
+                      }"
+                    >
+                      <a href="#">Services & Trainings</a>
+                      <ul class="sub-menu">
+                        <li :class="{ active: isActiveRoute('service.index') }">
+                          <Link :href="route('service.index')">Services</Link>
+                        </li>
+                        <li
+                          :class="{ active: isActiveRoute('trainings.index') }"
+                        >
+                          <Link :href="route('trainings.index')"
+                            >Trainings</Link
+                          >
+                        </li>
+                      </ul>
+                    </li>
+
+                    <!-- Media & News Section -->
+                    <li
+                      :class="{
+                        'menu-item-has-children': true,
+                        active:
+                          isActiveRoute('gallery.index') ||
+                          isActiveRoute('events.index'),
+                      }"
+                    >
+                      <a href="#">Media & News</a>
+                      <ul class="sub-menu">
+                        <li :class="{ active: isActiveRoute('gallery.index') }">
+                          <Link :href="route('gallery.index')">Gallery</Link>
+                        </li>
+                        <li :class="{ active: isActiveRoute('events.index') }">
+                          <Link :href="route('events.index')"
+                            >News & Events</Link
+                          >
+                        </li>
+                      </ul>
+                    </li>
                   </ul>
                 </div>
                 <div class="tgmenu__action">
@@ -202,13 +270,20 @@
   <!-- header-area-end -->
 </template>
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 const props = defineProps({
   setting: {
     type: Object,
     required: true,
   },
 });
+const { url, currentRouteName } = usePage();
+function isActiveRoute(routeName) {
+  const routePath = route(routeName)
+    .replace(window.location.origin, "")
+    .replace(/^\/+/, "/");
+  return url.includes(routePath);
+}
 </script>
 
 <style scoped>

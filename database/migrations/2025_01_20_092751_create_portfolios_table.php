@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title'); 
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('image')->nullable();
             $table->boolean('has_form')->default(true);
             $table->date('date')->nullable();

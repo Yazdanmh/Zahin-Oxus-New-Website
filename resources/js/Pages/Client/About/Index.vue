@@ -30,7 +30,7 @@
                 <Link :href="route('contact.index')" class="tg-btn tg-btn-three tg-border-btn"
                   >Read More
                   <img
-                    src="assets/img/icons/right_arrow.svg"
+                    src="/frontend/assets/img/icons/right_arrow.svg"
                     alt=""
                     class="injectable"
                 /></Link>

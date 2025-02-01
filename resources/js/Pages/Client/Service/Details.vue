@@ -11,7 +11,7 @@
               <div class="sidebar__widget">
                 <div class="sidebar__cat-list">
                   <ul class="list-wrap" v-for="item in props.services.data" :key="item.id">
-                    <li>
+                    <li class="my-1">
                       <Link :href="route('service.show', item.slug)"
                         >{{ item.subtitle }}
                         <span>
@@ -133,8 +133,8 @@
               </div>
               <div class="services__details-content-top">
                 <h2 class="title">{{ props.service.title }}</h2>
-                <p>
-                  {{ props.service.description }}
+                <p v-html="props.service.description">
+                  
                 </p>
               </div>
             </div>

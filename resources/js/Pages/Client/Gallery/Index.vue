@@ -69,7 +69,7 @@
 
         <!-- No Images Message -->
         <div v-else class="text-center">
-          <p>No images yet</p>
+          <p class="text-warning">No images yet</p>
         </div>
       </div>
     </section>

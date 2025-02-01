@@ -14,7 +14,7 @@ class SettingsSeeder extends Seeder
     public function run(): void
     {
         Setting::create([
-            'site_name' => 'My Website',
+            'site_name' => 'Zahin Oxus',
             'site_logo' => 'logo.png',
             'site_favicon' => 'favicon.ico',
             'email' => 'info@zahin-oxus.af',
