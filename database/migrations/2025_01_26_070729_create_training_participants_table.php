@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('training_id');
             $table->string('full_name');
-            $table->string('email');
-            $table->string('phone_number');
-            $table->string('address');
-            $table->string('taskira_number');
-            $table->string('organization');
-            $table->string('position');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
+            $table->string('taskira_number')->nullable();
+            $table->string('organization')->nullable();
+            $table->string('position')->nullable();
             $table->timestamps();
 
             $table->foreign('training_id')

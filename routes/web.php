@@ -20,6 +20,7 @@ use App\Http\Controllers\backend\AcademicCalendarController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\MOUController;
 use App\Http\Controllers\backend\NotificationController;
+use App\Http\Controllers\backend\ParticipantsController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AcademicController;
@@ -116,6 +117,9 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::resource('/training', TrainingController::class);
     Route::post('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
 
+    Route::resource('/participants',ParticipantsController::class);
+    Route::post('/participants/{id}',[ParticipantsController::class, 'update'])->name('participants.update');
+
     Route::resource('/certificate', CertificatesControlller::class);
     Route::post('/certificate/{id}', [CertificatesControlller::class, 'update'])->name('certificate.update');
 
@@ -131,6 +135,7 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
 
     Route::resource('/mou', MOUController::class);
     Route::post('/mou/{id}', [MOUController::class, 'update'])->name('mou.update');
+
     route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index'); 
 });
 Route::middleware(['auth', PassUserDataToViews::class])->group(function () {

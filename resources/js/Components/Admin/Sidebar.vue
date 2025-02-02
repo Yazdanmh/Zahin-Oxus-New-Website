@@ -198,6 +198,7 @@
           'active open':
             isActiveRoute('training.index') ||
             isActiveRoute('mou.index') ||
+            isActiveRoute('participants.index') ||
             isActiveRoute('certificate.index'),
         }"
       >
@@ -224,6 +225,16 @@
           >
             <Link :href="route('mou.index')" class="menu-link"
               ><div>MOU</div></Link
+            >
+          </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('participants.index'),
+            }"
+          >
+            <Link :href="route('participants.index')" class="menu-link"
+              ><div>Participants</div></Link
             >
           </li>
           <li

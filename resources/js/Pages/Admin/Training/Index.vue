@@ -26,6 +26,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Has Form</th>
+                <th>Participants</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -54,6 +55,15 @@
                   >
                     {{ training.has_form ? "Yes" : "No" }}
                   </span>
+                </td>
+                <td class="text-centere">
+                  <Link :href="route('participants.show', training.id)">
+                    <span
+                      class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
+                    >
+                      <i class="icon-base bx bx-show icon-xs"></i>
+                    </span>
+                  </Link>
                 </td>
                 <td>
                   <Link :href="route('training.edit', training.id)">
