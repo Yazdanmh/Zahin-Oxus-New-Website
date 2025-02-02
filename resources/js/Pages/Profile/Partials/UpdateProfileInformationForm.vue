@@ -4,26 +4,30 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
-defineProps<{
-  mustVerifyEmail?: Boolean;
-  status?: String;
-}>();
+defineProps<{ mustVerifyEmail?: boolean; status?: string }>();
 
-const user = usePage().props.auth.user;
-const uploadedAvatar = ref(
-  "/storage/" + user.profile_image || "/backend/assets/img/avatars/1.png"
-);
+// Define user type
+interface User {
+  name: string;
+  email: string;
+  profile_image?: string;
+  email_verified_at?: string | null;
+}
+
+const user = usePage().props.auth.user as User;
+const uploadedAvatar = ref(user.profile_image ? `/storage/${user.profile_image}` : "/backend/assets/img/avatars/1.png");
 
 const form = useForm({
   name: user.name,
   email: user.email,
-  profile_image: null, // Add profile_image to the form data
+  profile_image: null as File | null, // Ensure correct typing
 });
 
-function handleFileUpload(event) {
-  const file = event.target.files[0];
+function handleFileUpload(event: Event) {
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
   if (file) {
     form.profile_image = file; // Attach the file to the form
     const reader = new FileReader();
@@ -35,9 +39,8 @@ function handleFileUpload(event) {
 }
 
 function resetImage() {
-  uploadedAvatar.value =
-    "/storage/" + user.profile_image || "/backend/assets/img/avatars/1.png";
-  form.profile_image = null; // Reset the image field
+  uploadedAvatar.value = user.profile_image ? `/storage/${user.profile_image}` : "/backend/assets/img/avatars/1.png";
+  form.profile_image = null;
 }
 
 function resendVerification() {
@@ -48,7 +51,6 @@ function resendVerification() {
 <template>
   <div class="card mb-4">
     <h5 class="card-header">Profile Details</h5>
-
     <div class="card-body">
       <div class="d-flex align-items-start align-items-sm-center gap-4">
         <img
@@ -80,16 +82,11 @@ function resendVerification() {
             <i class="bx bx-reset d-block d-sm-none"></i>
             <span class="d-none d-sm-block">Reset</span>
           </button>
-
-          <p class="text-muted mb-0">
-            Allowed JPG, GIF, or PNG. Max size of 800KB
-          </p>
+          <p class="text-muted mb-0">Allowed JPG, GIF, or PNG. Max size of 800KB</p>
         </div>
       </div>
     </div>
-
     <hr class="my-0" />
-
     <div class="card-body">
       <form @submit.prevent="form.post(route('profile.update'))">
         <div class="row">
@@ -106,7 +103,6 @@ function resendVerification() {
             />
             <InputError class="mt-2" :message="form.errors.name" />
           </div>
-
           <div class="mb-3 col-md-6">
             <InputLabel for="email" value="Email" />
             <TextInput
@@ -120,7 +116,6 @@ function resendVerification() {
             <InputError class="mt-2" :message="form.errors.email" />
           </div>
         </div>
-
         <div v-if="mustVerifyEmail && user.email_verified_at === null">
           <p class="mt-2 text-sm text-gray-800">
             Your email address is unverified.
@@ -132,19 +127,14 @@ function resendVerification() {
               Click here to re-send the verification email.
             </button>
           </p>
-
-          <div
-            v-if="status === 'verification-link-sent'"
-            class="mt-2 text-sm text-success"
-          >
+          <div v-if="status === 'verification-link-sent'" class="mt-2 text-sm text-success">
             A new verification link has been sent to your email address.
           </div>
         </div>
-
         <div class="mt-2">
-          <PrimaryButton class="btn btn-primary" :disabled="form.processing"
-            >Save Changes</PrimaryButton
-          >
+          <PrimaryButton class="btn btn-primary" :disabled="form.processing">
+            Save Changes
+          </PrimaryButton>
           <button type="reset" class="btn btn-outline-secondary ms-2">
             Cancel
           </button>

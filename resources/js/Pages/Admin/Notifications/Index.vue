@@ -18,13 +18,14 @@ const props = defineProps({
         required:true, 
     }
 })
-const displayedMessages = computed(() => messages.value.slice(0, 2));
+const displayedMessages = computed(() => props.messages.slice(0, 2));
 
-const truncateMessage = (text) => {
+
+const truncateMessage = (text: string) => {
   return text.length > 200 ? text.substring(0, 200) + "..." : text;
 };
 
-const formatDate = (date) => {
+const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
