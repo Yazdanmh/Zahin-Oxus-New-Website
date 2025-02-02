@@ -246,6 +246,7 @@ const form = useForm({
   identity_card_id: "",
   position: "",
   address: "",
+  training_name: props.training.name, 
 });
 
 const responseMessage = ref("");

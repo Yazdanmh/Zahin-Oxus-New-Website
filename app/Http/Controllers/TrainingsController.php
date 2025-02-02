@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Training;
 use App\Models\TrainingParticipants;
 use Inertia\Inertia; 
+use App\Mail\TrainingApplicationMail;
+use Illuminate\Support\Facades\Mail;
+
 class TrainingsController extends Controller
 {
     public function index(){
@@ -32,9 +35,10 @@ class TrainingsController extends Controller
             'training' => $training,
         ]);
     }
+  
+    
     public function apply_store(Request $request, $id)
     {
-        // return $request->all();
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:training_participants,email,NULL,id,training_id,' . $id,
@@ -45,17 +49,42 @@ class TrainingsController extends Controller
             'position' => 'required|string|max:255',
         ]);
     
+        $validated = $request->all();
+
+        $trainingName = $request->training_name ?? 'Unknown Training';
+        // Create the participant entry
         TrainingParticipants::create([
-            'full_name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'organization' => $request->input('organization'),
-            'phone_number' => $request->input('phone'),
-            'address' => $request->input('address'),
-            'taskira_number' => $request->input('identity_card_id'),
-            'position' => $request->input('position'),
+            'full_name' => $validated['name'],
+            'email' => $validated['email'],
+            'organization' => $validated['organization'],
+            'phone_number' => $validated['phone'],
+            'address' => $validated['address'],
+            'taskira_number' => $validated['identity_card_id'],
+            'position' => $validated['position'],
             'training_id' => $id,
         ]);
-        return redirect()->back(); 
+    
+        // Send the email to admin
+        try {
+            Mail::to('mohammadiy207@gmail.com')->send(new \App\Mail\TrainingApplicationMail(
+                $validated['name'],
+                $validated['email'],
+                $validated['organization'],
+                $validated['phone'],
+                $validated['address'],
+                $validated['identity_card_id'],
+                $validated['position'],
+                $trainingName // Pass the trainingName
+            ));
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with('error', 'There was an issue sending the notification.');
+        }
+    
+        return redirect()->back()->with('success', 'Your application has been submitted!');
     }
+    
+
+    
     
 }

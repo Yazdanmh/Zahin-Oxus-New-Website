@@ -41,7 +41,9 @@
                         />
                       </label>
                       <p class="text-muted mb-0">
-                        Allowed JPG, GIF, or PNG. Max size of 1MB 511 X 388.
+                        Allowed JPG, GIF, or PNG. Max size of 1MB 511 X 388. <br>
+                        <span class="text-warning">Recommended dimensions: 511 x 338 pixels.</span>
+
                       </p>
                     </div>
                   </div>
@@ -69,7 +71,9 @@
                         />
                       </label>
                       <p class="text-muted mb-0">
-                        Allowed JPG, GIF, or PNG. Max size of 1MB 357 X 228.
+                        Allowed JPG, GIF, or PNG. Max size of 1MB 357 X 228. <br>
+                        <span class="text-warning">Recommended dimensions: 357 x 228 pixels.</span>
+
                       </p>
                     </div>
                   </div>

@@ -61,9 +61,9 @@
                     </p>
 
                     <!-- MOUs Listing -->
-                    <div v-if="props.mous.length > 0" class="row">
+                    <div v-if="props.mous.data.length > 0" class="row">
                       <div
-                        v-for="mou in props.mous"
+                        v-for="mou in props.mous.data"
                         :key="mou.id"
                         class="col-lg-4 col-md-6 col-sm-12 mb-4"
                       >
@@ -100,6 +100,65 @@
                     <p v-else class="text-warning">
                       No MOUs available at the moment.
                     </p>
+
+                    <!-- Pagination Links -->
+                    <div class="pagination__wrap mt-40">
+                      <ul class="list-wrap">
+                        <!-- Previous Button (disabled on page 1) -->
+                        <li :class="{ disabled: currentPage === 1 }">
+                          <Link
+                            v-if="currentPage > 1"
+                            :href="`${props.mous.path}?page=${currentPage - 1}`"
+                          >
+                            <span class="bx bx-chevron-left"></span>
+                          </Link>
+                        </li>
+
+                        <!-- First Page -->
+                        <li v-if="currentPage > 3">
+                          <Link :href="`${props.mous.path}?page=1`">1</Link>
+                        </li>
+
+                        <!-- Ellipsis before pages -->
+                        <li v-if="currentPage > 4">
+                          <span>...</span>
+                        </li>
+
+                        <!-- Loop through Pages (handling page numbers) -->
+                        <li
+                          v-for="page in displayedPages"
+                          :key="page"
+                          :class="{ active: currentPage === page }"
+                        >
+                          <Link :href="`${props.mous.path}?page=${page}`">{{
+                            page
+                          }}</Link>
+                        </li>
+
+                        <!-- Ellipsis after pages -->
+                        <li v-if="currentPage < totalPages - 3">
+                          <span>...</span>
+                        </li>
+
+                        <!-- Last Page -->
+                        <li v-if="currentPage < totalPages - 2">
+                          <Link
+                            :href="`${props.mous.path}?page=${totalPages}`"
+                            >{{ totalPages }}</Link
+                          >
+                        </li>
+
+                        <!-- Next Button (disabled on last page) -->
+                        <li :class="{ disabled: currentPage === totalPages }">
+                          <Link
+                            v-if="currentPage < totalPages"
+                            :href="`${props.mous.path}?page=${currentPage + 1}`"
+                          >
+                            <span class="bx bx-chevron-right"></span>
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -110,9 +169,9 @@
     </section>
   </ClientLayout>
 </template>
-  
-  <script setup>
-import { ref } from "vue";
+
+<script setup>
+import { ref, computed } from "vue";
 import ClientLayout from "@/Layouts/ClientLayout.vue";
 import Breadcrumb from "@/Components/Client/Breadcrumb.vue";
 import { useForm, Head, Link } from "@inertiajs/vue3";
@@ -127,7 +186,7 @@ const truncatedDescription = (description) => {
 
 // Toggle the full description visibility
 const toggleDescription = (mouId) => {
-  const mou = props.mous.find((item) => item.id === mouId);
+  const mou = props.mous.data.find((item) => item.id === mouId);
   mou.showFullDescription = !mou.showFullDescription;
 };
 
@@ -139,12 +198,32 @@ const nav = [
 const props = defineProps({
   setting: Object,
   mous: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
+
+const currentPage = computed(() => props.mous.current_page);
+const totalPages = computed(() => {
+  return Math.ceil(props.mous.total / props.mous.per_page);
+});
+
+const displayedPages = computed(() => {
+  const pages = [];
+  const range = 3;
+
+
+  for (
+    let i = Math.max(currentPage.value - range, 1);
+    i <= Math.min(currentPage.value + range, totalPages.value);
+    i++
+  ) {
+    pages.push(i);
+  }
+
+  return pages;
+});
 </script>
-  
   <style scoped>
 .mou__list-area {
   padding-top: 30px;

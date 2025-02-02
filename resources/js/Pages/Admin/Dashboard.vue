@@ -30,12 +30,10 @@
                         class="dropdown-menu dropdown-menu-end"
                         aria-labelledby="cardOpt3"
                       >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >View More</a
+                        <Link class="dropdown-item" :href="route('services.index')"
+                          >View More</Link
                         >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >Delete</a
-                        >
+                        
                       </div>
                     </div>
                   </div>
@@ -74,12 +72,10 @@
                         class="dropdown-menu dropdown-menu-end"
                         aria-labelledby="cardOpt3"
                       >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >View More</a
+                        <Link class="dropdown-item" :href="route('galleries.index')"
+                          >View More</Link
                         >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >Delete</a
-                        >
+                        
                       </div>
                     </div>
                   </div>
@@ -116,12 +112,10 @@
                         class="dropdown-menu dropdown-menu-end"
                         aria-labelledby="cardOpt3"
                       >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >View More</a
+                      <Link class="dropdown-item" :href="route('news.index')"
+                          >View More</Link
                         >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >Delete</a
-                        >
+                        
                       </div>
                     </div>
                   </div>
@@ -158,12 +152,10 @@
                         class="dropdown-menu dropdown-menu-end"
                         aria-labelledby="cardOpt3"
                       >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >View More</a
+                      <Link class="dropdown-item" :href="route('training.index')"
+                          >View More</Link
                         >
-                        <a class="dropdown-item" href="javascript:void(0);"
-                          >Delete</a
-                        >
+                        
                       </div>
                     </div>
                   </div>
@@ -206,8 +198,8 @@
                   class="dropdown-menu dropdown-menu-end"
                   aria-labelledby="messageDropdown"
                 >
-                  <a class="dropdown-item" href="javascript:void(0);"
-                    >View All</a
+                  <Link class="dropdown-item" :href="route('notifications.index')"
+                    >View All</Link
                   >
                 </div>
               </div>
@@ -243,6 +235,7 @@
   
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { Link } from "@inertiajs/vue3";
 import { computed } from "vue";
 const props = defineProps({
   setting: {

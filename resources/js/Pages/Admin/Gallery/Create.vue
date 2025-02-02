@@ -45,7 +45,9 @@
                           <span class="d-none d-sm-block">Reset</span>
                         </button>
                         <p class="text-muted mb-0">
-                          Allowed JPG, GIF, or PNG. Max size of 1MB.
+                          Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
+                        <span class="text-warning">Recommended dimensions: 200 x 200 pixels. Or Square</span>
+
                         </p>
                       </div>
                     </div>

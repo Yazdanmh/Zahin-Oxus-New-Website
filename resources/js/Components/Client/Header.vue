@@ -81,7 +81,7 @@
                   class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex"
                 >
                   <ul class="navigation">
-                    <li :class="{ active: isActiveRoute('home') }">
+                    <li :class="{ active: isActiveHome() }">
                       <Link href="/">Home</Link>
                     </li>
 
@@ -115,7 +115,9 @@
                     <li
                       :class="{
                         'menu-item-has-children': true,
-                        active: isActiveRoute('calendar.index'),
+                        active:
+                          isActiveRoute('calendar.index') ||
+                          isActiveRoute('mous.index'),
                       }"
                     >
                       <a href="#">Academic</a>
@@ -127,9 +129,7 @@
                             >Academic Calendar</Link
                           >
                         </li>
-                        <li
-                          :class="{ active: isActiveRoute('mous.index') }"
-                        >
+                        <li :class="{ active: isActiveRoute('mous.index') }">
                           <Link :href="route('mous.index')">MOU</Link>
                         </li>
                       </ul>
@@ -141,7 +141,7 @@
                         'menu-item-has-children': true,
                         active:
                           isActiveRoute('service.index') ||
-                          isActiveRoute('trainings.index') ,
+                          isActiveRoute('trainings.index'),
                       }"
                     >
                       <a href="#">Services & Trainings</a>
@@ -278,11 +278,25 @@ const props = defineProps({
   },
 });
 const { url, currentRouteName } = usePage();
+
 function isActiveRoute(routeName) {
   const routePath = route(routeName)
     .replace(window.location.origin, "")
     .replace(/^\/+/, "/");
+
+  console.log("Current URL:", url);
+  console.log("Route Path for", routeName, ":", routePath);
+
+  // Special case for home route ('/')
+  if (routeName === "home" && (url === "/" || url === window.location.origin)) {
+    return true;
+  }
+
   return url.includes(routePath);
+}
+function isActiveHome() {
+  // Check if the current URL is exactly '/' or the home URL
+  return url === "/" || url === window.location.origin;
 }
 </script>
 

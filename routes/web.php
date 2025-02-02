@@ -19,6 +19,7 @@ use App\Http\Controllers\backend\NewsController;
 use App\Http\Controllers\backend\AcademicCalendarController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\MOUController;
+use App\Http\Controllers\backend\NotificationController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AcademicController;
@@ -62,7 +63,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
     Route::get('/gallery/all', [GalleryController::class, 'index'])->name('gallery.index');
 
-    Route::get('/events', [EventsController::class, 'index'])->name('events.index');
+    Route::get('events', [EventsController::class, 'index'])->name('events.index');
     Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.show');
 
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
@@ -130,6 +131,7 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
 
     Route::resource('/mou', MOUController::class);
     Route::post('/mou/{id}', [MOUController::class, 'update'])->name('mou.update');
+    route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index'); 
 });
 Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -138,3 +140,6 @@ Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+Route::fallback(function () {
+    return Inertia::render('Admin/Error/Error');  
+});

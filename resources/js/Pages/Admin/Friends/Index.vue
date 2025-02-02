@@ -51,6 +51,7 @@
                     </button>
                     <p class="text-muted mb-0">
                       Allowed JPG, GIF, or PNG. Max size of 1MB.
+                      <span class="text-warning">Recommended dimensions: 188 x 22 pixels.</span>
                     </p>
                   </div>
 

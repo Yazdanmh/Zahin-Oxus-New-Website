@@ -18,7 +18,6 @@
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/theme-default.css') }}">
         <link rel="stylesheet" href="{{ asset('backend/assets/css/demo.css') }}">
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
-        <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/apex-charts/apex-charts.css') }}">
     @else
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/assets/img/favicon.png') }}">

@@ -4,7 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeleteUserForm from "./Partials/DeleteUserForm.vue";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 // Define the props type
@@ -38,10 +38,10 @@ const props = defineProps<{
                 >
               </li>
               <li class="nav-item">
-                <a
+                <Link
                   class="nav-link"
-                  href="pages-account-settings-notifications.html"
-                  ><i class="bx bx-bell me-1"></i> Notifications</a
+                  :href="route('notifications.index')"
+                  ><i class="bx bx-bell me-1"></i> Notifications</Link
                 >
               </li>
             </ul>

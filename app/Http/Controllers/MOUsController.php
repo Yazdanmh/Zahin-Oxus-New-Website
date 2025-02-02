@@ -10,11 +10,12 @@ class MOUsController extends Controller
 {
     public function index()
     {
-        $mous  = MOU::all();
+        $mous  = MOU::paginate(6); 
         return Inertia::render('Client/MOU/Index', [
             'mous' => $mous,
         ]);
     }
+
     public function show($slug)
     {
 

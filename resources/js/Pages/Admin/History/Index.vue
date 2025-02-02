@@ -98,6 +98,7 @@
                           </label>
                           <p class="text-muted mb-0">
                             Allowed formats: JPG, PNG. Max size: 1MB.
+                            <span class="text-warning">Recommended dimensions: 481 x 481 pixels.</span>
                           </p>
                         </div>
                       </div>
@@ -135,6 +136,7 @@
                           </label>
                           <p class="text-muted mb-0">
                             Allowed formats: JPG, PNG. Max size: 1MB.
+                            <span class="text-warning">Recommended dimensions: 274 x 299 pixels.</span>
                           </p>
                         </div>
                       </div>

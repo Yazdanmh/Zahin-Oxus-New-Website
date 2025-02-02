@@ -48,7 +48,8 @@
                         <span class="d-none d-sm-block">Reset</span>
                       </button>
                       <p class="text-muted mb-0">
-                        Allowed JPG, GIF, or PNG. Max size of 1MB.
+                        Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
+                        <span class="text-warning">Recommended dimensions: 529 x 713 pixels.</span>
                       </p>
                     </div>
                   </div>
@@ -143,7 +144,7 @@
   </AdminLayout>
 </template>
   
-  <script setup>
+<script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
