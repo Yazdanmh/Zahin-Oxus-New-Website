@@ -6,8 +6,6 @@
         </h4>
   
         <div class="card">
-       
-  
           <div class="card-body">
             <!-- Check if participants are available -->
             <div v-if="participants.length > 0">

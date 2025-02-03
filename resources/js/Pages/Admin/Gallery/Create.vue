@@ -46,14 +46,15 @@
                         </button>
                         <p class="text-muted mb-0">
                           Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
-                        <span class="text-warning">Recommended dimensions: 200 x 200 pixels. Or Square</span>
+                        <span class="text-warning">Recommended dimensions: 200 x 200 pixels. Or Square</span> <br>
+                        <span v-if="errors.image" class="text-danger mt-2">
+                          {{ errors.image }}
+                        </span>
 
                         </p>
                       </div>
                     </div>
-                    <div v-if="errors.image" class="text-danger mt-2">
-                      {{ errors.image }}
-                    </div>
+                    
                   </div>
   
                   <div class="row">
@@ -171,11 +172,8 @@
         toast.success("Gallery Image Added Successfully");
       },
       onError: (err) => {
-        if (err.response?.data?.errors) {
-          errors.value = err.response.data.errors;
-        } else {
-          toast.error("An error occurred: " + (err.message || "Unknown error"));
-        }
+        errors.value = err; 
+        toast.error('Error occurred while processing the form!');
       },
     });
   };

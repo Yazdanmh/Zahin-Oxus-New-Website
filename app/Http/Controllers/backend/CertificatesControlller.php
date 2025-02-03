@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Certificate; 
 use App\Models\Training; 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
 
 class CertificatesControlller extends Controller
 {
@@ -47,16 +48,16 @@ class CertificatesControlller extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'certificate_code' => 'required|string|max:255',
-            'certificate_name' => 'required|string|max:255',
+            'certificate_code' => 'required|string|max:20',
+            'certificate_name' => 'required|string|max:100',
             'issue_date' => 'required|date',
             'for_who' => 'required|string|max:255',
             'training_id' => 'required|exists:trainings,id',
-            'certificate_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048', // Add validation for file
+            'certificate_file' => 'required|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return Redirect::back()->withErrors($validator)->withInput();
         }
 
         $certificate = new Certificate();
@@ -71,12 +72,10 @@ class CertificatesControlller extends Controller
             $file = $request->file('certificate_file');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $filePath = $file->storeAs('certificates', $fileName, 'public');
-            $certificate->certificate_file = $filePath; // Save file path to database
+            $certificate->certificate_file = $filePath;
         }
 
         $certificate->save();
-
-        // Return success message
         return redirect()->route('certificate.index')->with('success', 'Certificate created successfully!');
     }
 
@@ -92,32 +91,29 @@ class CertificatesControlller extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'certificate_code' => 'required|string|max:255',
-            'certificate_name' => 'required|string|max:255',
+            'certificate_code' => 'required|string|max:20',
+            'certificate_name' => 'required|string|max:100',
             'issue_date' => 'required|date',
             'for_who' => 'required|string|max:255',
             'training_id' => 'required|exists:trainings,id',
-            'certificate_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx', // Validate the file
+            'certificate_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx',
         ]);
     
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+            return Redirect::back()->withErrors($validator)->withInput();
         }
    
-        // Find the certificate by ID
         $certificate = Certificate::findOrFail($id);
     
-        // Update certificate details
         $certificate->certificate_code = $request->certificate_code;
         $certificate->certificate_name = $request->certificate_name;
         $certificate->issue_date = $request->issue_date;
         $certificate->for_who = $request->for_who;
         $certificate->training_id = $request->training_id;
     
-        // Handle file upload
+
         if ($request->hasFile('certificate_file')) {
-            // Delete the old file if it exists
-            if ($certificate->certificate_file && \Storage::disk('public')->exists($certificate->certificate_file)) {
+            if ($certificate->certificate_file) {
                 \Storage::disk('public')->delete($certificate->certificate_file);
             }
     

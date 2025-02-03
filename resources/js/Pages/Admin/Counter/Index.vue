@@ -140,6 +140,10 @@ const submit = () => {
     onSuccess: () => {
       toast.success("Counters Updated Successfully");
     },
+    onError: (err) =>{
+      errors.value = err; 
+      toast.error("Error occurred while proccesing the form!");
+    }
   });
 };
 </script>

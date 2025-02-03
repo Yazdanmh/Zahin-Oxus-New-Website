@@ -67,6 +67,7 @@ class PortfolioController extends Controller
             'category_id' => 'required|integer',
             'has_form' => 'required|integer',
             'date' => 'required|date',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
         ]);
 
         $portfolio->title = $request['title'];

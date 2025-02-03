@@ -208,7 +208,8 @@ const submit = () => {
       toast.success("Service Created Successfully"); // Show success message
     },
     onError: (err) => {
-      toast.error("Error: " + err); // Show error message
+      errors.value = err; 
+      toast.error("Error occurred while procesing the form! "); // Show error message
     },
   });
 };

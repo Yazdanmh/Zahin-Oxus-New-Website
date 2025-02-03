@@ -34,7 +34,7 @@
                         v-if="errors.certificate_code"
                         class="text-danger mt-2"
                       >
-                        {{ errors.certificate_code[0] }}
+                        {{ errors.certificate_code }}
                       </div>
                     </div>
                   </div>
@@ -56,7 +56,7 @@
                         v-if="errors.certificate_name"
                         class="text-danger mt-2"
                       >
-                        {{ errors.certificate_name[0] }}
+                        {{ errors.certificate_name }}
                       </div>
                     </div>
                   </div>
@@ -75,7 +75,7 @@
                       />
                       <!-- Display error for issue_date -->
                       <div v-if="errors.issue_date" class="text-danger mt-2">
-                        {{ errors.issue_date[0] }}
+                        {{ errors.issue_date }}
                       </div>
                     </div>
                   </div>
@@ -94,7 +94,7 @@
                       />
                       <!-- Display error for for_who -->
                       <div v-if="errors.for_who" class="text-danger mt-2">
-                        {{ errors.for_who[0] }}
+                        {{ errors.for_who }}
                       </div>
                     </div>
                   </div>
@@ -123,7 +123,7 @@
                       </select>
                       <!-- Display error for training_id -->
                       <div v-if="errors.training_id" class="text-danger mt-2">
-                        {{ errors.training_id[0] }}
+                        {{ errors.training_id }}
                       </div>
                     </div>
                   </div>
@@ -144,7 +144,7 @@
                         v-if="errors.certificate_file"
                         class="text-danger mt-2"
                       >
-                        {{ errors.certificate_file[0] }}
+                        {{ errors.certificate_file }}
                       </div>
                     </div>
                   </div>
@@ -194,7 +194,7 @@ const form = useForm({
   issue_date: "",
   for_who: "",
   training_id: "",
-  certificate_file: null, // Added file field
+  certificate_file: null, 
 });
 
 const handleFileUpload = (event) => {
@@ -207,15 +207,17 @@ const submit = () => {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Certificate Created Successfully");
-      // Reset errors if needed
-      errors.value = {};
+      form.reset();
+      errors.value = {}; 
     },
     onError: (err) => {
-      errors.value = err.response?.data.errors || {};
-      toast.error("Error: " + (err.response?.data.message || err.message));
+      console.log(err); 
+      errors.value = err 
+      toast.error("Error: " + (err.response?.data?.message || 'An error occurred while processing your request.'));
     },
   });
 };
+
 </script>
   
   <style scoped>

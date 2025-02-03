@@ -42,7 +42,10 @@
                       </label>
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB 511 X 388. <br>
-                        <span class="text-warning">Recommended dimensions: 511 x 338 pixels.</span>
+                        <span class="text-warning">Recommended dimensions: 511 x 338 pixels.</span><br>
+                        <span v-if="errors.image_one" class="text-danger mt-2">
+                          {{ errors.image_one }}
+                        </span>
 
                       </p>
                     </div>
@@ -72,7 +75,10 @@
                       </label>
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB 357 X 228. <br>
-                        <span class="text-warning">Recommended dimensions: 357 x 228 pixels.</span>
+                        <span class="text-warning">Recommended dimensions: 357 x 228 pixels.</span> <br>
+                        <span v-if="errors.image_two" class="text-danger mt-2">
+                          {{ errors.image_two }}
+                        </span>
 
                       </p>
                     </div>
@@ -88,6 +94,9 @@
                         id="title"
                         v-model="form.title"
                       />
+                      <span v-if="errors.title" class="text-danger mt-2">
+                          {{ errors.title }}
+                        </span>
                     </div>
                   </div>
                   <div class="col-md-8">
@@ -101,6 +110,9 @@
                         id="features"
                         v-model="form.features"
                       />
+                      <span v-if="errors.features" class="text-danger mt-2">
+                          {{ errors.features }}
+                        </span>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -114,6 +126,9 @@
                         v-model="form.description"
                         rows="5"
                       ></textarea>
+                      <span v-if="errors.description" class="text-danger mt-2">
+                          {{ errors.description }}
+                        </span>
                     </div>
                   </div>
                  
@@ -152,7 +167,7 @@ const props = defineProps({
   },
 });
 const toast = useToast();
-
+const errors = ref({}); 
 const form = useForm({
   title: props.about.title,
   description: props.about.description,
@@ -196,6 +211,10 @@ const submit = () => {
     onSuccess: () => {
       toast.success("About Section Updated Successfully");
     },
+    onError: (err)=>{
+      errors.value = err; 
+      toast.error("Error occurred while processing the form!");
+    }
   });
 };
 </script>

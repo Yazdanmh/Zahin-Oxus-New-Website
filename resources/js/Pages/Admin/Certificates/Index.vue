@@ -186,7 +186,10 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Swal from "sweetalert2"; // Import SweetAlert2
 import { Head, useForm, Link } from "@inertiajs/vue3";
 import { ref, computed, watch } from "vue";
+import { useToast } from "vue-toastification";
 
+const form = useForm({}); 
+const toast = useToast({});
 const props = defineProps({
   certificates: {
     type: Object,

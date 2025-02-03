@@ -11,11 +11,6 @@
           <!-- Contact Information Section -->
           <div class="col-lg-4">
             <div class="contact__info-wrap">
-              <img
-                :src="'/storage/' + props.training.image"
-                alt=""
-                class="rounded mb-3"
-              />
               <p>
                 <strong>Start Date:</strong>
                 {{
@@ -42,7 +37,18 @@
                 }}
               </p>
               <h2>{{ props.training.name }}</h2>
-              <p>{{ props.training.description }}</p>
+              <p v-html="truncatedDescription"></p>
+              <Link
+                :href="route('trainings.show', props.training.slug)"
+                class="tg-btn tg-btn-two"
+              >
+                Read More
+                <img
+                  src="/frontend/assets/img/icons/right_arrow.svg"
+                  alt="right arrow"
+                  class="injectable"
+                />
+              </Link>
             </div>
           </div>
 
@@ -65,6 +71,9 @@
                       <span v-if="form.errors.name" class="error-message">{{
                         form.errors.name[0]
                       }}</span>
+                      <span v-if="error.name" class="error-message">{{
+                        error.name
+                      }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -78,6 +87,9 @@
                       />
                       <span v-if="form.errors.email" class="error-message">{{
                         form.errors.email[0]
+                      }}</span>
+                      <span v-if="error.email" class="error-message">{{
+                        error.email
                       }}</span>
                     </div>
                   </div>
@@ -93,6 +105,9 @@
                       <span v-if="form.errors.phone" class="error-message">{{
                         form.errors.phone[0]
                       }}</span>
+                      <span v-if="error.phone" class="error-message">{{
+                        error.phone
+                      }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -104,11 +119,12 @@
                         type="text"
                         placeholder="Enter your organization"
                       />
-                      <span
-                        v-if="form.errors.organization"
-                        class="error-message"
-                        >{{ form.errors.organization[0] }}</span
-                      >
+                      <span v-if="form.errors.organization" class="error-message">{{
+                        form.errors.organization[0]
+                      }}</span>
+                      <span v-if="error.organization" class="error-message">{{
+                        error.organization
+                      }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -120,10 +136,13 @@
                         type="text"
                         placeholder="Enter your identity card ID"
                       />
+                      <span v-if="form.errors.identity_card_id" class="error-message">{{
+                        form.errors.identity_card_id[0]
+                      }}</span>
                       <span
-                        v-if="form.errors.identity_card_id"
+                        v-if="error.identity_card_id"
                         class="error-message"
-                        >{{ form.errors.identity_card_id[0] }}</span
+                        >{{ error.identity_card_id }}</span
                       >
                     </div>
                   </div>
@@ -139,6 +158,9 @@
                       <span v-if="form.errors.position" class="error-message">{{
                         form.errors.position[0]
                       }}</span>
+                      <span v-if="error.position" class="error-message">{{
+                        error.position
+                      }}</span>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -152,6 +174,9 @@
                       />
                       <span v-if="form.errors.address" class="error-message">{{
                         form.errors.address[0]
+                      }}</span>
+                      <span v-if="error.address" class="error-message">{{
+                        error.address
                       }}</span>
                     </div>
                   </div>
@@ -200,7 +225,7 @@
                 >
                   Read More
                   <img
-                    src="assets/img/icons/right_arrow.svg"
+                    src="/frontend/assets/img/icons/right_arrow.svg"
                     alt="right arrow"
                     class="injectable"
                   />
@@ -221,9 +246,9 @@
   </ClientLayout>
 </template>
   
-  <script setup>
+<script setup>
 import { Link, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import ClientLayout from "@/Layouts/ClientLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import Breadcrumb from "@/Components/Client/Breadcrumb.vue";
@@ -246,13 +271,25 @@ const form = useForm({
   identity_card_id: "",
   position: "",
   address: "",
-  training_name: props.training.name, 
+  training_name: props.training.name,
+});
+
+// Truncate description to 500 characters but keep HTML tags
+const truncatedDescription = computed(() => {
+  // Remove HTML tags using a regex, then limit the characters
+  const textWithoutHtml = props.training.description.replace(
+    /(<([^>]+)>)/gi,
+    ""
+  );
+  return textWithoutHtml.length > 500
+    ? textWithoutHtml.substring(0, 500) + "..."
+    : textWithoutHtml;
 });
 
 const responseMessage = ref("");
 const buttonText = ref("Apply");
 const responseClass = ref("");
-
+const error = ref({});
 const validateForm = () => {
   let valid = true;
 
@@ -322,11 +359,13 @@ const submitForm = async () => {
           "Your application has been submitted successfully!";
         responseClass.value = "success-message";
         form.reset();
+        error.value = {};
       },
-      onError: () => {
+      onError: (err) => {
         responseMessage.value =
           "Error occurred while submitting your application.";
         responseClass.value = "error-message";
+        error.value = err;
       },
     });
   } catch {
@@ -336,7 +375,10 @@ const submitForm = async () => {
   }
 };
 </script>
-  
+
+
+
+
   <style scoped>
 .error-message {
   color: red;

@@ -16,7 +16,9 @@
               <form @submit.prevent="submit">
                 <!-- Reuse the TextEditor component -->
                 <TextEditor v-model="form.our_mission" />
-
+                <span v-if="errors.our_mission" class="text-danger mt-2">
+                          {{ errors.our_mission }}
+                        </span>
                 <button type="submit" class="btn btn-primary mt-3">
                   Update
                 </button>
@@ -35,6 +37,7 @@ import { Head } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import TextEditor from "@/Components/Admin/TextEditor.vue"; // Import the TextEditor component
+import { ref } from "vue";
 
 // Props passed from the server
 const props = defineProps({
@@ -54,7 +57,7 @@ const props = defineProps({
 
 // Toast notifications
 const toast = useToast();
-
+const errors = ref({});
 // Initialize form with the correct value
 const form = useForm({
   our_mission: props.our_mission?.our_mission || "", // Use the correct property from props
@@ -67,7 +70,8 @@ const submit = () => {
     onSuccess: () => {
       toast.success("About Section Updated Successfully");
     },
-    onError: () => {
+    onError: (err) => {
+      errors.value = err;
       toast.error("An error occurred while updating the About Section.");
     },
   });

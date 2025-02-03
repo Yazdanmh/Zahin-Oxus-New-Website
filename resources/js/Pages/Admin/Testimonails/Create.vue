@@ -51,12 +51,14 @@
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
                         <span class="text-warning">Recommended dimensions: 100 x 100 pixels.</span>
+                        <br>
+                        <span v-if="errors.image" class="text-danger mt-2">
+                          {{ errors.image }}
+                        </span>
                       </p>
                     </div>
                   </div>
-                  <div v-if="errors.image" class="text-danger mt-2">
-                    {{ errors.image }}
-                  </div>
+                  
                 </div>
                 <div class="row">
                   <div class="col-md-4">
@@ -151,16 +153,15 @@ import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 
 const props = defineProps({
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
-  
-})
+});
 const toast = useToast();
 
 const form = useForm({
@@ -214,7 +215,7 @@ const validateForm = () => {
   if (!form.position) {
     errors.value.position = "Position is required";
   }
-  return Object.keys(errors.value).length === 0; 
+  return Object.keys(errors.value).length === 0;
 };
 
 const submit = () => {
@@ -227,16 +228,11 @@ const submit = () => {
       toast.success("Testimonial Created Successfully");
     },
     onError: (err) => {
-      // Assuming the validation errors are returned in err.response.data.errors
-      if (err.response && err.response.data && err.response.data.errors) {
-        errors.value = err.response.data.errors; // Set the errors to be displayed
-      } else {
-        toast.error("An error occurred: " + (err.message || "Unknown error"));
-      }
+      errors.value = err;
+      toast.error("Error occured while processing the form!");
     },
   });
 };
-
 </script>
   
   <style scoped>

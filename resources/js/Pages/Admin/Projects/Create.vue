@@ -49,14 +49,19 @@
                         <span class="d-none d-sm-block">Reset</span>
                       </button>
                       <p class="text-muted mb-0">
-                        Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
-                        <span class="text-warning">Recommended dimensions: 1000 x 710 pixels.</span>
+                        Allowed JPG, GIF, or PNG. Max size of 1MB. <br />
+                        <span class="text-warning"
+                          >Recommended dimensions: 1000 x 710 pixels.</span
+                          
+                        >
+                        <br>
+                        <span v-if="errors.image" class="text-danger mt-2">
+                    {{ errors.image }}
+                        </span>
                       </p>
                     </div>
                   </div>
-                  <div v-if="errors.image" class="text-danger mt-2">
-                    {{ errors.image }}
-                  </div>
+                  
                 </div>
 
                 <div class="row">
@@ -85,7 +90,7 @@
                         class="form-select"
                         v-model="form.category_id"
                       >
-                        <option>Select Category</option>
+                        <option value="" disabled>--Select Category--</option>
                         <option
                           v-for="category in categories"
                           :key="category.id"
@@ -143,10 +148,10 @@
   </AdminLayout>
 </template>
   
-  <script setup>
+<script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, useForm, Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useToast } from "vue-toastification";
 import TextEditor from "@/Components/Admin/TextEditor.vue";
 const toast = useToast();
@@ -156,25 +161,33 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
 });
 
 const form = useForm({
   name: "",
   description: "",
-  category_id: null,
+  category_id: null, // This should be set to the first category's id later
   image: null,
 });
 
 const errors = ref({});
 const imagePreview = ref(null);
+
+// Watch the categories prop and set the default category_id
+watchEffect(() => {
+  if (props.categories.length > 0 && form.category_id === null) {
+    // Set the default category_id to the first category
+    form.category_id = props.categories[0].id;
+  }
+});
 
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
@@ -226,16 +239,13 @@ const submit = () => {
       toast.success("Project Created Successfully");
     },
     onError: (err) => {
-      if (err.response && err.response.data && err.response.data.errors) {
-        errors.value = err.response.data.errors; // Set the errors to be displayed
-      } else {
-        toast.error("An error occurred: " + (err.message || "Unknown error"));
-      }
+      errors.value = err; 
+      toast.error('Error occurred while processing the form!');
     },
   });
 };
 </script>
-  
+
   <style scoped>
 </style>
   

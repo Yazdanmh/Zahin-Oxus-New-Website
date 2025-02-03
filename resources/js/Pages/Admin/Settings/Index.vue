@@ -53,13 +53,15 @@
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
                         <span class="text-warning">Recommended dimensions: 130 x 30 pixels.</span>
+                        <br>
+                        <span v-if="errors.logo" class="text-danger mt-2">
+                    {{ errors.logo }}
+                  </span>
 
                       </p>
                     </div>
                   </div>
-                  <div v-if="errors.logo" class="text-danger mt-2">
-                    {{ errors.logo }}
-                  </div>
+                  
                 </div>
                 <div class="row">
                   <template v-for="(field, index) in fields" :key="index">
@@ -259,6 +261,10 @@ const submit = () => {
     onSuccess: () => {
       toast.success('Setting Updated Successfully');
     },
+    onError:(err) =>{
+      errors.value = err; 
+      toast.error('Error occurred while processing the form!');
+    }
   });
 };
 

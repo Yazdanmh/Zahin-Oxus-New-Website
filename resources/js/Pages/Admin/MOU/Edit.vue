@@ -28,7 +28,7 @@
                         />
                         <!-- Display error for title -->
                         <div v-if="errors.title" class="text-danger mt-2">
-                          {{ errors.title[0] }}
+                          {{ errors.title }}
                         </div>
                       </div>
                     </div>
@@ -44,7 +44,7 @@
                         />
                         <!-- Display error for start_date -->
                         <div v-if="errors.start_date" class="text-danger mt-2">
-                          {{ errors.start_date[0] }}
+                          {{ errors.start_datetitle }}
                         </div>
                       </div>
                     </div>
@@ -60,7 +60,7 @@
                         />
                         <!-- Display error for end_date -->
                         <div v-if="errors.end_date" class="text-danger mt-2">
-                          {{ errors.end_date[0] }}
+                          {{ errors.end_datetitle }}
                         </div>
                       </div>
                     </div>
@@ -80,7 +80,7 @@
                         />
                         <!-- Display error for parties_involved -->
                         <div v-if="errors.parties_involved" class="text-danger mt-2">
-                          {{ errors.parties_involved[0] }}
+                          {{ errors.parties_involvedtitle }}
                         </div>
                       </div>
                     </div>
@@ -100,7 +100,7 @@
                         </select>
                         <!-- Display error for status -->
                         <div v-if="errors.status" class="text-danger mt-2">
-                          {{ errors.status[0] }}
+                          {{ errors.statustitle }}
                         </div>
                       </div>
                     </div>
@@ -117,12 +117,10 @@
                         />
                         <!-- Display error for mou_file -->
                         <div v-if="errors.mou_file" class="text-danger mt-2">
-                          {{ errors.mou_file[0] }}
+                          {{ errors.mou_file }}
                         </div>
                         <!-- Display existing file link if available -->
-                        <div v-if="form.existing_file">
-                          <p>Existing MOU File: <a :href="form.existing_file_url" target="_blank">View File</a></p>
-                        </div>
+                      
                       </div>
                     </div>
   
@@ -132,7 +130,7 @@
                         <!-- Bind the description to the TextEditor -->
                         <TextEditor v-model="form.description" @editor-change="updateDescription" />
                         <div v-if="errors.description" class="text-danger mt-2">
-                          {{ errors.description[0] }}
+                          {{ errors.descriptiontitle }}
                         </div>
                       </div>
                     </div>
@@ -231,11 +229,9 @@
       },
       
       onError: (err) => {
-        errors.value = { ...err.response?.data.errors }; 
-        nextTick(() => {
-        });
+        errors.value = err; 
   
-        toast.error("Error: " + (err.response?.data.message || err.message));
+        toast.error("Error occurred while processing the form! ");
       },
     });
   };

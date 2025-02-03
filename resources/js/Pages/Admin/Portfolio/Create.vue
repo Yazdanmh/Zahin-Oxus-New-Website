@@ -51,13 +51,14 @@
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
                         <span class="text-warning">Recommended dimensions: 600 x 732 pixels.</span>
-
+                        <br>
+                        <span v-if="errors.image" class="text-danger mt-2">
+                    {{ errors.image }}
+                        </span>
                       </p>
                     </div>
                   </div>
-                  <div v-if="errors.image" class="text-danger mt-2">
-                    {{ errors.image }}
-                  </div>
+                 
                 </div>
 
                 <div class="row">
@@ -172,10 +173,10 @@
   </AdminLayout>
 </template>
   
-  <script setup>
+<script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, useForm, Link } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useToast } from "vue-toastification";
 import TextEditor from "@/Components/Admin/TextEditor.vue";
 
@@ -186,13 +187,13 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
 });
 
@@ -200,13 +201,20 @@ const form = useForm({
   title: "",
   date: "",
   description: "",
-  category_id: null,
+  category_id: null, // Start with null, so --Select Category-- is visible initially
   image: null,
   has_form: false,
 });
 
 const errors = ref({});
 const imagePreview = ref(null);
+
+// Watch categories to ensure that the first option is selected if the user hasn't selected one yet
+watchEffect(() => {
+  if (props.categories.length > 0 && form.category_id === null) {
+    form.category_id = props.categories[0].id; // Set to the first category if none is selected
+  }
+});
 
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
@@ -230,11 +238,11 @@ const resetImage = () => {
 };
 
 const cancel = () => {
-  window.history.back();
+  window.history.back(); // Navigate to the previous page
 };
 
 const validateForm = () => {
-  errors.value = {};
+  errors.value = {}; // Reset errors
   if (!form.title) {
     errors.value.title = "Title is required";
   }
@@ -257,16 +265,13 @@ const submit = () => {
       toast.success("Portfolio Created Successfully");
     },
     onError: (err) => {
-      if (err.response?.data?.errors) {
-        errors.value = err.response.data.errors;
-      } else {
-        toast.error("An error occurred: " + (err.message || "Unknown error"));
-      }
+      errors.value = err; 
+      toast.error('Error occurred while processing the form!');
     },
   });
 };
 </script>
-  
+
 
 <style scoped>
 </style>

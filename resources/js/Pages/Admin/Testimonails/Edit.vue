@@ -46,14 +46,14 @@
                         </button>
                         <p class="text-muted mb-0">
                           Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
-                        <span class="text-warning">Recommended dimensions: 100 x 100 pixels.</span>
-
+                        <span class="text-warning">Recommended dimensions: 100 x 100 pixels.</span> <br>
+                        <span v-if="errors.image" class="text-danger mt-2">
+                      {{ errors.image }}
+                    </span>
                         </p>
                       </div>
                     </div>
-                    <div v-if="errors.image" class="text-danger mt-2">
-                      {{ errors.image }}
-                    </div>
+                    
                   </div>
                   <div class="row">
                     <div class="col-md-4">
@@ -230,11 +230,8 @@
         toast.success("Testimonial Updated Successfully");
       },
       onError: (err) => {
-        if (err.response && err.response.data && err.response.data.errors) {
-          errors.value = err.response.data.errors;
-        } else {
-          toast.error("An error occurred: " + (err.message || "Unknown error"));
-        }
+        errors.value = err; 
+        toast.error("Error occurred while processing the form");
       },
     });
   };

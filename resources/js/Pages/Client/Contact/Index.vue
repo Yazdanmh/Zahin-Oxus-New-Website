@@ -62,6 +62,7 @@
                     />
                     <!-- Show error message for 'name' -->
                     <span v-if="form.errors.name" class="error-message">{{ form.errors.name[0] }}</span>
+                    <span v-if="error.name" class="error-message">{{ error.name }}</span>
                   </div>
                   <div class="form-grp">
                     <label for="email">Email *</label>
@@ -72,6 +73,7 @@
                     />
                     <!-- Show error message for 'email' -->
                     <span v-if="form.errors.email" class="error-message">{{ form.errors.email[0] }}</span>
+                    <span v-if="error.email" class="error-message">{{ error.email }}</span>
                   </div>
                   <div class="form-grp">
                     <label for="comment">Comment *</label>
@@ -81,6 +83,7 @@
                     ></textarea>
                     <!-- Show error message for 'message' -->
                     <span v-if="form.errors.message" class="error-message">{{ form.errors.message[0] }}</span>
+                    <span v-if="error.message" class="error-message">{{ error.message }}</span>
                   </div>
                   <button type="submit" class="tg-btn tg-btn-three">{{ buttonText }}</button>
                 </form>
@@ -162,7 +165,7 @@
     message: '',
     submitted: false, // Track if form has been submitted
   });
-  
+  const error = ref({});
   // Define response message, button text, and the class for response message
   const responseMessage = ref('');
   const buttonText = ref('Send Message');
@@ -219,10 +222,12 @@
           responseMessage.value = 'Your message has been sent successfully!';
           responseClass.value = 'success-message';  
           form.reset();
+          error.value = {};
         },
-        onError: () => {
+        onError: (err) => {
           responseMessage.value = 'There was an error sending your message. Please try again.';
           responseClass.value = 'error-message';  // Set class for error color
+          error.value = err; 
         }
       });
     } catch (error) {

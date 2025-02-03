@@ -21,7 +21,7 @@ class ContactController extends Controller
         $validated = $request->validate([
             'name'    => 'required|string|max:255',
             'email'   => 'required|email|max:255',
-            'message' => 'required|string',
+            'message' => 'required|string|max:500',
         ]);
         
         // Step 2: Create the contact form entry in the database
@@ -33,7 +33,7 @@ class ContactController extends Controller
 
         // Step 3: Send the email using Laravel’s Mailable system
         try {
-            Mail::to('mohammadiy207@gmail.com')->send(new ContactFormMail(
+            Mail::to('info@zahin-oxus.af')->send(new ContactFormMail(
                 $validated['name'],
                 $validated['email'],
                 $validated['message']

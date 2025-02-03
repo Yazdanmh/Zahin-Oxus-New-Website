@@ -52,6 +52,9 @@
                     <p class="text-muted mb-0">
                       Allowed JPG, GIF, or PNG. Max size of 1MB.
                       <span class="text-warning">Recommended dimensions: 188 x 22 pixels.</span>
+                      <div v-if="errors.image" class="text-danger mt-2">
+                      {{ errors.image }}
+                       </div>
                     </p>
                   </div>
 
@@ -68,8 +71,8 @@
                         placeholder="Enter company name"
                       />
                     </div>
-                    <div v-if="form.errors.name" class="text-danger mt-2">
-                      {{ form.errors.name }}
+                    <div v-if="errors.name" class="text-danger mt-2">
+                      {{ errors.name }}
                     </div>
                   </div>
                 </div>
@@ -206,17 +209,18 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
 });
 
 const toast = useToast();
+const errors = ref({});
 const form = useForm({
   name: "",
   image: null,
@@ -257,6 +261,7 @@ const submit = () => {
       resetImage();
     },
     onError: (err) => {
+      errors.value = err;
       toast.error("Error: " + err.message);
     },
   });

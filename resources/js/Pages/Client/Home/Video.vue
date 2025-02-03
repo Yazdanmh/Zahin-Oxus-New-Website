@@ -6,7 +6,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-5 order-0 order-lg-2">
                         <div class="video__btn">
-                            <a href="https://www.youtube.com/watch?v=6mkoGSqTqFI" class="play__btn popup-video"><img src="/frontend/assets/img/images/play_video.svg" alt=""></a>
+                            <a href="#" class="play__btn popup-video"><img src="/frontend/assets/img/images/play_video.svg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-lg-7">

@@ -24,7 +24,7 @@ class NewsController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'is_published' => 'required|boolean',
-            'tags' => 'required|string', 
+            'tags' => 'required|string|max:255', 
             'image' => 'required|image|mimes:jpeg,png,gif,PNG',
         ]);
 
@@ -54,7 +54,7 @@ class NewsController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'tags' => 'required|string',
+            'tags' => 'required|string|max:255',
             'is_published' => 'required|boolean',
             'image' => 'nullable|image|mimes:jpeg,png,gif,PNG',  
         ]);

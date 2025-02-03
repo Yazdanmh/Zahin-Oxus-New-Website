@@ -31,6 +31,9 @@
                         placeholder="Academic Calendar 2025"
                         v-model="form.title"
                       />
+                      <div v-if="errors.title" class="text-danger mt-2">
+                        {{ errors.title }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -45,6 +48,9 @@
                         @change="handleFileUpload"
                         accept=".pdf,.docx,.xls,.xlsx"
                       />
+                      <div v-if="errors.file" class="text-danger mt-2">
+                        {{ errors.file }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -187,13 +193,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
 });
 const toast = useToast();
@@ -201,6 +207,7 @@ const form = useForm({
   title: "",
   file: null, // The uploaded file will be stored here
 });
+const errors = ref({});
 
 const filePreview = ref(null); // Holds preview information about the file
 const uploadedFile = ref(null); // Holds information about the uploaded file
@@ -256,7 +263,8 @@ const submit = () => {
       filePreview.value = null;
     },
     onError: (err) => {
-      toast.error("Error: " + err.message);
+      errors.value = err; 
+      toast.error("Error occurred while porccessing the form!");
     },
   });
 };

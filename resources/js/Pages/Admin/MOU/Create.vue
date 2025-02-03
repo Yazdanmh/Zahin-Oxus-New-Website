@@ -30,7 +30,7 @@
                       />
                       <!-- Display error for title -->
                       <div v-if="errors.title" class="text-danger mt-2">
-                        {{ errors.title[0] }}
+                        {{ errors.title }}
                       </div>
                     </div>
                   </div>
@@ -48,7 +48,7 @@
                       />
                       <!-- Display error for start_date -->
                       <div v-if="errors.start_date" class="text-danger mt-2">
-                        {{ errors.start_date[0] }}
+                        {{ errors.start_date}}
                       </div>
                     </div>
                   </div>
@@ -66,7 +66,7 @@
                       />
                       <!-- Display error for end_date -->
                       <div v-if="errors.end_date" class="text-danger mt-2">
-                        {{ errors.end_date[0] }}
+                        {{ errors.end_date }}
                       </div>
                     </div>
                   </div>
@@ -91,7 +91,7 @@
                         v-if="errors.parties_involved"
                         class="text-danger mt-2"
                       >
-                        {{ errors.parties_involved[0] }}
+                        {{ errors.parties_involved }}
                       </div>
                     </div>
                   </div>
@@ -111,7 +111,7 @@
                       </select>
                       <!-- Display error for status -->
                       <div v-if="errors.status" class="text-danger mt-2">
-                        {{ errors.status[0] }}
+                        {{ errors.status }}
                       </div>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
                       />
                       <!-- Display error for mou_file -->
                       <div v-if="errors.mou_file" class="text-danger mt-2">
-                        {{ errors.mou_file[0] }}
+                        {{ errors.mou_file }}
                       </div>
                     </div>
                   </div>
@@ -144,7 +144,7 @@
                         @editor-change="updateDescription"
                       />
                       <div v-if="errors.description" class="text-danger mt-2">
-                        {{ errors.description[0] }}
+                        {{ errors.description }}
                       </div>
                     </div>
                   </div>
@@ -229,13 +229,7 @@ const submit = () => {
     },
     
     onError: (err) => {
-      // Ensure Vue detects reactivity when setting the errors
-      errors.value = { ...err.response?.data.errors }; // Creating a new object for reactivity
-
-      nextTick(() => {
-        // Ensure the DOM updates and the errors are displayed properly
-      });
-
+      errors.value = err; 
       toast.error("Error: " + (err.response?.data.message || err.message));
     },
   });

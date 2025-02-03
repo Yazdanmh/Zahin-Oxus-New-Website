@@ -25,7 +25,7 @@ class HeroController extends Controller
             'subtitle' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'button' => 'nullable|string|max:255',
-            'link' => 'nullable|string|max:255',
+            'link' => 'nullable|url|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

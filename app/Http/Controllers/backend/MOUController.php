@@ -9,6 +9,8 @@ use App\Models\MOU;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Str;
+use Illuminate\Support\Facades\Redirect;
+
 
 class MOUController extends Controller
 {
@@ -54,11 +56,7 @@ class MOUController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // Pass errors directly in the Inertia response as 'errors'
-            return Inertia::render('Admin/MOU/Create', [
-                'errors' => $validator->errors(),
-                'form' => $request->all() // Pass form data to repopulate the fields
-            ]);
+            return Redirect::back()->withErrors($validator)->withInput();
         }
 
         // Handle file upload if present
@@ -105,10 +103,7 @@ class MOUController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Inertia::render('Admin/MOU/Edit', [
-                'errors' => $validator->errors(),
-                'form' => $request->all(),
-            ]);
+            return Redirect::back()->withErrors($validator)->withInput();
         }
 
         $mou = MOU::findOrFail($id);

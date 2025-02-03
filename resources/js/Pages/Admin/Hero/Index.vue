@@ -203,6 +203,9 @@ const submit = () => {
     onSuccess: () => {
       toast.success("Hero Updated Successfully");
     },
+    onError:(err) => {
+      errors.value = err; 
+    }
   });
 };
 </script>

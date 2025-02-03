@@ -58,6 +58,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255', 
             'description' => 'required|string', 
             'category_id' => 'required|integer', 
+            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG',
         ]);
 
         $project->name = $request->name; 

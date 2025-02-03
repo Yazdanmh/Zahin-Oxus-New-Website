@@ -27,7 +27,7 @@
                       />
                       <!-- Display error for certificate_code -->
                       <div v-if="errors.certificate_code" class="text-danger mt-2">
-                        {{ errors.certificate_code[0] }}
+                        {{ errors.certificate_code }}
                       </div>
                     </div>
                   </div>
@@ -44,7 +44,7 @@
                       />
                       <!-- Display error for certificate_name -->
                       <div v-if="errors.certificate_name" class="text-danger mt-2">
-                        {{ errors.certificate_name[0] }}
+                        {{ errors.certificate_name }}
                       </div>
                     </div>
                   </div>
@@ -61,7 +61,7 @@
                       />
                       <!-- Display error for issue_date -->
                       <div v-if="errors.issue_date" class="text-danger mt-2">
-                        {{ errors.issue_date[0] }}
+                        {{ errors.issue_date }}
                       </div>
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                       />
                       <!-- Display error for for_who -->
                       <div v-if="errors.for_who" class="text-danger mt-2">
-                        {{ errors.for_who[0] }}
+                        {{ errors.for_who }}
                       </div>
                     </div>
                   </div>
@@ -101,7 +101,7 @@
                       </select>
                       <!-- Display error for training_id -->
                       <div v-if="errors.training_id" class="text-danger mt-2">
-                        {{ errors.training_id[0] }}
+                        {{ errors.training_id }}
                       </div>
                     </div>
                   </div>
@@ -118,7 +118,7 @@
                       />
                       <!-- Display error for certificate_file -->
                       <div v-if="errors.certificate_file" class="text-danger mt-2">
-                        {{ errors.certificate_file[0] }}
+                        {{ errors.certificate_file }}
                       </div>
                     </div>
                   </div>
@@ -189,7 +189,7 @@ const submit = () => {
       errors.value = {};
     },
     onError: (err) => {
-      errors.value = err.response?.data.errors || {};
+      errors.value = err;
       toast.error("Error: " + (err.response?.data.message || err.message));
     },
   });
