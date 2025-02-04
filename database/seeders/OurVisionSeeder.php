@@ -13,7 +13,7 @@ class OurVisionSeeder extends Seeder
     public function run(): void
     {
         OurVision::create([
-            'our_vision' => 'Empowering clients to increase access and usage of quality services for their customers through knowledge sharing, expertise, and experience of professionals with utmost commitment, care, integrity, trust, and teamwork.', 
+            'our_vision' => 'To be a platform or an avenue to provide unrivalled services and to contribute to the growth of our client’s business and indirectly to the growth of Afghanistan’s financial system.', 
         ]);
     }
 }

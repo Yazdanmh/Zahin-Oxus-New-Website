@@ -11,7 +11,7 @@
                         :key="index"
                     >
                         <div class="brand-item">
-                            <img :src="'storage/' + friend.image" alt="img" style="width:188px; height:22px;object-fit:cover;">
+                            <img :src="'storage/' + friend.image" alt="img" style="width:188px; max-height:42px;object-fit: contain;">
                         </div>
                     </div>
                 </div>

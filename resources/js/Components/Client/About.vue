@@ -65,7 +65,7 @@
         <div class="col-lg-6">
           <div class="about__content">
             <div class="section__title mb-15">
-              <span class="sub-title">Behind Our History</span>
+              <span class="sub-title">WHY WE ARE BETTER?</span>
               <h2 class="title">
                 {{ about.title }}
               </h2>

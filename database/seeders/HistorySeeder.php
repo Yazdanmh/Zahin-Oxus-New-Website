@@ -11,10 +11,10 @@ class HistorySeeder extends Seeder
     public function run(): void
     {
         History::create([
-            'title' => 'We Do Consultancy For Developing A New Business Culture Company', 
-            'subtitle' => 'Behind Our History', 
-            'progress_items' => '{"Software":78,"Consulting":80,"Finance":20}',
-            'description' => 'Transform your business with our transforeive consulting solution We go beyond short-term fixes to deliver sustainable growth strategies that future-proof your enterprise.',
+            'title' => 'Transforming Businesses with Expertise and Innovation', 
+            'subtitle' => 'Why Choose Zahin Oxus?', 
+            'progress_items' => '{"FinancialAdvisory":85,"BusinessDevelopment":70,"TrainingPrograms":60}',
+            'description' => 'Zahin Oxus delivers tailored solutions with over 10 years of expertise in financial advisory, business development, and compliance. We combine industry knowledge and technology to provide strategic consulting and measurable results for business growth.',
         ]);
     }
 }

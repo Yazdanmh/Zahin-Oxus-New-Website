@@ -25,7 +25,7 @@ class HeroController extends Controller
             'subtitle' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'button' => 'nullable|string|max:255',
-            'link' => 'nullable|url|max:255',
+            'link' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -44,17 +44,11 @@ class HeroController extends Controller
             'link' => $validatedData['link'] ?? null,
         ]);
 
-        // Handle image upload if it exists
         if ($request->hasFile('image')) {
-            // Delete old image if exists
             if ($hero->image) {
                 Storage::disk('public')->delete($hero->image);
             }
-
-            // Store the new image
             $logoPath = $request->file('image')->store('home', 'public');
-
-            // Update the hero's image path
             $hero->update(['image' => $logoPath]);
         }
 

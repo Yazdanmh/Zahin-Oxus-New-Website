@@ -50,11 +50,12 @@
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
                         <span class="text-warning">Recommended dimensions: 529 x 713 pixels.</span>
+                        <br>
+                        <span v-if="errors.image" class="text-danger mt-2">
+                          {{ errors.image }}
+                        </span>
                       </p>
                     </div>
-                  </div>
-                  <div v-if="errors.image" class="text-danger mt-2">
-                    {{ errors.image }}
                   </div>
                 </div>
                 <div class="row">

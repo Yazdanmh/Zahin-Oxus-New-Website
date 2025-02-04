@@ -50,6 +50,7 @@
               >
                 Upload New Logo
               </button>
+              
               <div v-if="errors.logo" class="text-danger">
                 {{ errors.logo }}
               </div>

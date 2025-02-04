@@ -13,8 +13,8 @@
               </div>
               <div class="project__details-content">
                 <h2 class="title">{{ props.project.name }}</h2>
-                <p>
-                  {{ props.project.description }}
+                <p v-html="props.project.description">
+                  
                 </p>
  
               </div>
