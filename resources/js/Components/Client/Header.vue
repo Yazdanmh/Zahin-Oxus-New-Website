@@ -27,6 +27,10 @@
                   ><a href="tel:0123456789">{{ props.setting.phone }}</a>
                 </li>
                 <li>
+                  <i class=""></i
+                  ><a href="/auth/login">Login</a>
+                </li>
+                <li>
                   <div class="tg-header__top-social">
                     <ul class="list-wrap">
                       <li>

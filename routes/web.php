@@ -136,7 +136,7 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::resource('/mou', MOUController::class);
     Route::post('/mou/{id}', [MOUController::class, 'update'])->name('mou.update');
 
-    route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index'); 
+    route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 });
 Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -146,5 +146,5 @@ Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
 
 require __DIR__ . '/auth.php';
 Route::fallback(function () {
-    return Inertia::render('Admin/Error/Error');  
+    return Inertia::render('Admin/Error/Error');
 });
