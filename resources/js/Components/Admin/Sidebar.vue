@@ -29,9 +29,9 @@
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
       <li
-        :class="{ 'menu-item': true, active: isActiveRoute('dashboard.index') }"
+        :class="{ 'menu-item': true, active: isActiveRoute('dashboard') }"
       >
-        <Link :href="route('dashboard.index')" class="menu-link">
+        <Link :href="route('dashboard')" class="menu-link">
           <i class="menu-icon tf-icons bx bx-home-circle"></i>
           <div>Dashboard</div>
         </Link>

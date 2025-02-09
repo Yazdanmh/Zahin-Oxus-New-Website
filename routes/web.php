@@ -73,7 +73,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 });
 
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
