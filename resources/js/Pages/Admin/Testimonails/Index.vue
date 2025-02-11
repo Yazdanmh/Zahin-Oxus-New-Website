@@ -109,7 +109,7 @@ const toast = useToast();
 
 // Delete a service
 const deleteTestimonial = (id) => {
-  form.delete(route("testimonails.destroy", id), {
+  form.post(route("testimonails.destroy", id), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Testimonail Deleted Successfully");

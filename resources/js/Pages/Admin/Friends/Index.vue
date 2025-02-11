@@ -52,9 +52,11 @@
                     <p class="text-muted mb-0">
                       Allowed JPG, GIF, or PNG. Max size of 1MB.
                       <span class="text-warning">Recommended dimensions: 188 x 22 pixels.</span>
-                      <div v-if="errors.image" class="text-danger mt-2">
+                      <br>
+          
+                      <span v-if="errors.image" class="text-danger mt-2">
                       {{ errors.image }}
-                       </div>
+                       </span>
                     </p>
                   </div>
 
@@ -286,7 +288,7 @@ const changePageTo = (page) => {
 
 const deleteCompany = (companyId) => {
   // Make the delete request
-  form.delete(route("friends.destroy", companyId), {
+  form.post(route("friends.destroy", companyId), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Company Deleted Successfully");

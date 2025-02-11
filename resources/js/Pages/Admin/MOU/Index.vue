@@ -140,7 +140,7 @@
   };
   
   const deleteMOU = (mouId) => {
-    form.delete(route("mou.destroy", mouId), {
+    form.post(route("mou.destroy", mouId), {
       preserveScroll: true,
       onSuccess: () => toast.success("MOU Deleted Successfully"),
       onError: (err) => toast.error("Error: " + err.message),

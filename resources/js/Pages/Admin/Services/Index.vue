@@ -201,7 +201,7 @@ const changePageTo = (page) => {
 
 // Delete a service
 const deleteService = (serviceId) => {
-  form.delete(route("services.destroy", serviceId), {
+  form.post(route("services.destroy", serviceId), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Service Deleted Successfully");

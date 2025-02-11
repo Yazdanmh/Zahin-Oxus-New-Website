@@ -174,7 +174,7 @@ const toast = useToast();
 
 // Delete a project
 const deleteProject = (id) => {
-  form.delete(route("projects.destroy", id), {
+  form.post(route("projects.destroy", id), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Project Deleted Successfully");

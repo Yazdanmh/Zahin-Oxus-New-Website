@@ -191,7 +191,7 @@ const deletePortfolio = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      form.delete(route("portfolio.destroy", id), {
+      form.post(route("portfolio.destroy", id), {
         preserveScroll: true,
         onSuccess: () => {
           toast.success("Project Deleted Successfully");

@@ -94,15 +94,7 @@
                         >
                           <i class="icon-base bx bx-trash icon-xs"></i>
                         </span>
-                        <Link :href="route('participants.show', participant.id)">
-                          <span
-                            class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
-                          >
-                            <i
-                              class="icon-base bx bx-message-square-detail"
-                            ></i>
-                          </span>
-                        </Link>
+                        
                       </td>
                     </tr>
                     <tr v-if="!filteredParticipants.length">
@@ -167,7 +159,7 @@ const confirmDelete = (id) => {
 };
 
 const deleteParticipant = (id) => {
-  form.delete(route("participants.destroy", id)).then(() => {
+  form.post(route("participants.destroy", id)).then(() => {
     window.location.reload();
   });
 };

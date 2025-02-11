@@ -175,7 +175,7 @@ const toast = useToast();
 
 // Delete a news
 const deleteNews = (id) => {
-  form.delete(route("news.destroy", id), {
+  form.post(route("news.destroy", id), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("News Deleted Successfully");

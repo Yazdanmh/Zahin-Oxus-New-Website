@@ -143,7 +143,7 @@ const resetForm = () => {
 
 const submitCategory = () => {
   if (form.id) {
-    form.put(route("categories.update", form.id), {
+    form.post(route("categories.update", form.id), {
       onSuccess: () => {
         toast.success("Category updated successfully");
         resetForm();
@@ -176,7 +176,7 @@ const deleteCategory = (categoryId) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      form.delete(route("categories.destroy", categoryId), {
+      form.post(route("categories.destroy", categoryId), {
         onSuccess: () => toast.success("Category deleted successfully"),
         onError: () => toast.error("Failed to delete category"),
       });

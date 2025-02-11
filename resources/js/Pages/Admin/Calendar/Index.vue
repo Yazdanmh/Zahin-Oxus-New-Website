@@ -270,7 +270,7 @@ const submit = () => {
 };
 
 const deleteCalendar = (id) => {
-  form.delete(route("calendars.destroy", id), {
+  form.post(route("calendars.destroy", id), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Calendar Deleted Successfully");

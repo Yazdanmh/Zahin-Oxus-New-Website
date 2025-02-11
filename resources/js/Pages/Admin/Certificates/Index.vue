@@ -257,7 +257,7 @@ const changePageTo = (page) => {
 };
 
 const deleteCertificate = (id) => {
-  form.delete(route("certificate.destroy", id), {
+  form.post(route("certificate.destroy", id), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Certificate Deleted Successfully");

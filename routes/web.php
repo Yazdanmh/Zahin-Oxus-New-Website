@@ -73,71 +73,150 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 });
 
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
+
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
+    // Hero
     Route::get('/hero', [HeroController::class, 'index'])->name('hero.index');
     Route::post('/hero', [HeroController::class, 'update'])->name('hero.update');
 
+    // Friends
     Route::get('/friends', [FriendsController::class, 'index'])->name('friends.index');
-    Route::post('/friends', [FriendsController::class, 'update'])->name('friends.update');
     Route::post('/friends', [FriendsController::class, 'store'])->name('friends.store');
-    Route::delete('/friends/{id}', [FriendsController::class, 'destroy'])->name('friends.destroy');
+    Route::post('/friends/update', [FriendsController::class, 'update'])->name('friends.update');
+    Route::post('/friends/{id}', [FriendsController::class, 'destroy'])->name('friends.destroy');
 
-    Route::resource('/services', ServicesController::class);
+    // Services
+    Route::get('/services', [ServicesController::class, 'index'])->name('services.index');
+    Route::get('/services/create', [ServicesController::class, 'create'])->name('services.create');
+    Route::post('/services', [ServicesController::class, 'store'])->name('services.store');
+    Route::get('/services/{id}', [ServicesController::class, 'show'])->name('services.show');
+    Route::get('/services/{id}/edit', [ServicesController::class, 'edit'])->name('services.edit');
     Route::post('/services/edit/{id}', [ServicesController::class, 'update'])->name('services.update');
+    Route::post('/services/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
 
+    // Counter
     Route::get('/counter', [CounterController::class, 'index'])->name('counter.index');
     Route::post('/counter', [CounterController::class, 'update'])->name('counter.update');
 
-    Route::resource('/testimonails', TestimonailsController::class);
-    Route::post('/testimonails/{id}', [TestimonailsController::class, 'update'])->name('testimonails.update');
+    // Testimonails
+    Route::get('/testimonails', [TestimonailsController::class, 'index'])->name('testimonails.index');
+    Route::get('/testimonails/create', [TestimonailsController::class, 'create'])->name('testimonails.create');
+    Route::post('/testimonails', [TestimonailsController::class, 'store'])->name('testimonails.store');
+    // Route::get('/testimonails/{id}', [TestimonailsController::class, 'show'])->name('testimonails.show');
+    Route::get('/testimonails/{id}/edit', [TestimonailsController::class, 'edit'])->name('testimonails.edit');
+    Route::post('/testimonails/edit/{id}', [TestimonailsController::class, 'update'])->name('testimonails.update');
+    Route::post('/testimonails/{id}', [TestimonailsController::class, 'destroy'])->name('testimonails.destroy');
 
-    Route::resource('/projects', ProjectController::class);
+    // Projects
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::post('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::post('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-    Route::resource('/categories', CategoryController::class);
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::post('/categories/edit/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::post('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
-    Route::resource('/portfolio', PortfolioController::class);
-    Route::post('/portfolio/{id}', [ProjectController::class, 'update'])->name('portfolio.update');
+    // Portfolio
+    Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio.index');
+    Route::get('/portfolio/create', [PortfolioController::class, 'create'])->name('portfolio.create');
+    Route::post('/portfolio', [PortfolioController::class, 'store'])->name('portfolio.store');
+    Route::get('/portfolio/details/{id}', [PortfolioController::class, 'show'])->name('portfolio.show');
+    Route::get('/portfolio/{id}/edit', [PortfolioController::class, 'edit'])->name('portfolio.edit');
+    Route::post('/portfolio/edit{id}', [PortfolioController::class, 'update'])->name('portfolio.update');
+    Route::post('/portfolio/{id}', [PortfolioController::class, 'destroy'])->name('portfolio.destroy');
 
+    // About
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
     Route::post('/about', [AboutController::class, 'update'])->name('about.update');
+    Route::get('/about/ourmission', [AboutController::class, 'mission'])->name('ourmission');
+    Route::post('/about/ourmission', [AboutController::class, 'mission_store'])->name('ourmission.store');
+    Route::get('/about/ourvission', [AboutController::class, 'vision'])->name('ourvision');
+    Route::post('/about/ourvission', [AboutController::class, 'vision_store'])->name('ourvision.store');
 
+    // History
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
     Route::post('/history', [HistoryController::class, 'update'])->name('history.update');
 
-    Route::get('/about/ourmission', [AboutController::class, 'mission'])->name('ourmission');
-    Route::post('/about/ourmission', [AboutController::class, 'mission_store'])->name('ourmission');
+    // Training
+    Route::get('/training', [TrainingController::class, 'index'])->name('training.index');
+    Route::get('/training/create', [TrainingController::class, 'create'])->name('training.create');
+    Route::post('/training', [TrainingController::class, 'store'])->name('training.store');
+    Route::get('/training/details/{id}', [TrainingController::class, 'show'])->name('training.show');
+    Route::get('/training/{id}/edit', [TrainingController::class, 'edit'])->name('training.edit');
+    Route::post('/training/edit/{id}', [TrainingController::class, 'update'])->name('training.update');
+    Route::post('/training/{id}', [TrainingController::class, 'destroy'])->name('training.destroy');
 
-    Route::get('/about/ourvission', [AboutController::class, 'vision'])->name('ourvision');
-    Route::post('/about/ourvission', [AboutController::class, 'vision_store'])->name('ourvision');
+    // Participants
+    Route::get('/participants', [ParticipantsController::class, 'index'])->name('participants.index');
+    Route::get('/participants/create', [ParticipantsController::class, 'create'])->name('participants.create');
+    Route::post('/participants', [ParticipantsController::class, 'store'])->name('participants.store');
+    Route::get('/participants/{id}', [ParticipantsController::class, 'show'])->name('participants.show');
 
-    Route::resource('/training', TrainingController::class);
-    Route::post('/training/{id}', [TrainingController::class, 'update'])->name('training.update');
+    Route::get('/participants/{id}/edit', [ParticipantsController::class, 'edit'])->name('participants.edit');
+    Route::post('/participants/edit/{id}', [ParticipantsController::class, 'update'])->name('participants.update');
+    Route::post('/participants/{id}/delete', [ParticipantsController::class, 'destroy'])->name('participants.destroy');
 
-    Route::resource('/participants',ParticipantsController::class);
-    Route::post('/participants/{id}',[ParticipantsController::class, 'update'])->name('participants.update');
 
-    Route::resource('/certificate', CertificatesControlller::class);
-    Route::post('/certificate/{id}', [CertificatesControlller::class, 'update'])->name('certificate.update');
+    // Certificates
+    Route::get('/certificate', [CertificatesControlller::class, 'index'])->name('certificate.index');
+    Route::get('/certificate/create', [CertificatesControlller::class, 'create'])->name('certificate.create');
+    Route::post('/certificate', [CertificatesControlller::class, 'store'])->name('certificate.store');
+    Route::get('/certificate/details/{id}', [CertificatesControlller::class, 'show'])->name('certificate.show');
+    Route::get('/certificate/{id}/edit', [CertificatesControlller::class, 'edit'])->name('certificate.edit');
+    Route::post('/certificate/edit/{id}', [CertificatesControlller::class, 'update'])->name('certificate.update');
 
-    Route::resource('/galleries', GalleriesController::class);
-    Route::post('/galleries/{id}', [GalleriesController::class, 'update'])->name('galleries.update');
+    Route::post('/certificate/{id}', [CertificatesControlller::class, 'destroy'])->name('certificate.destroy');
 
-    Route::resource('/news', NewsController::class);
-    Route::post('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+    // Galleries
+    Route::get('/galleries', [GalleriesController::class, 'index'])->name('galleries.index');
+    Route::get('/galleries/create', [GalleriesController::class, 'create'])->name('galleries.create');
+    Route::post('/galleries', [GalleriesController::class, 'store'])->name('galleries.store');
+    Route::post('/galleries/{id}', [GalleriesController::class, 'destroy'])->name('galleries.destroy');
 
+    // News
+    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    Route::get('/news/details/{id}', [NewsController::class, 'show'])->name('news.show');
+    Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+    Route::post('/news/edit/{id}', [NewsController::class, 'update'])->name('news.update');
+    Route::post('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+
+    // Academic Calendar
     Route::get('/academic-calendar', [AcademicCalendarController::class, 'index'])->name('calendars.index');
     Route::post('/academic-calendar', [AcademicCalendarController::class, 'store'])->name('calendars.store');
-    Route::delete('/academic-calendar/{id}', [AcademicCalendarController::class, 'destroy'])->name('calendars.destroy');
+    Route::post('/academic-calendar/{id}', [AcademicCalendarController::class, 'destroy'])->name('calendars.destroy');
 
-    Route::resource('/mou', MOUController::class);
-    Route::post('/mou/{id}', [MOUController::class, 'update'])->name('mou.update');
+    // MOU
+    Route::get('/mou', [MOUController::class, 'index'])->name('mou.index');
+    Route::get('/mou/create', [MOUController::class, 'create'])->name('mou.create');
+    Route::post('/mou', [MOUController::class, 'store'])->name('mou.store');
+    Route::get('/mou/details/{id}', [MOUController::class, 'show'])->name('mou.show');
+    Route::get('/mou/{id}/edit', [MOUController::class, 'edit'])->name('mou.edit');
+    Route::post('/mou/edit/{id}', [MOUController::class, 'update'])->name('mou.update');
+    Route::post('/mou/{id}/delete', [MOUController::class, 'destroy'])->name('mou.destroy');
 
-    route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
 });
+
+
 Route::middleware(['auth', PassUserDataToViews::class])->group(function () {
     Route::get('/admin/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/admin/profile', [ProfileController::class, 'update'])->name('profile.update');

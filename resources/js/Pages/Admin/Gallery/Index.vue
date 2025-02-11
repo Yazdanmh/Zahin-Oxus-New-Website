@@ -191,7 +191,7 @@
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        form.delete(route("galleries.destroy", id), {
+        form.post(route("galleries.destroy", id), {
           preserveScroll: true,
           onSuccess: () => {
             toast.success("Image Deleted Successfully");

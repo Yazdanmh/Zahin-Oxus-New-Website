@@ -214,7 +214,7 @@ const deleteTraining = (id) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      form.delete(route("training.destroy", id), {
+      form.post(route("training.destroy", id), {
         preserveScroll: true,
         onSuccess: () => {
           toast.success("Training Deleted Successfully");
