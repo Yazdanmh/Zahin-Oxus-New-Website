@@ -119,7 +119,7 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
     Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-    Route::post('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::post('/projects/edit/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::post('/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     // Categories

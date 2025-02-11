@@ -216,6 +216,7 @@ const deleteTraining = (id) => {
     if (result.isConfirmed) {
       form.post(route("training.destroy", id), {
         preserveScroll: true,
+        data: { _method: "DELETE" },  // Force DELETE request
         onSuccess: () => {
           toast.success("Training Deleted Successfully");
         },
@@ -226,6 +227,7 @@ const deleteTraining = (id) => {
     }
   });
 };
+
 </script>
   
   <style scoped>
