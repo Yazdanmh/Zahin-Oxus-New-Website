@@ -10,7 +10,9 @@
     <Counter :counter="props.counter" />
     <Video />
     <Projects :projects="props.projects" :categories="props.categories" />
-    <CTA2 />
+    <Teams v-if="props.teams.length>0" :teams="props.teams"/>
+    
+    <CTA2 v-else />
     <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
     <Trainings :trainings="props.trainings" />
   </ClientLayout>
@@ -31,10 +33,14 @@ import History from "@/Pages/Client/Home/History.vue";
 import Video from "@/Pages/Client/Home/Video.vue";
 import Trainings from "@/Pages/Client/Home/Trainings.vue";
 import Projects from "@/Pages/Client/Home/Projects.vue";
-
+import Teams from "@/Components/Client/Teams.vue";
 const props = defineProps({
+  teams: {
+    type: Object, 
+    required: true,
+  },
   hero: {
-    type: Object, // Changed from Array to Object
+    type: Object,
     required: true,
   },
   setting: {

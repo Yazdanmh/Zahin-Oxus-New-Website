@@ -49,6 +49,7 @@
     <!-- cta-area-end -->
 
     <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
+    <Teams v-if="props.teams.length> 0" :teams="props.teams"/>
     <Friends :friends="props.friends" />
   </ClientLayout>
 </template>
@@ -60,8 +61,12 @@ import Breadcrumb from "@/Components/Client/Breadcrumb.vue";
 import About from "@/Components/Client/About.vue";
 import Testimonial from "@/Components/Client/Testimonial.vue";
 import Friends from "@/Components/Client/Friends.vue";
-
+import Teams from "@/Components/Client/Teams.vue";
 const props = defineProps({
+  teams: {
+    type: Object,
+    required: true,
+  },
   setting: {
     type: Object,
     required: true,

@@ -71,10 +71,10 @@
             <div class="footer__widget">
               <h4 class="footer__widget-title">About Company</h4>
               <ul class="footer__widget-link list-wrap">
-                <li><a :href="route('home.about')">About Us</a></li>
-                <li><a :href="route('about.mission')">Our Missions</a></li>
-                <li><a :href="route('about.vision')">Our Vision</a></li>
-                <li><a :href="route('project.index')">Projects</a></li>
+                <li><Link :href="route('home.about')">About Us</Link></li>
+                <li><Link :href="route('about.mission')">Our Missions</Link></li>
+                <li><Link :href="route('about.vision')">Our Vision</Link></li>
+                <li><Link :href="route('project.index')">Projects</Link></li>
               </ul>
             </div>
           </div>
@@ -84,10 +84,10 @@
             <div class="footer__widget">
               <h4 class="footer__widget-title">Quick Links</h4>
               <ul class="footer__widget-link list-wrap">
-                <li><a :href="route('contact.index')">Contact Us</a></li>
-                <li><a :href="route('service.index')">Services</a></li>
-                <li><a :href="route('trainings.index')">Trainings</a></li>
-                <li><a :href="route('home')">Testimonials</a></li>
+                <li><Link :href="route('contact.index')">Contact Us</Link></li>
+                <li><Link :href="route('service.index')">Services</Link></li>
+                <li><Link :href="route('trainings.index')">Trainings</Link></li>
+                <li><Link :href="route('home')">Testimonials</Link></li>
               </ul>
             </div>
           </div>
@@ -167,7 +167,7 @@
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 // Props

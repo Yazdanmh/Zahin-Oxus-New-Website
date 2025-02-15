@@ -102,7 +102,10 @@
                     </p>
 
                     <!-- Pagination Links -->
-                    <div class="pagination__wrap mt-40">
+                    <div
+                      v-if="props.mous.total > 6"
+                      class="pagination__wrap mt-40"
+                    >
                       <ul class="list-wrap">
                         <!-- Previous Button (disabled on page 1) -->
                         <li :class="{ disabled: currentPage === 1 }">
@@ -211,7 +214,6 @@ const totalPages = computed(() => {
 const displayedPages = computed(() => {
   const pages = [];
   const range = 3;
-
 
   for (
     let i = Math.max(currentPage.value - range, 1);

@@ -179,9 +179,8 @@ const props = defineProps({
     required:true, 
   },
 });
-const currentPage = ref(props.trainings.current_page); // Track the current page
+const currentPage = ref(props.trainings.current_page); 
 const totalPages = computed(() => {
-  // Calculate the total pages based on props
   return Array.from({ length: props.trainings.last_page }, (_, i) => i + 1);
 });
 

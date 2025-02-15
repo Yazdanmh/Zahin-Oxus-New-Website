@@ -126,6 +126,7 @@
           'active open':
             isActiveRoute('about.index') ||
             isActiveRoute('ourmission') ||
+            isActiveRoute('members.index') ||
             isActiveRoute('ourvision'),
         }"
       >
@@ -153,6 +154,13 @@
           >
             <Link :href="route('ourvision')" class="menu-link"
               ><div>Our Vision</div></Link
+            >
+          </li>
+          <li
+            :class="{ 'menu-item': true, active: isActiveRoute('members.index') }"
+          >
+            <Link :href="route('members.index')" class="menu-link"
+              ><div>Members</div></Link
             >
           </li>
         </ul>

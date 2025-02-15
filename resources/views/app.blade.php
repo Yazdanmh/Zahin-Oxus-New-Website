@@ -44,7 +44,6 @@
 
 <body class="font-sans antialiased">
     @inertia
-
     @if (request()->is('admin/*') || request()->is('auth/*'))
         <!-- Admin-specific scripts -->
         <script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>
@@ -52,9 +51,8 @@
         <script src="{{ asset('backend/assets/vendor/js/bootstrap.js') }}"></script>
         <script src="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
         <script src="{{ asset('backend/assets/vendor/js/menu.js') }}"></script>
-        <script src="{{ asset('backend/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
         <script src="{{ asset('backend/assets/js/main.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/dashboards-analytics.js') }}"></script>
+
     @else
         <!-- Frontend scripts without defer -->
         <script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>

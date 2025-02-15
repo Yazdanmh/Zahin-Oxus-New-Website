@@ -21,8 +21,10 @@ use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\MOUController;
 use App\Http\Controllers\backend\NotificationController;
 use App\Http\Controllers\backend\ParticipantsController;
+use App\Http\Controllers\backend\MembersController;
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\HomeController;
@@ -70,6 +72,9 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
     Route::get('/mous', [MOUsController::class, 'index'])->name('mous.index');
     Route::get('/mous/{slug}', [MOUsController::class, 'show'])->name('mous.show');
+
+    Route::get('/team-details/{slug}', [TeamsController::class, 'show'])->name('team.show');
+
 });
 
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
@@ -210,6 +215,14 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::get('/mou/{id}/edit', [MOUController::class, 'edit'])->name('mou.edit');
     Route::post('/mou/edit/{id}', [MOUController::class, 'update'])->name('mou.update');
     Route::post('/mou/{id}/delete', [MOUController::class, 'destroy'])->name('mou.destroy');
+    // Members
+    Route::get('/members', [MembersController::class, 'index'])->name('members.index');
+    Route::get('/members/create', [MembersController::class, 'create'])->name('members.create');
+    Route::post('/members', [MembersController::class, 'store'])->name('members.store');
+    Route::get('/members/details/{id}', [MembersController::class, 'show'])->name('members.show');
+    Route::get('/members/{id}/edit', [MembersController::class, 'edit'])->name('members.edit');
+    Route::post('/members/edit/{id}', [MembersController::class, 'update'])->name('members.update');
+    Route::post('/members/{id}/delete', [MembersController::class, 'destroy'])->name('members.destroy');
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

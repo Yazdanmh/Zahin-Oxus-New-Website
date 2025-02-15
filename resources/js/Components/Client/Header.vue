@@ -189,7 +189,7 @@
                 <div class="tgmenu__action">
                   <ul class="list-wrap">
                     <li class="header-btn">
-                      <a
+                      <Link
                         :href="route('certificate.verify')"
                         class="tg-btn"
                         data-toggle="popover"
@@ -201,7 +201,7 @@
                           alt=""
                         />
                         Verify Certificate
-                      </a>
+                    </Link>
                     </li>
                   </ul>
                 </div>
