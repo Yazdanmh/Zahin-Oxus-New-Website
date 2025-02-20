@@ -1,6 +1,6 @@
 <template>
     <Head title="Contact-us" />
-    <ClientLayout :setting="props.setting">
+    <ClientLayout :setting="props.setting" :service="props.service_categories">
       <!-- Breadcrumb Section -->
       <Breadcrumb :title="'Contact with us'" :nav="nav" />
   
@@ -151,6 +151,10 @@
       type: Object,
       required: true,
     },
+      service_categories: {
+    type: Object,
+    required: true,
+  },
   });
   
   const nav = [

@@ -1,6 +1,6 @@
 <template>
   <Head title="Events & News" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <Breadcrumb :title="'Events & News'" :nav="nav" />
 
     <!-- blog-details-area -->
@@ -38,7 +38,7 @@
                             v-for="(tag, index) in formattedTags"
                             :key="index"
                           >
-                            <a href="blog.html">{{ tag.trim() }}</a>
+                            <a href="#">{{ tag.trim() }}</a>
                           </li>
                         </ul>
                       </div>
@@ -57,6 +57,7 @@
                                 style="width: 30px; height: 20px"
                               />
                             </a>
+                          
                           </li>
                           <li>
                             <a href="https://x.com/home" target="_blank">
@@ -197,6 +198,10 @@ const props = defineProps({
   },
   recent: {
     type: Array,
+    required: true,
+  },
+    service_categories: {
+    type: Object,
     required: true,
   },
 });

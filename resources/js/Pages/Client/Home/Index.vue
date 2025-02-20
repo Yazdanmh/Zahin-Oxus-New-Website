@@ -1,6 +1,7 @@
 <template>
   <Head title="Home" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="service_categories">
+  
     <Hero :hero="props.hero" />
     <Friends :friends="props.friends" />
     <About :about="props.about" :counter="props.counter" :fulltext="false" />
@@ -11,10 +12,10 @@
     <Video />
     <Projects :projects="props.projects" :categories="props.categories" />
     <Teams v-if="props.teams.length>0" :teams="props.teams"/>
-    
     <CTA2 v-else />
     <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
     <Trainings :trainings="props.trainings" />
+
   </ClientLayout>
 </template>
 
@@ -83,5 +84,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  service_categories:{
+    type:Object, 
+    required:true,  
+  }
 });
 </script>

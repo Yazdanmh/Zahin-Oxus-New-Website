@@ -24,7 +24,7 @@
                       :src="imagePreview || '/storage/' + props.hero.image"
                       alt="Website Logo"
                       class="d-block rounded"
-                      style="width: 300px; height: 100px; object-fit: cover"
+                      style="width: 300px; height: 100px; object-fit: contain;"
                       id="uploadedLogo"
                     />
                     <div class="button-wrapper">

@@ -1,6 +1,6 @@
 <template>
   <Head title="About Us" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'About ZOSC'" :nav="nav" />
     <About :about="props.about" :counter="props.counter" :fulltext="true" />
@@ -84,6 +84,10 @@ const props = defineProps({
     required: true,
   },
   friends: {
+    type: Object,
+    required: true,
+  },
+    service_categories: {
     type: Object,
     required: true,
   },

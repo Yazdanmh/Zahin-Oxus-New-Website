@@ -1,6 +1,6 @@
 <template>
     <Head title="Our Vision" />
-    <ClientLayout :setting="props.setting">
+    <ClientLayout :setting="props.setting" :service="props.service_categories">
       <!-- Breadcrumb Section -->
       <Breadcrumb :title="'Our Vision'" :nav="nav" />
   
@@ -157,6 +157,10 @@
       type: Object,
       required: true,
     },
+      service_categories: {
+    type: Object,
+    required: true,
+  },
   });
   
   const nav = [

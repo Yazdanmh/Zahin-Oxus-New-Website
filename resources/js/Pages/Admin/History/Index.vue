@@ -112,7 +112,8 @@
                             />
                           </label>
                           <p class="text-muted mb-0">
-                            Allowed formats: JPG, PNG. Max size: 1MB.
+                            Allowed formats: JPG, PNG. Max size: 1MB. <br>
+                            <span class="text-warning">Recommended dimensions: 481 x 481 pixels.</span>
                           </p>
                           <small v-if="errors.image_one" class="text-danger">{{
                             errors.image_one
@@ -154,7 +155,9 @@
                             />
                           </label>
                           <p class="text-muted mb-0">
-                            Allowed formats: JPG, PNG. Max size: 1MB.
+                            Allowed formats: JPG, PNG. Max size: 1MB.<br>
+                            <span class="text-warning">Recommended dimensions: 274 x 299 pixels.</span>
+
                           </p>
                           <small v-if="errors.image_two" class="text-danger">{{
                             errors.image_two

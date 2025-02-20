@@ -6,7 +6,7 @@
   <!-- Scroll-top-end-->
 
   <!-- Header -->
-  <Header :setting="props.setting" />
+  <Header :setting="props.setting" :service="service" />
 
   <!-- Main Content -->
   <main>
@@ -25,6 +25,10 @@ import Footer from "@/Components/Client/Footer.vue";
 
 const props = defineProps({
   setting:{
+    type:Object, 
+    required:true, 
+  },
+  service:{
     type:Object, 
     required:true, 
   }

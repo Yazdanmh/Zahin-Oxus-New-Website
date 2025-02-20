@@ -50,7 +50,8 @@
                         <span class="d-none d-sm-block">Reset</span>
                       </button>
                       <p class="text-muted mb-0">
-                        Allowed formats: JPG, PNG. Max size: 1MB.
+                        Allowed formats: JPG, PNG. Max size: 1MB. <br>
+                        <span class="text-warning">Recommended dimensions: 400 x 400 pixels.</span>
                       </p>
                       <small v-if="errors.image" class="text-danger">{{
                         errors.image

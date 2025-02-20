@@ -49,7 +49,9 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
     Route::get('/our-mission', [HomeController::class, 'OurMission'])->name('about.mission');
     Route::get('/our-vision', [HomeController::class, 'OurVision'])->name('about.vision');
+
     Route::get('/services/all', [ServiceController::class, 'index'])->name('service.index');
+    Route::get('/services/category/{slug}', [ServiceController::class, 'category'])->name('service.category');
     Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('service.show');
 
     Route::get('/projects/all', [ProjectsController::class, 'index'])->name('project.index');

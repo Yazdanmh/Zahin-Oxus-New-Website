@@ -2,7 +2,7 @@
   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo" style="height: 100px;">
       <div class="d-flex flex-column">
-        <a href="index.html" class="app-brand-link">
+        <Link :href="route('dashboard')" class="app-brand-link">
           <span class="app-brand-logo demo">
             <img
               :src="'/storage/' + props.setting.site_logo"
@@ -11,16 +11,15 @@
             />
           </span>
           <br />
-        </a>
-        <a href="index.html" class="app-brand-link">
+        </Link>
+        <Link :href="route('dashboard')" class="app-brand-link">
           <span class="demo menu-text  text-wrap">{{ props.setting.site_name }}</span>
-        </a>
+        </Link>
       </div>
       <br />
-
       <a
         href="javascript:void(0);"
-        class="layout-menu-toggle menu-link text-large ms-auto d-xl-none"
+        class="layout-menu-toggle menu-link text-large ms-auto d-xl-none close-menu"
       >
         <i class="bx bx-chevron-left bx-sm align-middle"></i>
       </a>

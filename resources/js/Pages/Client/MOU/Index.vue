@@ -1,6 +1,6 @@
 <template>
   <Head title="MOUs" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'Memorandums of Understanding (MOUs)'" :nav="nav" />
 
@@ -201,6 +201,10 @@ const nav = [
 const props = defineProps({
   setting: Object,
   mous: {
+    type: Object,
+    required: true,
+  },
+    service_categories: {
     type: Object,
     required: true,
   },

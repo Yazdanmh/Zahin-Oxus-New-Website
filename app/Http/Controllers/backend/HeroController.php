@@ -26,7 +26,7 @@ class HeroController extends Controller
             'description' => 'required|string|max:255',
             'button' => 'nullable|string|max:255',
             'link' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         // Get the first hero or handle if not found

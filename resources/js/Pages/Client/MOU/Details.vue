@@ -1,6 +1,6 @@
 <template>
   <Head :title="props.mou.title" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'MOU'" :nav="nav" />
 
@@ -134,6 +134,10 @@ const props = defineProps({
     required: true,
   },
   mou: {
+    type: Object,
+    required: true,
+  },
+    service_categories: {
     type: Object,
     required: true,
   },

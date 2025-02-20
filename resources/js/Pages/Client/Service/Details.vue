@@ -1,6 +1,6 @@
 <template>
   <Head :title="props.service.title" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <Breadcrumb :title="'Our Services'" :nav="nav" />
     <!-- services-details-area -->
     <section class="services__details-area section-py-130">
@@ -12,12 +12,12 @@
                 <div class="sidebar__cat-list">
                   <ul
                     class="list-wrap"
-                    v-for="item in props.services.data"
+                    v-for="item in props.service_categories"
                     :key="item.id"
                   >
                     <li class="my-1">
-                      <Link :href="route('service.show', item.slug)"
-                        >{{ item.subtitle }}
+                      <Link :href="route('service.category', item.slug)"
+                        >{{ item.name }}
                         <span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -119,6 +119,10 @@ const props = defineProps({
     required: true,
   },
   services: {
+    type: Object,
+    required: true,
+  },
+  service_categories: {
     type: Object,
     required: true,
   },

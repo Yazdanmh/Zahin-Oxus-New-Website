@@ -1,6 +1,6 @@
 <template>
   <Head title="Events & News" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <Breadcrumb :title="'Events & News'" :nav="nav" />
     <!-- blog-post-area -->
     <section class="blog__post-area-five section-py-130">
@@ -104,6 +104,10 @@ const props = defineProps({
     required: true,
   },
   events: {
+    type: Object,
+    required: true,
+  },
+    service_categories: {
     type: Object,
     required: true,
   },

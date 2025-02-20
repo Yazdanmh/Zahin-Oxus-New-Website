@@ -1,6 +1,6 @@
 <template>
   <Head title="Our Mission" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'Our Mission'" :nav="nav" />
 
@@ -154,6 +154,10 @@ const props = defineProps({
     required: true,
   },
   our_mission: {
+    type: Object,
+    required: true,
+  },
+  service_categories: {
     type: Object,
     required: true,
   },

@@ -26,7 +26,7 @@
                       "
                       alt="Image One"
                       class="d-block rounded"
-                      style="width: 300px; height: 100px; object-fit: cover"
+                      style="width: 150px; height: 150px; object-fit: contain"
                     />
                     <div class="button-wrapper">
                       <label for="upload-one" class="btn btn-primary me-2 mb-4">
@@ -59,7 +59,7 @@
                       "
                       alt="Image Two"
                       class="d-block rounded"
-                      style="width: 300px; height: 100px; object-fit: cover"
+                      style="width: 150px; height: 150px; object-fit: contain; border-radius:10px;"
                     />
                     <div class="button-wrapper">
                       <label for="upload-two" class="btn btn-primary me-2 mb-4">

@@ -1,6 +1,6 @@
 <template>
   <Head title="Gallery" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <Breadcrumb :title="'Gallery'" :nav="nav" />
 
     <!-- services-area -->
@@ -91,6 +91,10 @@ const props = defineProps({
   },
   gallery: {
     type: Array,
+    required: true,
+  },
+    service_categories: {
+    type: Object,
     required: true,
   },
 });

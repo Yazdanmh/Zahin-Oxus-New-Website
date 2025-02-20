@@ -1,6 +1,6 @@
 <template>
   <Head title="Academic Calendar" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'Academic Calendar'" :nav="nav" />
 
@@ -138,6 +138,10 @@ const nav = [
 const props = defineProps({
   setting: Object,
   calendars: {
+    type: Object,
+    required: true,
+  },
+    service_categories: {
     type: Object,
     required: true,
   },

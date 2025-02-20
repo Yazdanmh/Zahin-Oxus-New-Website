@@ -25,7 +25,7 @@
                       :src="imagePreview"
                       alt="member Image Preview"
                       class="d-block rounded"
-                      style="width: 300px; height: 100px; object-fit: cover"
+                      style="width: 100px; height: 100px; object-fit: cover"
                       id="uploadedImage"
                     />
                     <div class="button-wrapper">
@@ -51,7 +51,7 @@
                       <p class="text-muted mb-0">
                         Allowed JPG, GIF, or PNG. Max size of 1MB. <br />
                         <span class="text-warning"
-                          >Recommended dimensions: 520 x 600 pixels.</span
+                          >Recommended dimensions: 400 x 400 pixels.</span
                         ><br>
                         <span v-if="errors.image" class="text-danger mt-2">
                           {{ errors.image }}
