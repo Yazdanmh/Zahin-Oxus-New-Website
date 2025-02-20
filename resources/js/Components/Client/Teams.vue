@@ -11,7 +11,7 @@
               Team of Experts
             </h2>
           </div>
-        </div>
+        </div>  
         <div class="col-lg-6">
           <div class="section__content white-content mb-50">
             <p>
@@ -28,52 +28,28 @@
           :key="team.id"
         >
           <div class="team__item">
-            <div class="team__thumb">
-              <img :src="'/storage/' + team.image" alt="Team Member Image" />
+            <div class="team__thumb" style="margin-bottom: 50px;">
+              <img
+                :src="'/storage/' + team.image"
+                alt="Team Member Image"
+                style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; padding: 3px; border: 1px solid gray;"
+              />
             </div>
             <div class="team__content">
               <h2 class="title">
-                <Link  :href="route('team.show', team.slug)">{{
+                <Link :href="route('team.show', team.slug)">{{
                   team.name
                 }}</Link>
               </h2>
+              <span>{{ team.position }}</span>
+            </div>
 
-              <span>{{ team.name}}</span>
-            </div>
-            <div class="team__social">
-              <div class="social-toggle-icon">
-                <i class="fas fa-share-alt"></i>
-              </div>
-              <ul class="list-wrap">
-                <li>
-                  <a v-if="team.facebook" :href="team.facebook" target="_blank">
-                    <img
-                      src="/frontend/assets/img/icons/facebook.svg"
-                      alt="Facebook"
-                      class="injectable"
-                      style="height: 30px; width: 30px; cursor: pointer"
-                    />
-                  </a>
-                </li>
-                <li class="mt-2">
-                  <a v-if="team.twitter" :href="team.twitter" target="_blank">
-                    <img
-                      src="/frontend/assets/img/icons/twitter.svg"
-                      alt="Twitter"
-                      class="injectable"
-                      style="height: 30px; width: 20px; cursor: pointer"
-                    />
-                  </a>
-                </li>
-              </ul>
-            </div>
             <div class="team__shape">
               <img src="/frontend/assets/img/team/team_shape.svg" alt="shape" />
             </div>
           </div>
         </div>
       </div>
-      
     </div>
     <div class="team__shape-wrap">
       <img

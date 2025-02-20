@@ -46,6 +46,10 @@
                   <i :class="service.icon" style="font-size: 2rem"></i>
                   <p class="mt-2">{{ service.icon }}</p>
                 </div>
+                <div class="col-md-6">
+                  <h6 class="text-muted">Category</h6>
+                  <p class="mt-2">{{ service.category.name }}</p>
+                </div>
               </div>
 
               <!-- Action buttons -->

@@ -1,5 +1,5 @@
 <template>
-  <Head title="Hero" />
+  <Head title="Edit Service" />
   <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
@@ -8,28 +8,26 @@
       <div class="row">
         <div class="col-xl">
           <div class="card mb-4">
-            <div
-              class="card-header d-flex justify-content-between align-items-center"
-            >
-              <h5 class="mb-0">Hero</h5>
-              <small class="text-muted float-end">Update hero</small>
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Edit Service</h5>
+              <small class="text-muted float-end">Update service details</small>
             </div>
             <div class="card-body">
               <form @submit.prevent="submit">
                 <div class="card-body">
-                  <div
-                    class="d-flex align-items-start align-items-sm-center gap-4"
-                  >
+                  <div class="d-flex align-items-start align-items-sm-center gap-4">
                     <img
-                      :src="imagePreview || '/storage/' + props.service.image"
-                      alt="Website Logo"
+                      v-if="imagePreview || form.image"
+                      :src="imagePreview ? imagePreview : '/storage/' + form.image"
+                      alt="Service Image Preview"
                       class="d-block rounded"
                       style="width: 300px; height: 100px; object-fit: cover"
-                      id="uploadedLogo"
+                      id="uploadedImage"
                     />
+
                     <div class="button-wrapper">
                       <label for="upload" class="btn btn-primary me-2 mb-4">
-                        <span class="d-none d-sm-block">Upload New Image</span>
+                        <span class="d-none d-sm-block">Upload Image</span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
                         <input
                           type="file"
@@ -48,7 +46,7 @@
                         <span class="d-none d-sm-block">Reset</span>
                       </button>
                       <p class="text-muted mb-0">
-                        Allowed JPG, GIF, or PNG. Max size of 1MB. <br>
+                        Allowed JPG, GIF, or PNG. Max size of 1MB. <br />
                         <span class="text-warning">Recommended dimensions: 600 x 383 pixels.</span>
                       </p>
                     </div>
@@ -58,7 +56,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="mb-3">
                       <label for="title" class="form-label">Title</label>
                       <input
@@ -66,13 +64,14 @@
                         class="form-control"
                         id="title"
                         v-model="form.title"
+                        placeholder="Enter service title"
                       />
                       <div v-if="errors.title" class="text-danger mt-2">
                         {{ errors.title }}
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-5">
                     <div class="mb-3">
                       <label for="subtitle" class="form-label">Subtitle</label>
                       <input
@@ -80,6 +79,7 @@
                         class="form-control"
                         id="subtitle"
                         v-model="form.subtitle"
+                        placeholder="Enter service subtitle"
                       />
                       <div v-if="errors.subtitle" class="text-danger mt-2">
                         {{ errors.subtitle }}
@@ -90,7 +90,6 @@
                     <div class="mb-3">
                       <label for="icon" class="form-label">Icon</label>
                       <div class="d-flex align-items-center gap-3">
-                        <!-- Icon Input -->
                         <input
                           type="text"
                           class="form-control w-50"
@@ -98,9 +97,7 @@
                           v-model="form.icon"
                           placeholder="Enter icon class (e.g., bx bx-home)"
                         />
-                        <!-- Preview -->
                         <i :class="form.icon" style="font-size: 2rem"></i>
-                        <!-- Link Button -->
                         <a
                           href="https://boxicons.com/"
                           class="btn btn-info"
@@ -115,29 +112,62 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-12">
-                      <div class="mb-3">
-                        <!-- Bind the description to the TextEditor -->
-                        <TextEditor
-                          v-model="form.description"
-                          @editor-change="updateDescription"
-                        />
-                        <div v-if="errors.description" class="text-danger mt-2">
-                          {{ errors.description }}
-                        </div>
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                   
+                      <label for="category" class="form-label">Category</label>
+                      <div class="d-flex align-items-center gap-3">
+                        <select
+                          class="form-control"
+                          id="category"
+                          v-model="form.category"
+                        >
+                          <option value="" disabled>
+                            -- Select Service Category --
+                          </option>
+                          <option
+                            v-for="category in categories"
+                            :key="category.id"
+                            :value="category.id"
+                          >
+                            {{ category.name }}
+                          </option>
+                        </select>
+                        <Link
+                            :href="route('service-categories.index')"
+                          class="btn btn-outline-primary"
+                          title="Manage Categories"
+                        >
+                          <i class="bx bx-cog"></i>
+                      </Link>
+                      </div>
+                      <div v-if="errors.category" class="text-danger mt-2">
+                        {{ errors.category }}
                       </div>
                     </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="mb-3">
+                      <TextEditor
+                        v-model="form.description"
+                        @editor-change="updateDescription"
+                      />
+                      <div v-if="errors.description" class="text-danger mt-2">
+                        {{ errors.description }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="d-flex justify-content-end gap-3 mt-4">
-                  <Link
-                    :href="route('services.index')"
+                  <button
+                    type="button"
                     class="btn btn-outline-secondary"
                     @click="cancel"
                   >
-                     Cancel
-                </Link>
+                    Cancel
+                  </button>
                   <button type="submit" class="btn btn-primary">
-                    <i class="bx bx-pencil mr-2"></i>Update Service
+                    <i class="bx bx-save"></i> Update Service
                   </button>
                 </div>
               </form>
@@ -150,72 +180,63 @@
 </template>
 
 <script setup>
+import { ref, watch } from "vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Head , Link} from "@inertiajs/vue3";
-import { ref } from "vue";
+import { Head, Link } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import TextEditor from "@/Components/Admin/TextEditor.vue";
 
 const props = defineProps({
-  service: {
-    type: Object,
-    required: true,
-  },
-  setting:{
-    type:Object, 
-    required:true, 
-  },
-  user:{
-    type:Object, 
-    required:true, 
-  },
+  setting: Object,
+  user: Object,
+  categories: Array,
+  service: Object,
 });
 
 const toast = useToast();
 
+// Initialize form with service data, ensuring category is set correctly
 const form = useForm({
-  title: props.service.title,
-  subtitle: props.service.subtitle,
-  description: props.service.description,
-  icon: props.service.icon,
-  image: null,
+  ...props.service,
+  category: props.service.service_category_id || "", // Ensure category is set
 });
 
 const errors = ref({});
 const imagePreview = ref(null);
 
+// Image upload handler
 const handleImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     form.image = file;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreview.value = e.target.result;
-    };
-    reader.readAsDataURL(file);
+    imagePreview.value = URL.createObjectURL(file);
   }
 };
 
+// Reset image
 const resetImage = () => {
-  form.image = null;
+  form.image = props.service.image;
   imagePreview.value = null;
 };
 
+// Go back to the previous page
+const cancel = () => window.history.back();
+
+// Submit form data
 const submit = () => {
-  if (!form.image) delete form.image; // Remove the image field if no image is selected
   form.post(route("services.update", props.service.id), {
-    preserveScroll: true, // Preserve the scroll position
-    onSuccess: () => {
-      toast.success("Services Updated Successfully"); // Show success message
-    },
+    preserveScroll: true,
+    onSuccess: () => toast.success("Service Updated Successfully"),
     onError: (err) => {
-      errors.value = err; 
-      toast.error("Error occurred while processing the form!" ); // Show error message
+      errors.value = err;
+      toast.error("Error occurred while updating the form!");
     },
   });
 };
-</script>
 
-<style scoped>
-</style>
+// Watch category changes for debugging
+watch(() => form.category, (newCategory) => {
+  console.log("Selected Category:", newCategory); // Debugging: check if the category is updating correctly
+});
+</script>

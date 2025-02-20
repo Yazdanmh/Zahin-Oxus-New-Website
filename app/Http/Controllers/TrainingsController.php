@@ -66,7 +66,7 @@ class TrainingsController extends Controller
     
         // Send the email to admin
         try {
-            Mail::to('info@zahin-oxus.af')->send(new \App\Mail\TrainingApplicationMail(
+            Mail::to('mohammadiy207@gmail.com')->send(new \App\Mail\TrainingApplicationMail(
                 $validated['name'],
                 $validated['email'],
                 $validated['organization'],
@@ -83,8 +83,5 @@ class TrainingsController extends Controller
     
         return redirect()->back()->with('success', 'Your application has been submitted!');
     }
-    
-
-    
     
 }

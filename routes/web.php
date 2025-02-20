@@ -7,6 +7,7 @@ use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\HeroController;
 use App\Http\Controllers\backend\FriendsController;
 use App\Http\Controllers\backend\ServicesController;
+use App\Http\Controllers\backend\ServiceCategoryController;
 use App\Http\Controllers\backend\CounterController;
 use App\Http\Controllers\backend\TestimonailsController;
 use App\Http\Controllers\backend\ProjectController;
@@ -104,6 +105,15 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::get('/services/{id}/edit', [ServicesController::class, 'edit'])->name('services.edit');
     Route::post('/services/edit/{id}', [ServicesController::class, 'update'])->name('services.update');
     Route::post('/services/{id}', [ServicesController::class, 'destroy'])->name('services.destroy');
+
+    // Service Categories
+    Route::get('/service/categories', [ServiceCategoryController::class, 'index'])->name('service-categories.index');
+    Route::get('/service/categories/create', [ServiceCategoryController::class, 'create'])->name('service-categories.create');
+    Route::post('/service/categories', [ServiceCategoryController::class, 'store'])->name('service-categories.store');
+    Route::get('/service/categories/{id}', [ServiceCategoryController::class, 'show'])->name('service-categories.show');
+    Route::get('/service/categories/{id}/edit', [ServiceCategoryController::class, 'edit'])->name('service-categories.edit');
+    Route::post('/service/categories/edit/{id}', [ServiceCategoryController::class, 'update'])->name('service-categories.update');
+    Route::post('/service/categories/{id}', [ServiceCategoryController::class, 'destroy'])->name('service-categories.destroy');
 
     // Counter
     Route::get('/counter', [CounterController::class, 'index'])->name('counter.index');

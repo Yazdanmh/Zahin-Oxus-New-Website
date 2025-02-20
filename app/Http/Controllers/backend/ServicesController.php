@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Services;
+use App\Models\Service;
+use App\Models\ServiceCategory;
 use Illuminate\Support\Facades\Storage;
-use Str; 
+use Illuminate\Support\Str;
+
 class ServicesController extends Controller
 {
     public function index()
     {
-        $services = Services::paginate(10);
+        $services = Service::with('category')->paginate(10);
         return Inertia::render('Admin/Services/Index', [
             'services' => $services
         ]);
@@ -20,35 +22,48 @@ class ServicesController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Services/Create');
+        $categories = ServiceCategory::all();
+        return Inertia::render('Admin/Services/Create', [
+            'categories' => $categories
+        ]);
     }
+
     public function store(Request $request)
     {
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'icon' => 'required|string|max:255',
             'description' => 'required|string',
+            'category' => 'required|exists:service_categories,id',
         ]);
 
         $imagePath = $request->file('image')->store('services', 'public');
 
-        Services::create([
+        // Generate a unique slug
+        $slug = Str::slug($request->input('title'));
+        if (Service::where('slug', $slug)->exists()) {
+            $slug .= '-' . uniqid();
+        }
+
+        Service::create([
             'title' => $request->input('title'),
             'subtitle' => $request->input('subtitle'),
             'image' => $imagePath,
             'icon' => $request->input('icon'),
             'description' => $request->input('description'),
-            'slug' => Str::slug($request->input('title')),
+            'slug' => $slug,
+            'service_category_id' => $request->input('category'),
         ]);
 
-        return redirect()->route('services.index');
+        return redirect()->route('services.index')->with('success', 'Service created successfully.');
     }
+
     public function show($id)
     {
-        $service = Services::findOrFail($id);
-
+        $service = Service::with('category')->findOrFail($id);
         return Inertia::render('Admin/Services/Details', [
             'service' => $service
         ]);
@@ -56,31 +71,31 @@ class ServicesController extends Controller
 
     public function edit($id)
     {
-        $service = Services::findOrFail($id);
+        $service = Service::findOrFail($id);
+        $categories = ServiceCategory::all();
+
         return Inertia::render('Admin/Services/Edit', [
             'service' => $service,
+            'categories' => $categories
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        // return $request->all();
-        $service = Services::findOrFail($id);
+        $service = Service::findOrFail($id);
 
-        // Base validation rules
         $rules = [
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'icon' => 'nullable|string|max:255',
+            'category' => 'nullable|exists:service_categories,id',
         ];
 
-        // Add image validation only if a file is uploaded
         if ($request->hasFile('image')) {
-            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
 
-        // Validate the request data
         $validatedData = $request->validate($rules);
 
         // Update fields
@@ -88,31 +103,33 @@ class ServicesController extends Controller
         $service->subtitle = $validatedData['subtitle'] ?? $service->subtitle;
         $service->description = $validatedData['description'] ?? $service->description;
         $service->icon = $validatedData['icon'] ?? $service->icon;
-        $service->slug = Str::slug($validatedData['title']);
-        // Handle image upload
+        $service->service_category_id = $validatedData['category'] ?? $service->service_category_id;
+
+        // Handle slug update and uniqueness
+        if ($service->title !== $validatedData['title']) {
+            $slug = Str::slug($validatedData['title']);
+            if (Service::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+                $slug .= '-' . uniqid();
+            }
+            $service->slug = $slug;
+        }
+
+        // Handle image update
         if ($request->hasFile('image')) {
-            
             if ($service->image) {
                 Storage::disk('public')->delete($service->image);
             }
-
-            // Store new image and update the path
-            $imagePath = $request->file('image')->store('services', 'public');
-            $service->image = $imagePath;
+            $service->image = $request->file('image')->store('services', 'public');
         }
 
-        // Save the updated service
         $service->save();
 
-        return redirect()->route('services.index')
-            ->with('success', 'Service updated successfully.');
+        return redirect()->route('services.index')->with('success', 'Service updated successfully.');
     }
-
-    
 
     public function destroy($id)
     {
-        $service = Services::findOrFail($id);
+        $service = Service::findOrFail($id);
 
         if ($service->image) {
             Storage::disk('public')->delete($service->image);
@@ -120,6 +137,6 @@ class ServicesController extends Controller
 
         $service->delete();
 
-        return redirect()->route('services.index');
+        return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
     }
 }

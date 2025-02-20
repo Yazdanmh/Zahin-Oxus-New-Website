@@ -32,7 +32,7 @@
                                 <!-- Loop through testimonial avatars -->
                                 <div class="swiper-slide" v-for="(testimonial, index) in testimonials" :key="'avatar-' + index">
                                     <button>
-                                        <img :src="'/storage/' + testimonial.image" alt="img">
+                                        <img :src="'/storage/' + testimonial.image" alt="img" style="width:50px; height:50px; border-radius: 50%; object-fit: cover;">
                                     </button>
                                 </div>
                             </div>

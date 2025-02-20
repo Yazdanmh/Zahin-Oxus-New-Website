@@ -16,28 +16,16 @@
                 style="width: 100%; height: auto"
               />
               <ul class="team__details-inner list-wrap">
-                <li v-if="props.team.phone">
+                <li >
                   <div class="icon">
-                    <i class="flaticon-phone-call"></i>
+                    <i class="fas fa-wrench"></i>
                   </div>
                   <div class="content text-start">
-                    <span>Phone Number</span>
-                    <a :href="'tel:' + props.team.phone">{{
-                      props.team.phone
-                    }}</a>
+                    <span>Service</span>
+                    IT Technician
                   </div>
                 </li>
-                <li v-if="props.team.email">
-                  <div class="icon">
-                    <i class="flaticon-envelope"></i>
-                  </div>
-                  <div class="content text-start">
-                    <span>Email Address</span>
-                    <a :href="'mailto:' + props.team.email">{{
-                      props.team.email
-                    }}</a>
-                  </div>
-                </li>
+                
               </ul>
 
               <div class="progress__wrap py-5">
@@ -72,30 +60,7 @@
             <div class="team__details-info-wrap">
               <h2 class="title">{{ props.team.name }}</h2>
               <span>{{ props.team.position }}</span>
-              <div class="team__details-social">
-                <ul class="list-wrap">
-                  <li v-if="props.team.facebook">
-                    <a :href="props.team.facebook" target="_blank">
-                      <img
-                        src="/frontend/assets/img/icons/facebook.svg"
-                        alt="Facebook"
-                        class="injectable"
-                        style="width: 20px; height: 30px"
-                      />
-                    </a>
-                  </li>
-                  <li v-if="props.team.twitter">
-                    <a :href="props.team.twitter" target="_blank">
-                      <img
-                        src="/frontend/assets/img/icons/twitter.svg"
-                        alt="Twitter"
-                        class="injectable"
-                        style="width: 20px; height: 30px"
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </div>
+             
               <p v-html="props.team.description"></p>
             </div>
           </div>

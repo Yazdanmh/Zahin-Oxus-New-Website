@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Hero;
 use App\Models\Friend;
-use App\Models\Services;
+use App\Models\Service;
 use App\Models\Counter;
 use App\Models\Project;
 use App\Models\Training;
@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $hero = Hero::select('title', 'subtitle', 'description', 'image', 'button', 'link')->first();
         $friends = Friend::all();
-        $services = Services::select('title', 'subtitle', 'description', 'image','icon', 'slug')->paginate(5);
+        $services = Service::select('title', 'subtitle', 'description', 'image','icon', 'slug')->paginate(5);
         $counter = Counter::first();
         $projects = Project::paginate(4);
         $categories = Category::all();

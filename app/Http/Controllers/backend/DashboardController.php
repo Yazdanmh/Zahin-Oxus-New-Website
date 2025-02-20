@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactForm;
 use App\Models\Gallery;
 use App\Models\News;
-use App\Models\Services;
+use App\Models\Service;
 use App\Models\Training;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,7 +15,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $services = Services::all();
+        $services = Service::all();
         $news = News::all();
         $trainings = Training::all();
         $gallery = Gallery::all();
