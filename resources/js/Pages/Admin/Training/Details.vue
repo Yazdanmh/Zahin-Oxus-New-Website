@@ -63,6 +63,10 @@
                           {{ training.has_form ? "Yes" : "No" }}
                         </p>
                       </div>
+                      <div class="col-md-6 mb-3">
+                        <h6 class="fw-bold">Service: </h6>
+                        <p class="text-muted">{{ training.service.title || "N/A" }}</p>
+                      </div>
                     </div>
                   </div>
   

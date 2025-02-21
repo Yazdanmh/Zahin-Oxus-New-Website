@@ -85,7 +85,9 @@
           <div class="col-70 order-0 order-lg-2">
             <div class="services__details-wrap">
               <div class="services__details-content-top">
+               <p>{{props.service.category.name}}</p>
                 <h2 class="title">{{ props.service.subtitle }}</h2>
+               
               </div>
               <div class="services__details-thumb">
                 <img :src="'/storage/' + props.service.image" alt="img" />

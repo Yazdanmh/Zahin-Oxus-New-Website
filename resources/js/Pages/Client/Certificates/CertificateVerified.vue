@@ -2,7 +2,7 @@
   <Head
     :title="props.verified ? 'Certificate Verified' : 'Certificate Not Found'"
   />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'Certificate Verification'" :nav="nav" />
 
@@ -143,6 +143,10 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  service_categories:{
+    type:Object, 
+    required: true, 
+  }
 });
 
 // Adjust nav structure to handle the breadcrumb navigation

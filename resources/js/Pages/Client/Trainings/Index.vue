@@ -8,27 +8,34 @@
     <section class="project__area section-py-130">
       <div class="container">
         <div class="row align-items-center">
-        <div class="col-lg-6 col-md-8">
-          <div class="section__title mb-50 mb-md-30">
-            <span class="sub-title">Our Trainings</span>
-            <h2 class="title">Popular Trainings Offered Recently</h2>
+          <div class="col-lg-6 col-md-8">
+            <div class="section__title mb-50 mb-md-30">
+              <span class="sub-title">Our Trainings</span>
+              <h2 class="title">Popular Trainings Offered Recently</h2>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-4">
+            <div class="section__btn text-end mb-30">
+              <Link
+                :href="route('certificate.verify')"
+                class="tg-btn tg-btn-four tg-btn-six tg-btn-lavender"
+                >Verify Certificates
+                <img
+                  src="/frontend/assets/img/icons/right_arrow02.svg"
+                  alt=""
+                  class="injectable"
+              /></Link>
+            </div>
           </div>
         </div>
-        <div class="col-lg-6 col-md-4">
-          <div class="section__btn text-end mb-30">
-            <Link
-              :href="route('certificate.verify')"
-              class="tg-btn tg-btn-four tg-btn-six tg-btn-lavender"
-              >Verify Certificates
-              <img
-                src="/frontend/assets/img/icons/right_arrow02.svg"
-                alt=""
-                class="injectable"
-            /></Link>
-          </div>
+
+        <!-- Show message if no trainings are available -->
+        <div v-if="!props.trainings.data.length" class="text-center py-5">
+          <p>No trainings available at the moment.</p>
         </div>
-      </div>
-        <div class="row gutter-y-30">
+
+        <!-- training list -->
+        <div v-else class="row gutter-y-30">
           <div
             class="col-lg-6 col-md-6"
             v-for="training in props.trainings.data"
@@ -135,6 +142,7 @@
     <!-- training-area-end -->
   </ClientLayout>
 </template>
+
   
   <script setup>
 import { Link } from "@inertiajs/vue3";

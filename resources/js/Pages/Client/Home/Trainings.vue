@@ -12,7 +12,7 @@
         <div class="col-lg-6 col-md-4">
           <div class="section__btn text-end mb-30">
             <a
-              :href="route('trainings.index')"
+              :href="route('trainings.category', 'upcoming')"
               class="tg-btn tg-btn-four tg-btn-six tg-btn-lavender"
               >See All Trainings
               <img

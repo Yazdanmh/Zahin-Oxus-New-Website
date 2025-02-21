@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('service_id')->constrained('services')->onDelete('cascade'); // Foreign key
             $table->string('name');
             $table->string('image')->nullable();
             $table->longText('description')->nullable();
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->string('slug')->nullable(); 
             $table->timestamps();
         });
-        
     }
 
     /**

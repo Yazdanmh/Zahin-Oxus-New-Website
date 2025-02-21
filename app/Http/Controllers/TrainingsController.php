@@ -11,15 +11,12 @@ use Illuminate\Support\Facades\Mail;
 
 class TrainingsController extends Controller
 {
-    public function index(Request $request)
+    public function index($q = null)
     {
-        $q = $request->query('q');
-    
         // Base query
         $trainings = Training::query();
-    
+        
         if ($q === 'upcoming') {
-            // Filter upcoming trainings (start date is in the future)
             $trainings->where('start_date', '>=', now())->orderBy('start_date', 'asc');
         } elseif ($q === 'previous') {
             // Filter past trainings (start date is in the past)
@@ -33,6 +30,7 @@ class TrainingsController extends Controller
             'trainings' => $trainings,
         ]);
     }
+    
     
     
     public function show($slug){

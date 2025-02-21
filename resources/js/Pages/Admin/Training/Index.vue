@@ -26,7 +26,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Has Form</th>
-                <th>Participants</th>
+                <th>Service</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -46,7 +46,7 @@
 
                 <td>{{ training.start_date }}</td>
                 <td>{{ training.end_date }}</td>
-                <td>
+                <td class="text-center">
                   <span
                     :class="[
                       'badge',
@@ -56,14 +56,8 @@
                     {{ training.has_form ? "Yes" : "No" }}
                   </span>
                 </td>
-                <td class="text-centere">
-                  <Link :href="route('participants.show', training.id)">
-                    <span
-                      class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
-                    >
-                      <i class="icon-base bx bx-show icon-xs"></i>
-                    </span>
-                  </Link>
+                <td class="">
+                  {{training.service.title}}
                 </td>
                 <td>
                   <Link :href="route('training.edit', training.id)">
@@ -84,6 +78,14 @@
                       class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                     >
                       <i class="icon-base bx bx-message-square-detail"></i>
+                    </span>
+                  </Link>
+
+                  <Link :href="route('participants.show', training.id)">
+                    <span
+                      class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
+                    >
+                      <i class="icon-base bx bx-show icon-xs"></i>
                     </span>
                   </Link>
                 </td>

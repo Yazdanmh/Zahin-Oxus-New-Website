@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <div class="mb-3">
                       <label for="name" class="form-label">Name</label>
                       <input
@@ -79,7 +79,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                     <div class="mb-3">
                       <label for="start_date" class="form-label"
                         >Start Date</label
@@ -95,7 +95,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                     <div class="mb-3">
                       <label for="end_date" class="form-label">End Date</label>
                       <input
@@ -109,7 +109,24 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-2 d-flex align-items-center">
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Service</label>
+                      <div class="position-relative">
+                        <select class="form-select" v-model="form.service_id">
+                          <option value="" disabled>-- Select Service --</option>
+                          <option v-for="service in props.services" :key="service.id" :value="service.id">
+                            {{ service.title }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div v-if="errors.service_id" class="text-danger mt-2">
+                        {{ errors.service_id }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-center">
                     <div class="form-check form-switch mb-2">
                       <input
                         class="form-check-input"
@@ -175,7 +192,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  services: {
+    type: Object,
+    required: true,
+  },
+  
 });
+
 const form = useForm({
   name: "",
   start_date: "",
@@ -183,7 +206,9 @@ const form = useForm({
   description: "",
   image: null,
   has_form: false,
+  service_id: "", // Added for service selection
 });
+
 
 const errors = ref({});
 const imagePreview = ref(null);

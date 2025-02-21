@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Training; 
+use App\Models\Service; 
 use Inertia\Inertia; 
 use Illuminate\Support\Facades\Redirect;
 use Str; 
@@ -13,7 +14,7 @@ class TrainingController extends Controller
 {
     public function index()
     {
-        $trainings = Training::paginate(10); 
+        $trainings = Training::with('service')->paginate(10); 
         return Inertia::render('Admin/Training/Index', [
             'trainings' => $trainings,
         ]);
@@ -21,18 +22,25 @@ class TrainingController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Training/Create'); 
+        $services = Service::select('id', 'title')->get(); 
+        
+        return Inertia::render('Admin/Training/Create',[
+            'services' => $services, 
+            
+        ]); 
     }
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'image' => 'required|image|mimes:jpeg,png,gif,PNG',
             'description' => 'required|string',
-            'has_form' => 'required|boolean'
+            'has_form' => 'required|boolean',
+            'service_id' => 'required|integer'
         ]);
 
         $imagePath = $request->file('image')->store('trainings', 'public');
@@ -44,6 +52,7 @@ class TrainingController extends Controller
             'image' => $imagePath,
             'description' => $request->input('description'),
             'has_form' => $request->input('has_form'),
+            'service_id' => $request->input('service_id'),
             'slug' => Str::slug($request->input('name')),
         ]);
 
@@ -53,15 +62,17 @@ class TrainingController extends Controller
     public function edit($id)
     {
         $training = Training::findOrFail($id);
-        
+        $services = Service::select("id", 'title')->get(); 
         return Inertia::render('Admin/Training/Edit', [
             'training' => $training, 
+            'services' => $services, 
         ]);
     }
+
     public function update(Request $request, $id)
     {
+        
         $training = Training::findOrFail($id);
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024', // 1MB max size
@@ -69,9 +80,8 @@ class TrainingController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'has_form' => 'nullable|boolean',
+            'service_id' => 'required|integer'
         ]);
-
-        // If there's a new image, delete the old one and store the new one
         if ($request->hasFile('image')) {
             if ($training->image) {
                 Storage::disk('public')->delete($training->image);
@@ -103,7 +113,7 @@ class TrainingController extends Controller
     }
 
     public function show($id){
-         $training = Training::findOrFail($id);
+         $training = Training::with('service')->findOrFail($id);
         
         return Inertia::render('Admin/Training/Details', [
             'training' => $training, 

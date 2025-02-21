@@ -221,9 +221,7 @@
                                         <li
                                             :class="{
                                                 'menu-item-has-children': true,
-                                                active: isActiveRoute(
-                                                    'service.index'
-                                                ),
+                                                active: isActiveService(),
                                             }"
                                         >
                                             <a href="#">Services</a>
@@ -232,9 +230,7 @@
                                                     v-for="item in service"
                                                     :key="item.id"
                                                     :class="{
-                                                        active: isActiveRoute(
-                                                            'service.index'
-                                                        ),
+                                                        active: isActiveSlug(item.slug) ,
                                                     }"
                                                 >
                                                     <Link
@@ -255,9 +251,11 @@
                                         <li
                                             :class="{
                                                 'menu-item-has-children': true,
-                                                active: isActiveRoute(
-                                                    'trainings.index'
-                                                ),
+                                                active: isActiveSlug(
+                                                    'upcoming'
+                                                ) || isActiveSlug(
+                                                    'previous'
+                                                ) 
                                             }"
                                         >
                                             <a href="#">Trainings</a>
@@ -265,18 +263,16 @@
                                                 <li
                                                     :class="{
                                                         active:
-                                                            isActiveSubRoute(
-                                                                'trainings.index'
-                                                            ) &&
-                                                            getQueryParam() ===
-                                                                'upcomi',
+                                                            isActiveSlug(
+                                                                'upcoming'
+                                                            )
                                                     }"
                                                 >
                                                     <Link
                                                         :href="
                                                             route(
-                                                                'trainings.index',
-                                                                { q: 'upcomi' }
+                                                                'trainings.category',
+                                                                'upcoming',
                                                             )
                                                         "
                                                     >
@@ -286,20 +282,16 @@
                                                 <li
                                                     :class="{
                                                         active:
-                                                            isActiveSubRoute(
-                                                                'trainings.index'
-                                                            ) &&
-                                                            getQueryParam() ===
-                                                                'previous',
+                                                            isActiveSlug(
+                                                                'previous'
+                                                            ) 
                                                     }"
                                                 >
                                                     <Link
                                                         :href="
                                                             route(
-                                                                'trainings.index',
-                                                                {
-                                                                    q: 'previous',
-                                                                }
+                                                                'trainings.category',
+                                                                'previous', 
                                                             )
                                                         "
                                                     >
@@ -489,28 +481,22 @@ function isActiveRoute(routeName) {
 
     return url.includes(routePath);
 }
+function isActiveService() {
+    const urlPath = window.location.pathname.toLowerCase();
+    return urlPath.startsWith("/services") || urlPath.includes("/services");
+}
 
 // Function to check if it's the home route
 function isActiveHome() {
     return url === "/" || url === window.location.origin;
 }
 
-// Function to check if the route matches a specific sub-route
-function isActiveSubRoute(subRoute) {
-    const routePath = route(subRoute)
-        .replace(window.location.origin, "")
-        .replace(/^\/+/, "/");
-
-    console.log("Checking SubRoute:", subRoute);
-    console.log("Current URL:", url);
-
-    return url.includes(routePath);
+function isActiveSlug(slug) {
+    return window.location.pathname.includes(slug);
 }
 
-function getQueryParam() {
-    return pageProps.query?.q;
-    alert(getQueryParam())
-}
+
+
 </script>
 
 <style scoped>

@@ -85,7 +85,7 @@
               <h4 class="footer__widget-title">Quick Links</h4>
               <ul class="footer__widget-link list-wrap">
                 <li><Link :href="route('contact.index')">Contact Us</Link></li>
-                <li><Link :href="route('trainings.index')">Trainings</Link></li>
+                <li><Link :href="route('trainings.category', 'upcoming')">Trainings</Link></li>
                 <li><Link :href="route('home')">Testimonials</Link></li>
               </ul>
             </div>

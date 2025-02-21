@@ -17,9 +17,10 @@ class ServiceController extends Controller
     }
     public function show($slug)
     {
-        $service = Service::where('slug', $slug)->firstOrFail();
+        $service = Service::with('category')->where('slug', $slug)->firstOrFail();
+    
         $services = Service::where('slug', '!=', $slug)
-                            ->orderByDesc('created_at') 
+                            ->orderByDesc('created_at')
                             ->paginate(6);
     
         return Inertia::render('Client/Service/Details', [
@@ -27,6 +28,7 @@ class ServiceController extends Controller
             'services' => $services,
         ]);
     }
+    
     public function category($slug) {
         $category = ServiceCategory::where('slug', $slug)->first(); 
         if (!$category) {

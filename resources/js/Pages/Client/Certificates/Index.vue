@@ -1,6 +1,6 @@
 <template>
   <Head title="Certificate Verification" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'Certificate Verification'" :nav="nav" />
 
@@ -116,6 +116,7 @@ const nav = [
 
 const props = defineProps({
   setting: Object,
+  service_categories: Object, 
 });
 
 const form = useForm({
