@@ -1,5 +1,5 @@
 <template>
-  <section class="team__area fix section-py-130">
+  <section class="team__area fix section-py-130" style="margin-bottom:60px;">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6">
@@ -50,7 +50,6 @@
           </div>
         </div>
 
-        <!-- If no team members, show message -->
         <div v-if="props.teams.length === 0" class="text-center no-team-message">
           <p>No team members available at the moment.</p>
         </div>
@@ -94,7 +93,6 @@ const props = defineProps({
 });
 
 onMounted(() => {
-  // Initialize Swiper for team sliding
   new Swiper('.team-active', {
     loop: true,  // Enable looping
     slidesPerView: 3,  // Number of visible slides at once

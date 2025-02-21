@@ -1,6 +1,6 @@
 <template>
   <Head title="Trainings" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
     <Breadcrumb :title="'All Trainings'" :nav="nav" />
 
@@ -152,6 +152,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  service_categories:{
+    type:Object, 
+    required:true, 
+  }
 });
 
 // Breadcrumb Navigation

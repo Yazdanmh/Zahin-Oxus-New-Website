@@ -58,6 +58,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/projects/{slug}', [ProjectsController::class, 'show'])->name('project.show');
 
     Route::get('/trainings/all', [TrainingsController::class, 'index'])->name('trainings.index');
+    // Route::get('/trainings/category/{slug}', [TrainingsController::class, 'index'])->name('trainings.category');
     Route::get('/trainings/{slug}', [TrainingsController::class, 'show'])->name('trainings.show');
     Route::get('/trainings/apply/{slug}', [TrainingsController::class, 'apply'])->name('trainings.apply');
     Route::post('/trainings/apply/{id}', [TrainingsController::class, 'apply_store'])->name('trainings.apply_store');

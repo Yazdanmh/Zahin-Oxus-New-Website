@@ -225,10 +225,9 @@
                                                     'service.index'
                                                 ),
                                             }"
-                                            
                                         >
                                             <a href="#">Services</a>
-                                            <ul class="sub-menu" >
+                                            <ul class="sub-menu">
                                                 <li
                                                     v-for="item in service"
                                                     :key="item.id"
@@ -241,18 +240,18 @@
                                                     <Link
                                                         :href="
                                                             route(
-                                                                'service.category', item.slug
+                                                                'service.category',
+                                                                item.slug
                                                             )
                                                         "
                                                     >
-                                                       
                                                         {{ item.name }}
                                                     </Link>
                                                 </li>
                                             </ul>
                                         </li>
 
-                                        <!-- Training  Section -->
+                                        <!-- Training Section -->
                                         <li
                                             :class="{
                                                 'menu-item-has-children': true,
@@ -265,35 +264,47 @@
                                             <ul class="sub-menu">
                                                 <li
                                                     :class="{
-                                                        active: isActiveRoute(
-                                                            'trainings.index'
-                                                        ),
+                                                        active:
+                                                            isActiveSubRoute(
+                                                                'trainings.index'
+                                                            ) &&
+                                                            getQueryParam() ===
+                                                                'upcomi',
                                                     }"
                                                 >
                                                     <Link
                                                         :href="
                                                             route(
-                                                                'trainings.index'
+                                                                'trainings.index',
+                                                                { q: 'upcomi' }
                                                             )
                                                         "
-                                                        >Upcoming</Link
                                                     >
+                                                        Upcoming
+                                                    </Link>
                                                 </li>
                                                 <li
                                                     :class="{
-                                                        active: isActiveRoute(
-                                                            'trainings.index'
-                                                        ),
+                                                        active:
+                                                            isActiveSubRoute(
+                                                                'trainings.index'
+                                                            ) &&
+                                                            getQueryParam() ===
+                                                                'previous',
                                                     }"
                                                 >
                                                     <Link
                                                         :href="
                                                             route(
-                                                                'trainings.index'
+                                                                'trainings.index',
+                                                                {
+                                                                    q: 'previous',
+                                                                }
                                                             )
                                                         "
-                                                        >Previous</Link
                                                     >
+                                                        Previous
+                                                    </Link>
                                                 </li>
                                             </ul>
                                         </li>
@@ -441,8 +452,10 @@
     </header>
     <!-- header-area-end -->
 </template>
+
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
+
 const props = defineProps({
     setting: {
         type: Object,
@@ -454,8 +467,10 @@ const props = defineProps({
     },
 });
 
-const { url, currentRouteName } = usePage();
+// Access Inertia page data
+const { url, currentRouteName, props: pageProps } = usePage();
 
+// Function to check if the current route is active
 function isActiveRoute(routeName) {
     const routePath = route(routeName)
         .replace(window.location.origin, "")
@@ -474,14 +489,32 @@ function isActiveRoute(routeName) {
 
     return url.includes(routePath);
 }
+
+// Function to check if it's the home route
 function isActiveHome() {
-    // Check if the current URL is exactly '/' or the home URL
     return url === "/" || url === window.location.origin;
+}
+
+// Function to check if the route matches a specific sub-route
+function isActiveSubRoute(subRoute) {
+    const routePath = route(subRoute)
+        .replace(window.location.origin, "")
+        .replace(/^\/+/, "/");
+
+    console.log("Checking SubRoute:", subRoute);
+    console.log("Current URL:", url);
+
+    return url.includes(routePath);
+}
+
+function getQueryParam() {
+    return pageProps.query?.q;
+    alert(getQueryParam())
 }
 </script>
 
 <style scoped>
-ul.navigation li ul{
-    width:300px;
+ul.navigation li ul {
+    width: 300px;
 }
 </style>

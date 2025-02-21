@@ -11,13 +11,29 @@ use Illuminate\Support\Facades\Mail;
 
 class TrainingsController extends Controller
 {
-    public function index(){
-        $trainings = Training::orderByDesc('created_at')
-            ->paginate(4); // Call paginate only once
+    public function index(Request $request)
+    {
+        $q = $request->query('q');
+    
+        // Base query
+        $trainings = Training::query();
+    
+        if ($q === 'upcoming') {
+            // Filter upcoming trainings (start date is in the future)
+            $trainings->where('start_date', '>=', now())->orderBy('start_date', 'asc');
+        } elseif ($q === 'previous') {
+            // Filter past trainings (start date is in the past)
+            $trainings->where('start_date', '<', now())->orderBy('start_date', 'desc');
+        }
+    
+        // Paginate the filtered results
+        $trainings = $trainings->paginate(4);
+    
         return Inertia::render('Client/Trainings/Index', [
             'trainings' => $trainings,
         ]);
     }
+    
     
     public function show($slug){
         $training = Training::where('slug', $slug)->firstOrFail();

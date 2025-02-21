@@ -1,6 +1,6 @@
 <template>
     <!-- banner-area -->
-    <section class="banner__area fix">
+    <section class="banner__area fix " style="padding-top:50px; padding-bottom:100px;">
       <div
         class="banner__bg"
         data-background="/frontend/assets/img/banner/hero_bg.jpg"
@@ -27,6 +27,7 @@
                     class="injectable"
                 /></Link>
               </div>
+              
             </div>
           </div>
           <div class="col-lg-5 col-md-8">

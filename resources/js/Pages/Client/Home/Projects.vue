@@ -66,6 +66,12 @@
         </button>
       </div>
     </div>
+         <div class="services__bottom-content text-center mt-70">
+        <p>
+          Discover Our Projects.
+          <Link :href="route('project.index')">Explore All Projects</Link>
+        </p>
+      </div>
   </section>
   <!-- project-area-end -->
 </template>

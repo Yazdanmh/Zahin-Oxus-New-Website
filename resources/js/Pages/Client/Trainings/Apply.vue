@@ -1,8 +1,8 @@
 <template>
   <Head :title="props.training.name" />
-  <ClientLayout :setting="props.setting">
+  <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
-    <Breadcrumb :title="'Contact with us'" :nav="nav" />
+    <Breadcrumb :title="'Apply'" :nav="nav" />
 
     <!-- Contact Area -->
     <section class="contact__area">
@@ -256,6 +256,7 @@ import Breadcrumb from "@/Components/Client/Breadcrumb.vue";
 const props = defineProps({
   setting: { type: Object, required: true },
   training: { type: Object, required: true },
+  service_categories: { type: Object, required: true },
 });
 
 const nav = [
@@ -274,7 +275,6 @@ const form = useForm({
   training_name: props.training.name,
 });
 
-// Truncate description to 500 characters but keep HTML tags
 const truncatedDescription = computed(() => {
   // Remove HTML tags using a regex, then limit the characters
   const textWithoutHtml = props.training.description.replace(
@@ -289,6 +289,7 @@ const truncatedDescription = computed(() => {
 const responseMessage = ref("");
 const buttonText = ref("Apply");
 const responseClass = ref("");
+
 const error = ref({});
 const validateForm = () => {
   let valid = true;
