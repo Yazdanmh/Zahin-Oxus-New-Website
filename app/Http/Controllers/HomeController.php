@@ -17,7 +17,8 @@ use App\Models\OurMission;
 use App\Models\OurVision;
 use App\Models\Newsletter;
 use App\Models\History;
-use App\Models\Member;
+use App\Models\Trainer;
+use App\Models\CEO;
 
 class HomeController extends Controller
 {
@@ -33,7 +34,7 @@ class HomeController extends Controller
         $about = About::first();
         $trainings = Training::paginate(4);
         $history = History::first(); 
-        $teams = Member::all(); 
+        $teams = Trainer::where('show_on_home', 1)->get(); 
 
         return Inertia::render('Client/Home/Index', [
             'hero' => $hero,
@@ -55,13 +56,15 @@ class HomeController extends Controller
         $counter = Counter::first();
         $testimonials = Testimonial::all();
         $friends = Friend::all();
-        $teams = Member::all();
+        $teams = Trainer::where('show_on_home',1)->get();
+        $ceo = CEO::first(); 
         return Inertia::render('Client/About/Index', [
             'about' => $about,
             'counter' => $counter,
             'testimonials' => $testimonials,
             'friends' => $friends,
             'teams' => $teams, 
+            'ceo' => $ceo,
         ]);
     }
     public function OurMission(){

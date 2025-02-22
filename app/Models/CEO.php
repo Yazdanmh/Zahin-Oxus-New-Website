@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Member extends Model
+class CEO extends Model
 {
     protected $fillable = [
         'name',
@@ -14,15 +13,11 @@ class Member extends Model
         'phone',
         'image',
         'description',
-        'facebook',
-        'twitter',
         'skills',
         'slug',
     ];
 
-    // Ensure 'skills' is treated as an array
     protected $casts = [
         'skills' => 'array',
     ];
 }
-

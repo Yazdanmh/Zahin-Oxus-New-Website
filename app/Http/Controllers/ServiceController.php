@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Service; 
 use App\Models\ServiceCategory; 
 use Inertia\Inertia; 
+use App\Models\Trainer;
 
 class ServiceController extends Controller
 {
@@ -17,8 +18,9 @@ class ServiceController extends Controller
     }
     public function show($slug)
     {
+        
         $service = Service::with('category')->where('slug', $slug)->firstOrFail();
-    
+        $trainers = Trainer::where('service_id', $service->id)->get();
         $services = Service::where('slug', '!=', $slug)
                             ->orderByDesc('created_at')
                             ->paginate(6);
@@ -26,6 +28,7 @@ class ServiceController extends Controller
         return Inertia::render('Client/Service/Details', [
             'service' => $service,
             'services' => $services,
+            'trainers' => $trainers
         ]);
     }
     

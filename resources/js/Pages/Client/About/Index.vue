@@ -47,7 +47,7 @@
       </div>
     </section>
     <!-- cta-area-end -->
-
+    <CEO :ceo="props.ceo" v-if="props.ceo"/>
     <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
     <Teams v-if="props.teams.length> 0" :teams="props.teams"/>
     <Friends :friends="props.friends" />
@@ -62,6 +62,8 @@ import About from "@/Components/Client/About.vue";
 import Testimonial from "@/Components/Client/Testimonial.vue";
 import Friends from "@/Components/Client/Friends.vue";
 import Teams from "@/Components/Client/Teams.vue";
+
+import CEO from "@/Components/Client/CEO.vue";
 const props = defineProps({
   teams: {
     type: Object,
@@ -88,6 +90,10 @@ const props = defineProps({
     required: true,
   },
     service_categories: {
+    type: Object,
+    required: true,
+  },
+  ceo: {
     type: Object,
     required: true,
   },

@@ -1,9 +1,9 @@
 <template>
-  <Head title="Edit Member" />
+  <Head title="Edit Trainer" />
   <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Home /</span> Members / Edit
+        <span class="text-muted fw-light">Home /</span> Trainers / Edit
       </h4>
       <div class="row">
         <div class="col-xl">
@@ -11,8 +11,8 @@
             <div
               class="card-header d-flex justify-content-between align-items-center"
             >
-              <h5 class="mb-0">Edit Members</h5>
-              <small class="text-muted float-end">Edit existing member</small>
+              <h5 class="mb-0">Edit Trainers</h5>
+              <small class="text-muted float-end">Edit existing trainer</small>
             </div>
             <div class="card-body">
               <form @submit.prevent="submit">
@@ -23,7 +23,7 @@
                     <img
                       v-if="imagePreview"
                       :src="imagePreview"
-                      alt="member Image Preview"
+                      alt="trainer Image Preview"
                       class="d-block rounded"
                       style="width: 100px; height: 100px; object-fit: cover"
                       id="uploadedImage"
@@ -70,7 +70,7 @@
                         class="form-control"
                         id="name"
                         v-model="form.name"
-                        placeholder="Enter member name"
+                        placeholder="Enter trainer name"
                       />
                       <div v-if="errors.name" class="text-danger mt-2">
                         {{ errors.name }}
@@ -93,6 +93,23 @@
                       <div v-if="errors.position" class="text-danger mt-2">
                         {{ errors.position }}
                       </div>
+                    </div>
+                  </div>
+                  <!-- Toggle for show_on_home -->
+                  <div class="col-md-2 d-flex align-items-center">
+                    <div class="form-check form-switch mb-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckChecked"
+                        v-model="form.show_on_home"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
+                      >
+                        Show On Home
+                      </label>
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -129,37 +146,21 @@
                       </div>
                     </div>
                   </div>
+                  
                   <div class="col-md-4">
                     <div class="mb-3">
-                      <label for="facebook" class="form-label"
-                        >Facebook</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="facebook"
-                        v-model="form.facebook"
-                        placeholder="Business, "
-                      />
-                      <div v-if="errors.facebook" class="text-danger mt-2">
-                        {{ errors.facebook }}
+                      <label for="name" class="form-label">Service</label>
+                      <div class="position-relative">
+                        <select class="form-select" v-model="form.service_id">
+                          <option value="" disabled>-- Select Service --</option>
+                          <option v-for="service in props.services" :key="service.id" :value="service.id">
+                            {{ service.title }}
+                          </option>
+                        </select>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="twitter" class="form-label"
-                        >Twitter</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="twitter"
-                        v-model="form.twitter"
-                        placeholder="Business, "
-                      />
-                      <div v-if="errors.twitter" class="text-danger mt-2">
-                        {{ errors.twitter }}
+
+                      <div v-if="errors.service_id" class="text-danger mt-2">
+                        {{ errors.service_id }}
                       </div>
                     </div>
                   </div>
@@ -224,7 +225,7 @@ import TextEditor from "@/Components/Admin/TextEditor.vue";
 const toast = useToast();
 
 const props = defineProps({
-  member: {
+  trainer: {
     type: Object,
     required: true,
   },
@@ -236,20 +237,23 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  services: {
+    type: Object,
+    required: true,
+  },
 });
 
 // Initialize the form with the current values from the news object
 const form = useForm({
-  name: props.member.name || "",
-  position: props.member.position || "",
-  email: props.member.email || "",
-  description: props.member.description || "",
-  phone: props.member.phone || "",
-  facebook: props.member.facebook || "",
-  twitter: props.member.twitter || "",
-  skills: props.member.skills || "",
-
-  image: null, // Image will be handled separately
+  name: props.trainer.name || "",
+  position: props.trainer.position || "",
+  email: props.trainer.email || "",
+  description: props.trainer.description || "",
+  phone: props.trainer.phone || "",
+  skills: props.trainer.skills || "",
+  service_id: props.trainer.service_id,
+  show_on_home: props.trainer.show_on_home === 1 ? true : false,
+  image: null,
 });
 
 // Track any validation errors
@@ -257,7 +261,7 @@ const errors = ref({});
 
 // Initialize image preview
 const imagePreview = ref(
-  props.member.image ? `/storage/${props.member.image}` : null
+  props.trainer.image ? `/storage/${props.trainer.image}` : null
 );
 
 // Handle image upload
@@ -290,10 +294,10 @@ const cancel = () => {
 
 // Handle form submission
 const submit = () => {
-  form.post(route("members.update", props.member.id), {
+  form.post(route("trainers.update", props.trainer.id), {
     preserveScroll: true,
     onSuccess: () => {
-      toast.success("Member updated successfully");
+      toast.success("Trainer updated successfully");
     },
     onError: (err) => {
       errors.value = err; 

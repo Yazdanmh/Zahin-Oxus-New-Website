@@ -1,22 +1,22 @@
 <template>
-    <Head title="Member Details" />
+    <Head title="Trainer Details" />
     <AdminLayout :setting="props.setting" :user="props.user">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
-          <span class="text-muted fw-light">Home /</span> Members / Details
+          <span class="text-muted fw-light">Home /</span> Trainers / Details
         </h4>
         <div class="row">
           <div class="col-xl">
             <div class="card mb-4">
               <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Member Details</h5>
+                <h5 class="mb-0">Trainer Details</h5>
               </div>
               <div class="card-body">
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                   <img
                     v-if="form.image"
                     :src="'/storage/' + form.image"
-                    alt="Member Image"
+                    alt="Trainer Image"
                     class="d-block rounded"
                     style="width: 100px; height: 100px; object-fit: cover"
                   />
@@ -36,20 +36,12 @@
                     <p>{{ form.phone }}</p>
                   </div>
                   <div class="col-md-4">
-                    <h6><strong>Facebook:</strong></h6>
-                    <p v-if="form.facebook">
-                      <a :href="form.facebook" target="_blank">{{ form.facebook }}</a>
-                    </p>
-                    <p v-else>No Facebook profile</p>
+                    <h6><strong>Service:</strong></h6>
+                    <p>{{ form.service.title }}</p>
                   </div>
-                  <div class="col-md-4">
-                    <h6><strong>Twitter:</strong></h6>
-                    <p v-if="form.twitter">
-                      <a :href="form.twitter" target="_blank">{{ form.twitter }}</a>
-                    </p>
-                    <p v-else>No Twitter profile</p>
-                  </div>
-                  <div class="col-md-4">
+                 
+                 
+                  <div class="col-md-12">
                     <h6><strong>Skills:</strong></h6>
                     <p v-if="form.skills">
                       {{ form.skills }}
@@ -82,10 +74,10 @@
   const props = defineProps({
     setting: { type: Object, required: true },
     user: { type: Object, required: true },
-    member: { type: Object, required: true },
+    trainer: { type: Object, required: true },
   });
   
-  const form = ref({ ...props.member });
+  const form = ref({ ...props.trainer });
   
   const cancel = () => {
     window.history.back(); // Go back to the previous page

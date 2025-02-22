@@ -2,12 +2,14 @@
   <Head :title="props.service.title" />
   <ClientLayout :setting="props.setting" :service="props.service_categories">
     <Breadcrumb :title="'Our Services'" :nav="nav" />
+    
     <!-- services-details-area -->
     <section class="services__details-area section-py-130">
       <div class="container">
         <div class="row">
           <div class="col-30">
             <aside class="services__sidebar">
+              <!-- Sidebar content: Categories and contact info -->
               <div class="sidebar__widget">
                 <div class="sidebar__cat-list">
                   <ul
@@ -16,8 +18,8 @@
                     :key="item.id"
                   >
                     <li class="my-1">
-                      <Link :href="route('service.category', item.slug)"
-                        >{{ item.name }}
+                      <Link :href="route('service.category', item.slug)">
+                        {{ item.name }}
                         <span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +42,7 @@
                   </ul>
                 </div>
               </div>
+
               <div class="sidebar__widget">
                 <div class="sidebar__contact">
                   <h4 class="title">
@@ -61,24 +64,8 @@
                       class="injectable"
                     />
                   </Link>
-                  <div class="shape">
-                    <img
-                      src="/frontend/assets/img/images/sidebar_contact_shape01.svg"
-                      alt="shape"
-                      class="rotateme"
-                    />
-                    <img
-                      src="/frontend/assets/img/images/sidebar_contact_shape02.svg"
-                      alt="shape"
-                      class="alltuchtopdown"
-                    />
-                  </div>
                 </div>
               </div>
-
-             
-
-             
             </aside>
           </div>
 
@@ -87,15 +74,44 @@
               <div class="services__details-content-top">
                <p>{{props.service.category.name}}</p>
                 <h2 class="title">{{ props.service.subtitle }}</h2>
-               
               </div>
+
               <div class="services__details-thumb">
                 <img :src="'/storage/' + props.service.image" alt="img" />
               </div>
+
               <div class="services__details-content-top">
                 <h2 class="title">{{ props.service.title }}</h2>
                 <p v-html="props.service.description"></p>
               </div>
+              
+              <!-- Trainers Table -->
+              <div class="trainers-table-wrap" v-if="props.trainers.length> 0">
+                <h3 class="trainers-list-title">Our Trainers List</h3>
+                <table class="table table-modern">
+                  <thead>
+                    <tr>
+                      <th>NO</th>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(trainer, index) in props.trainers" :key="trainer.id">
+                      <td>{{ index + 1 }}</td>
+                      <td>{{ trainer.name }}</td>
+                      <td>{{ trainer.position }}</td>
+                      <td>
+                        <Link :href="route('trainer.show', trainer.slug)" class="trainer-link">
+                          View Details
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
             </div>
           </div>
         </div>
@@ -104,8 +120,8 @@
     <!-- services-details-area-end -->
   </ClientLayout>
 </template>
-    
-    <script setup>
+
+<script setup>
 import { Link } from "@inertiajs/vue3";
 import ClientLayout from "@/Layouts/ClientLayout.vue";
 import { Head } from "@inertiajs/vue3";
@@ -128,6 +144,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  trainers: {
+    type: Object,
+    required: true,
+  }
 });
 
 const nav = [
@@ -136,5 +156,68 @@ const nav = [
   { name: props.service.title, url: "" },
 ];
 </script>
-    
+
+<style scoped>
+/* Modern Table Styling */
+.table-modern {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.table-modern th, .table-modern td {
+  text-align: left;
+  padding: 14px 20px;
+  font-size: 16px;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.table-modern th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  color: #555;
+}
+
+.table-modern tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.table-modern tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-modern tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.trainers-list-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.trainer-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.trainer-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .table-modern th, .table-modern td {
+    font-size: 14px;
+    padding: 12px;
+  }
   
+  .trainers-list-title {
+    font-size: 20px;
+  }
+}
+</style>

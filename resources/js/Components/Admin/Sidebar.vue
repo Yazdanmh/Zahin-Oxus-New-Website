@@ -125,7 +125,7 @@
           'active open':
             isActiveRoute('about.index') ||
             isActiveRoute('ourmission') ||
-            isActiveRoute('members.index') ||
+            isActiveRoute('ceo.index') ||
             isActiveRoute('ourvision'),
         }"
       >
@@ -156,12 +156,13 @@
             >
           </li>
           <li
-            :class="{ 'menu-item': true, active: isActiveRoute('members.index') }"
+            :class="{ 'menu-item': true, active: isActiveRoute('ceo.index') }"
           >
-            <Link :href="route('members.index')" class="menu-link"
-              ><div>Members</div></Link
+            <Link :href="route('ceo.index')" class="menu-link"
+              ><div>CEO</div></Link
             >
           </li>
+          
         </ul>
       </li>
 
@@ -206,6 +207,7 @@
             isActiveRoute('training.index') ||
             isActiveRoute('mou.index') ||
             isActiveRoute('participants.index') ||
+            isActiveRoute('trainers.index') ||
             isActiveRoute('certificate.index'),
         }"
       >
@@ -222,6 +224,13 @@
           >
             <Link :href="route('training.index')" class="menu-link"
               ><div>Training</div></Link
+            >
+          </li>
+          <li
+            :class="{ 'menu-item': true, active: isActiveRoute('trainers.index') }"
+          >
+            <Link :href="route('trainers.index')" class="menu-link"
+              ><div>Trainer</div></Link
             >
           </li>
           <li

@@ -71,7 +71,7 @@
             <div class="footer__widget">
               <h4 class="footer__widget-title">About Company</h4>
               <ul class="footer__widget-link list-wrap">
-                <li><Link :href="route('home.about')">About Us</Link></li>
+                <li><Link :href="route('home.about')">About ZOCS</Link></li>
                 <li><Link :href="route('about.mission')">Our Missions</Link></li>
                 <li><Link :href="route('about.vision')">Our Vision</Link></li>
                 <li><Link :href="route('project.index')">Projects</Link></li>
@@ -86,7 +86,8 @@
               <ul class="footer__widget-link list-wrap">
                 <li><Link :href="route('contact.index')">Contact Us</Link></li>
                 <li><Link :href="route('trainings.category', 'upcoming')">Trainings</Link></li>
-                <li><Link :href="route('home')">Testimonials</Link></li>
+                <li><Link :href="route('service.index')">Services</Link></li>
+                <li><Link :href="route('service.index')">Gallery</Link></li>
               </ul>
             </div>
           </div>
@@ -96,7 +97,7 @@
             <div class="footer__widget">
               <h4 class="footer__widget-title">Subscribe Newsletter</h4>
               <div class="footer__newsletter">
-                <span>*Only valuable resource no bullshit</span>
+                <span>*Only valuable resource</span>
 
                 <form
                   @submit.prevent="submitForm"

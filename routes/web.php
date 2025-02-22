@@ -22,7 +22,8 @@ use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\MOUController;
 use App\Http\Controllers\backend\NotificationController;
 use App\Http\Controllers\backend\ParticipantsController;
-use App\Http\Controllers\backend\MembersController;
+use App\Http\Controllers\backend\TrainersController;
+use App\Http\Controllers\backend\CEOController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TeamsController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\MOUsController;
+use App\Http\Controllers\TrainerController;
 use App\Http\Middleware\ShareGlobalData;
 use App\Http\Middleware\PassUserDataToViews;
 use App\Http\Controllers\EventController;
@@ -63,6 +65,9 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/trainings/apply/{slug}', [TrainingsController::class, 'apply'])->name('trainings.apply');
     Route::post('/trainings/apply/{id}', [TrainingsController::class, 'apply_store'])->name('trainings.apply_store');
 
+    Route::get('/trainers/all', [TrainerController::class, 'index'])->name('trainer.index');
+    Route::get('/trainers-details/{slug}', [TrainerController::class, 'show'])->name('trainer.show');
+    Route::get('/ceo/{slug}', [TrainerController::class, 'getCEO'])->name('ceo.show');
 
     Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
     Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify');
@@ -77,7 +82,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/mous', [MOUsController::class, 'index'])->name('mous.index');
     Route::get('/mous/{slug}', [MOUsController::class, 'show'])->name('mous.show');
 
-    Route::get('/team-details/{slug}', [TeamsController::class, 'show'])->name('team.show');
+
 
 });
 
@@ -165,6 +170,8 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::post('/about/ourmission', [AboutController::class, 'mission_store'])->name('ourmission.store');
     Route::get('/about/ourvission', [AboutController::class, 'vision'])->name('ourvision');
     Route::post('/about/ourvission', [AboutController::class, 'vision_store'])->name('ourvision.store');
+    Route::get('/CEO/Details', [CEOController::class, 'index'])->name('ceo.index');
+    Route::post('/CEO/Details', [CEOController::class, 'update'])->name('ceo.update');
 
     // History
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
@@ -228,14 +235,14 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::get('/mou/{id}/edit', [MOUController::class, 'edit'])->name('mou.edit');
     Route::post('/mou/edit/{id}', [MOUController::class, 'update'])->name('mou.update');
     Route::post('/mou/{id}/delete', [MOUController::class, 'destroy'])->name('mou.destroy');
-    // Members
-    Route::get('/members', [MembersController::class, 'index'])->name('members.index');
-    Route::get('/members/create', [MembersController::class, 'create'])->name('members.create');
-    Route::post('/members', [MembersController::class, 'store'])->name('members.store');
-    Route::get('/members/details/{id}', [MembersController::class, 'show'])->name('members.show');
-    Route::get('/members/{id}/edit', [MembersController::class, 'edit'])->name('members.edit');
-    Route::post('/members/edit/{id}', [MembersController::class, 'update'])->name('members.update');
-    Route::post('/members/{id}/delete', [MembersController::class, 'destroy'])->name('members.destroy');
+    // trainers
+    Route::get('/trainers', [TrainersController::class, 'index'])->name('trainers.index');
+    Route::get('/trainers/create', [TrainersController::class, 'create'])->name('trainers.create');
+    Route::post('/trainers', [TrainersController::class, 'store'])->name('trainers.store');
+    Route::get('/trainers/details/{id}', [TrainersController::class, 'show'])->name('trainers.show');
+    Route::get('/trainers/{id}/edit', [TrainersController::class, 'edit'])->name('trainers.edit');
+    Route::post('/trainers/edit/{id}', [TrainersController::class, 'update'])->name('trainers.update');
+    Route::post('/trainers/{id}/delete', [TrainersController::class, 'destroy'])->name('trainers.destroy');
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

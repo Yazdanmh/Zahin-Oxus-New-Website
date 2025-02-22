@@ -1,9 +1,9 @@
 <template>
-  <Head title="Create Member" />
+  <Head title="Create Trainer" />
   <AdminLayout :setting="props.setting" :user="props.user">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Home /</span> Members / Create
+        <span class="text-muted fw-light">Home /</span> Trainers / Create
       </h4>
       <div class="row">
         <div class="col-xl">
@@ -11,8 +11,8 @@
             <div
               class="card-header d-flex justify-content-between align-items-center"
             >
-              <h5 class="mb-0">Create Member</h5>
-              <small class="text-muted float-end">Add a new member</small>
+              <h5 class="mb-0">Create Trainer</h5>
+              <small class="text-muted float-end">Add a new trainer</small>
             </div>
             <div class="card-body">
               <form @submit.prevent="submit">
@@ -23,7 +23,7 @@
                     <img
                       v-if="imagePreview"
                       :src="imagePreview"
-                      alt="Member Image Preview"
+                      alt="Trainer Image Preview"
                       class="d-block rounded"
                       style="width: 100px; height: 100px; object-fit: cover"
                       id="uploadedImage"
@@ -50,8 +50,10 @@
                         <span class="d-none d-sm-block">Reset</span>
                       </button>
                       <p class="text-muted mb-0">
-                        Allowed formats: JPG, PNG. Max size: 1MB. <br>
-                        <span class="text-warning">Recommended dimensions: 400 x 400 pixels.</span>
+                        Allowed formats: JPG, PNG. Max size: 1MB. <br />
+                        <span class="text-warning"
+                          >Recommended dimensions: 400 x 400 pixels.</span
+                        >
                       </p>
                       <small v-if="errors.image" class="text-danger">{{
                         errors.image
@@ -68,7 +70,7 @@
                         class="form-control"
                         id="name"
                         v-model="form.name"
-                        placeholder="Enter member's name"
+                        placeholder="Enter trainer's name"
                       />
                       <small v-if="errors.name" class="text-danger">{{
                         errors.name
@@ -90,6 +92,24 @@
                       }}</small>
                     </div>
                   </div>
+                  <!-- Toggle for show_on_home -->
+                  <div class="col-md-2 d-flex align-items-center">
+                    <div class="form-check form-switch mb-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="flexSwitchCheckChecked"
+                        v-model="form.show_on_home"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckChecked"
+                      >
+                        Show On Home
+                      </label>
+                    </div>
+                  </div>
+
                   <div class="col-md-4">
                     <div class="mb-3">
                       <label for="email" class="form-label">Email</label>
@@ -120,35 +140,27 @@
                       }}</small>
                     </div>
                   </div>
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="name" class="form-label">Service</label>
+                      <div class="position-relative">
+                        <select class="form-select" v-model="form.service_id">
+                          <option value="" disabled>
+                            -- Select Service --
+                          </option>
+                          <option
+                            v-for="service in props.services"
+                            :key="service.id"
+                            :value="service.id"
+                          >
+                            {{ service.title }}
+                          </option>
+                        </select>
+                      </div>
 
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="facebook" class="form-label">Facebook</label>
-                      <input
-                        type="url"
-                        class="form-control"
-                        id="facebook"
-                        v-model="form.facebook"
-                        placeholder="Enter Facebook url"
-                      />
-                      <small v-if="errors.facebook" class="text-danger">{{
-                        errors.facebook
-                      }}</small>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="twitter" class="form-label">Twitter</label>
-                      <input
-                        type="url"
-                        class="form-control"
-                        id="twitter"
-                        v-model="form.twitter"
-                        placeholder="Enter Twitter url"
-                      />
-                      <small v-if="errors.twitter" class="text-danger">{{
-                        errors.twitter
-                      }}</small>
+                      <div v-if="errors.service_id" class="text-danger mt-2">
+                        {{ errors.service_id }}
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -172,7 +184,6 @@
                         >Description</label
                       >
                       <TextEditor
-                        
                         id="description"
                         v-model="form.description"
                         rows="5"
@@ -192,7 +203,7 @@
                     Cancel
                   </button>
                   <button type="submit" class="btn btn-primary">
-                    <i class="bx bx-save"></i> Add Member
+                    <i class="bx bx-save"></i> Add Trainer
                   </button>
                 </div>
               </form>
@@ -221,6 +232,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  services: {
+    type: Object,
+    required: true,
+  },
 });
 
 const form = useForm({
@@ -230,10 +245,11 @@ const form = useForm({
   phone: "",
   image: null,
   description: "",
-  facebook: "",
-  twitter: "",
   skills: "",
+  service_id: "",
+  show_on_home: false,  
 });
+
 
 const imagePreview = ref(null);
 
@@ -259,10 +275,12 @@ const cancel = () => {
 };
 
 const submit = () => {
-  form.post(route("members.store"), {
+  console.log(form);  // Debugging line to check the form data
+
+  form.post(route("trainers.store"), {
     preserveScroll: true,
     onSuccess: () => {
-      toast.success("Member Created Successfully");
+      toast.success("Trainer Created Successfully");
       form.reset();
       resetImage();
     },
@@ -272,6 +290,7 @@ const submit = () => {
     },
   });
 };
+
 </script>
   
   <style scoped>

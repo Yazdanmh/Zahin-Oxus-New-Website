@@ -17,5 +17,8 @@ class Service extends Model
     {
         return $this->hasMany(Training::class);
     }
-    
+    public function trainers()
+    {
+        return $this->hasMany(Member::class);  
+    }
 }
