@@ -5,7 +5,7 @@
     <Breadcrumb :title="'About ZOSC'" :nav="nav" />
     <About :about="props.about" :counter="props.counter" :fulltext="true" />
     <!-- cta-area -->
-    <section class="cta__area-two">
+    <section class="cta__area-two" data-aos="fade-up" data-aos-delay="100">
       <div class="container">
         <div class="cta__inner-wrap-two">
           <div class="row align-items-center">

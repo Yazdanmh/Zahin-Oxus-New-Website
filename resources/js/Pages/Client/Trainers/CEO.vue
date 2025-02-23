@@ -1,7 +1,7 @@
 <template>
   <Head :title="props.trainer.name" />
   <ClientLayout :setting="props.setting" :service="props.service_categories">
-    <Breadcrumb :title="'Our Trainers'" :nav="nav" />
+    <Breadcrumb :title="'CEO Details'" :nav="nav" />
 
     <!-- trainer-details -->
     <section class="team__details-area section-py-130">
@@ -15,7 +15,6 @@
                 alt="img"
                 style="width: 100%; height: auto"
               />
-
               <div class="progress__wrap py-5">
                 <h5 class="text-start mb-3">Skills</h5>
                 <!-- Dynamically generate progress items -->
@@ -104,9 +103,8 @@ const parsedProgressItems = computed(() => {
 });
 // Breadcrumb Navigation
 const nav = computed(() => [
-  { name: "Home", url: "/" },
-  { name: "Trainers", url: "/" },
-  { name: props.trainer.name || "Member", url: "" },
+  { name: "About", url: route('home.about') },
+  { name: "CEO", url: "/" },
 ]);
 </script>
     

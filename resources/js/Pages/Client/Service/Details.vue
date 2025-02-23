@@ -7,7 +7,7 @@
     <section class="services__details-area section-py-130">
       <div class="container">
         <div class="row">
-          <div class="col-30">
+          <div class="col-30 order-2 order-sm-2 order-md-2 order-lg-1">
             <aside class="services__sidebar">
               <!-- Sidebar content: Categories and contact info -->
               <div class="sidebar__widget">
@@ -69,7 +69,7 @@
             </aside>
           </div>
 
-          <div class="col-70 order-0 order-lg-2">
+          <div class="col-70 order-0 order-lg-2 order-sm-1 order-md-1 order-lg-2">
             <div class="services__details-wrap">
               <div class="services__details-content-top">
                <p>{{props.service.category.name}}</p>

@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="testimonial__shape-wrap">
-            <img src="/frontend/assets/img/images/testi_shape01.svg" alt="shape">
+            <img src="/frontend/assets/img/images/testi_shape01.svg" alt="shape" >
             <img src="/frontend/assets/img/images/testi_shape02.svg" alt="shape">
             <img src="/frontend/assets/img/images/testi_shape03.svg" alt="shape" data-aos="fade-up-right" data-aos-delay="400">
             <img src="/frontend/assets/img/images/testi_shape04.svg" alt="shape">

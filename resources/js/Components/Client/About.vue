@@ -1,6 +1,6 @@
 <template>
   <!-- about-area -->
-  <section class="about__area section-py-130">
+  <section class="about__area section-py-130 bg-red" style="padding-bottom: 0px;">
     <div class="container">
       <div class="row justify-content-center">
         <!-- Left Image Section -->

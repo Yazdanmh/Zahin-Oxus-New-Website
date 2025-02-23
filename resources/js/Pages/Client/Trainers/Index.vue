@@ -32,7 +32,7 @@
             v-for="trainer in props.trainers.data"
             :key="trainer.id"
           >
-            <div class="team__item">
+            <div class="team__item" >
               <div class="team__thumb" style="margin-bottom: 50px">
                 <img
                   :src="'/storage/' + trainer.image"

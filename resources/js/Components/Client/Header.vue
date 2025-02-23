@@ -72,7 +72,7 @@
             <div class="tgmenu__wrap">
               <nav class="tgmenu__nav">
                 <div class="logo">
-                  <Link :href="route('home')">
+                  <Link :href="route('home')" data-aos="fade-right" data-aos-delay="200">
                     <img
                       :src="'/storage/' + props.setting.site_logo"
                       alt="Logo"
@@ -248,7 +248,7 @@
                 </div>
                 <div class="tgmenu__action">
                   <ul class="list-wrap">
-                    <li class="header-btn">
+                    <li class="header-btn" data-aos="fade-left" data-aos-delay="0">
                       <Link
                         :href="route('certificate.verify')"
                         class="tg-btn"

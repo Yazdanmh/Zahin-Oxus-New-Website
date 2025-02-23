@@ -8,7 +8,7 @@
     <section class="mou__list-area py-md-5 py-lg-5">
       <div class="container">
         <div class="row">
-          <div class="col-md-4 col-lg-3">
+          <div class="col-md-4 col-lg-3 order-2 order-sm-2 order-md-2 order-lg-1">
             <!-- Sidebar with information about MOUs -->
             <aside class="mou__sidebar">
               <div class="sidebar__widget">
@@ -47,7 +47,7 @@
             </aside>
           </div>
 
-          <div class="col-md-8 col-lg-9">
+          <div class="col-md-8 col-lg-9 order-sm-1 order-md-1 order-lg-2">
             <!-- MOU Listing Section -->
             <section class="mou__listing">
               <div class="row justify-content-center">

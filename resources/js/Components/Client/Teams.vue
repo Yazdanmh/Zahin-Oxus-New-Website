@@ -132,6 +132,9 @@ onMounted(() => {
       480: {
         slidesPerView: 1,
       },
+      280: {
+        slidesPerView: 1,
+      },
     },
   });
 });

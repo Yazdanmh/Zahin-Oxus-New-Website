@@ -30,13 +30,13 @@
               
             </div>
           </div>
-          <div class="col-lg-5 col-md-8">
-            <div class="banner__img">
+          <div class="col-lg-5 col-md-8 ">
+            <div class="banner__img" data-aos="fade-up" data-aos-delay="100">
               <img
                 :src="'/storage/' + props.hero.image"
                 alt="img"
                 class="main-img"
-               style="max-width:600px;"
+               style="width:auto; "
               />
               
             </div>

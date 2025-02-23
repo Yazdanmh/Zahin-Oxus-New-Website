@@ -8,7 +8,7 @@
     <section class="services__details-area py-md-5 py-lg-5">
       <div class="container">
         <div class="row">
-          <div class="col-30">
+          <div class="col-30 order-2 order-sm-2 order-md-2  order-lg-1">
             <aside class="services__sidebar">
               <div class="sidebar__widget">
                 <div class="sidebar__contact">
@@ -45,7 +45,7 @@
             </aside>
           </div>
 
-          <div class="col-70 order-0 order-lg-2 p-0 mt-2">
+          <div class="col-70 order-sm-1 order-md-1 order-lg-2 p-0 mt-2">
             <!-- team-details -->
             <section class="team__details-area">
               <div class="container">
@@ -124,6 +124,7 @@
     </section>
   </ClientLayout>
 </template>
+
     
   <script setup>
 import { ref } from "vue";
