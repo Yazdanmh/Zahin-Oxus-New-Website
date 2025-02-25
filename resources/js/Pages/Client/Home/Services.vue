@@ -34,10 +34,10 @@
               <div class="services__content">
                 <h3 class="title">
                   <a :href="route('service.show', service.slug)">{{
-                    service.subtitle
+                    service.title
                   }}</a>
                 </h3>
-                <p>{{ truncatedDescription(service.title) }}</p>
+                <p>{{ truncatedDescription(service.subtitle) }}</p>
                 <Link
                   :href="route('service.show', service.slug)"
                   class="link-btn"
@@ -68,7 +68,7 @@
 
       <div class="services__bottom-content text-center mt-70">
         <p>
-          Discover Our Financial Services.
+          Discover Our Financial and IT Services.
           <Link :href="route('service.index')">Explore All Services</Link>
         </p>
       </div>

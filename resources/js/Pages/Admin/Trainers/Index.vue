@@ -123,6 +123,9 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import Swal from "sweetalert2";
 import { Head, useForm, Link } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const props = defineProps({
   trainers: { type: Object, required: true },

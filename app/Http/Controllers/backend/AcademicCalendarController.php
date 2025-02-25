@@ -23,7 +23,7 @@ class AcademicCalendarController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx,xlsx|max:2048',
+            'file' => 'nullable|file|mimes:pdf,docx,xlsx|max:2048',
         ]);
 
         if ($validator->fails()) {

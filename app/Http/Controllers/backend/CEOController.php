@@ -27,7 +27,7 @@ class CEOController extends Controller
             'position' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048', 
             'description' => 'required|string',
             'skills' => 'nullable|json',
         ]);

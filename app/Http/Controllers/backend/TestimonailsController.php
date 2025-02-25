@@ -29,7 +29,7 @@ class TestimonailsController extends Controller
             'position' => 'required|string|max:255',
             'stars' => 'required|integer',
             'message' => 'required|',
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
         $imagePath = $request->file('image')->store('testimonails', 'public');
         Testimonial::create([
@@ -56,7 +56,7 @@ class TestimonailsController extends Controller
             'position' => 'required|string|max:255',
             'stars' => 'required|integer',
             'message' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ];
         $validatedData = $request->validate($rules);
         $testimonial->name = $validatedData['name'];

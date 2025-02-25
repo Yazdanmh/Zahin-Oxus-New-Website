@@ -19,7 +19,7 @@ class FriendsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,gif|max:1024',
+            'image' => 'required|image|mimes:jpeg,png,gif,svg,webp|max:1024',
         ]);
 
         $imagePath = null;

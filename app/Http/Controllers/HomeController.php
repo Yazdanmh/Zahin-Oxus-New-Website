@@ -32,7 +32,7 @@ class HomeController extends Controller
         $categories = Category::all();
         $testimonials = Testimonial::all();
         $about = About::first();
-        $trainings = Training::paginate(4);
+        $trainings = Training::orderBy('start_date')->paginate(4);
         $history = History::first(); 
         $teams = Trainer::where('show_on_home', 1)->get(); 
 

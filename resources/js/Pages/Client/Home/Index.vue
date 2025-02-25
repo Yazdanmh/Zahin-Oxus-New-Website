@@ -14,7 +14,7 @@
     <Teams v-if="props.teams.length>0" :teams="props.teams"/>
     <CTA2 v-else />
     <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
-    <Trainings :trainings="props.trainings" />
+    <Trainings v-if="props.trainings.length>0" :trainings="props.trainings" />
 
   </ClientLayout>
 </template>

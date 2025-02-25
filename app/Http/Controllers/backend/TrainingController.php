@@ -37,7 +37,7 @@ class TrainingController extends Controller
             'name' => 'required|string|max:255',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
             'description' => 'required|string',
             'has_form' => 'required|boolean',
             'service_id' => 'required|integer'
@@ -75,7 +75,7 @@ class TrainingController extends Controller
         $training = Training::findOrFail($id);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024', // 1MB max size
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024', // 1MB max size
             'description' => 'nullable|string',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',

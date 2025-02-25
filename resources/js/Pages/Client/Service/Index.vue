@@ -29,10 +29,10 @@
               </div>
               <div class="services__content-two">
                 <h4 class="title">
-                  <Link :href="route('service.show', service.slug)">{{ service.subtitle }}</Link>
+                  <Link :href="route('service.show', service.slug)">{{ service.title }}</Link>
                 </h4>
                 <p>
-                  {{ truncatedDescription(service.title) }}
+                  {{ truncatedDescription(service.subtitle) }}
                 </p>
                 <Link :href="route('service.show', service.slug)" class="tg-btn tg-btn-two">
                   Read More

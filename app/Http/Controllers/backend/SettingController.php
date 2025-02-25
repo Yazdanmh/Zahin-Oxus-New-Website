@@ -22,7 +22,7 @@ class SettingController extends Controller
         // Validate the request data
         $validatedData = $request->validate([
             'website_name' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|regex:/^\+?[0-9\s]+$/|max:15',
             'address' => 'nullable|string|max:500',

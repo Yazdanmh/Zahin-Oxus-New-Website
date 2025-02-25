@@ -33,9 +33,10 @@ class TrainersController extends Controller
     
         return Inertia::render('Admin/Trainers/Index', [
             'trainers' => $trainers,
-            'services' => Service::all(), // Pass services to dropdown
+            'services' => Service::all(), 
         ]);
     }
+    
     
 
     public function create()

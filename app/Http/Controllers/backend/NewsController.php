@@ -25,7 +25,7 @@ class NewsController extends Controller
             'description' => 'required|string',
             'is_published' => 'required|boolean',
             'tags' => 'required|string|max:255', 
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
 
         $imagePath = $request->file('image')->store('news', 'public');
@@ -56,7 +56,7 @@ class NewsController extends Controller
             'description' => 'required|string',
             'tags' => 'required|string|max:255',
             'is_published' => 'required|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG',  
+            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG,svg,webp',  
         ]);
 
         $news = News::findOrFail($id);

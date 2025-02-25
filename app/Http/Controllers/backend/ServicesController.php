@@ -12,13 +12,27 @@ use Illuminate\Support\Str;
 
 class ServicesController extends Controller
 {
-    public function index()
-    {
-        $services = Service::with('category')->paginate(10);
-        return Inertia::render('Admin/Services/Index', [
-            'services' => $services
-        ]);
+    public function index(Request $request)
+{
+    $query = Service::with('category');
+
+    if ($request->filled('search')) {
+        $query->where('title', 'like', '%' . $request->search . '%');
     }
+
+    if ($request->filled('category')) {
+        $query->where('service_category_id', $request->category);
+    }
+
+    $services = $query->paginate(9);
+    $categories = ServiceCategory::all();
+
+    return Inertia::render('Admin/Services/Index', [
+        'services' => $services,
+        'categories' => $categories,
+    ]);
+}
+
 
     public function create()
     {
@@ -34,7 +48,7 @@ class ServicesController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'icon' => 'required|string|max:255',
             'description' => 'required|string',
             'category' => 'required|exists:service_categories,id',
@@ -93,7 +107,7 @@ class ServicesController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $rules['image'] = 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048';
         }
 
         $validatedData = $request->validate($rules);

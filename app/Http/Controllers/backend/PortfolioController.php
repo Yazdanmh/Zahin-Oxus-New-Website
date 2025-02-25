@@ -34,7 +34,7 @@ class PortfolioController extends Controller
             'category_id' => 'required|integer',
             'has_form' => 'required|integer',
             'date' => 'required|date',
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
         $imagePath = $request->file('image')->store('portfolio', 'public');
         Portfolio::create([
@@ -67,7 +67,7 @@ class PortfolioController extends Controller
             'category_id' => 'required|integer',
             'has_form' => 'required|integer',
             'date' => 'required|date',
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
 
         $portfolio->title = $request['title'];

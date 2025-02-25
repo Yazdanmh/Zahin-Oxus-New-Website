@@ -28,7 +28,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255', 
             'description' => 'required|string', 
             'category_id' => 'required|integer', 
-            'image' => 'required|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
         $imagePath = $request->file('image')->store('projects', 'public');
         Project::create([
@@ -58,7 +58,7 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255', 
             'description' => 'required|string', 
             'category_id' => 'required|integer', 
-            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG',
+            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
 
         $project->name = $request->name; 
