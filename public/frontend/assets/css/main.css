@@ -1220,7 +1220,7 @@ textarea {
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #01022E 0%, rgba(1, 2, 46, 0.5) 102.5%);
+  background: linear-gradient(90deg, #1f408c 0%, rgba(1, 2, 46, 0.5) 102.5%);
   z-index: -1;
 }
 .breadcrumb__content .title {
