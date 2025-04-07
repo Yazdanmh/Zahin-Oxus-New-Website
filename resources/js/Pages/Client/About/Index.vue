@@ -2,7 +2,7 @@
   <Head title="About Us" />
   <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
-    <Breadcrumb :title="'About ZOSC'" :nav="nav" />
+    <Breadcrumb :title="'About ZOCS'" :nav="nav" />
     <About :about="props.about" :counter="props.counter" :fulltext="true" />
     <!-- cta-area -->
     <section class="cta__area-two" data-aos="fade-up" data-aos-delay="100">
