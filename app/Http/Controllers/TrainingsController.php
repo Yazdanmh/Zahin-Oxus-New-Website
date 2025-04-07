@@ -97,5 +97,4 @@ class TrainingsController extends Controller
     
         return redirect()->back()->with('success', 'Your application has been submitted!');
     }
-    
 }

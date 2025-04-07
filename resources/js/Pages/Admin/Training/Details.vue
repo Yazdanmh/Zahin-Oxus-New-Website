@@ -1,6 +1,6 @@
 <template>
     <Head title="Training Details" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> Trainings / Details
@@ -14,6 +14,7 @@
               >
                 <h5 class="mb-0">Training Details</h5>
                 <Link
+                  v-if="hasPermission('training.edit')"
                   :href="route('training.edit', training.id)"
                   class="btn btn-primary btn-sm"
                 >
@@ -100,7 +101,14 @@
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
   });
+  const hasPermission = (permission) => {
+    return props.permissions.includes(permission);
+  };
   </script>
   
   <style scoped>

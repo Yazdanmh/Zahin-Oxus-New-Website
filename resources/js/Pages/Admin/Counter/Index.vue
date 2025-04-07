@@ -1,6 +1,6 @@
 <template>
   <Head title="Counter" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.user.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Counter
@@ -88,7 +88,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-end gap-3 mt-4">
+                <div v-if="hasPermission('site_data.edit')" class="d-flex justify-content-end gap-3 mt-4">
                   <button type="submit" class="btn btn-primary">
                     <i class="bx bx-pencil"></i> Update Counters
                   </button>
@@ -122,6 +122,10 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 const toast = useToast();
 
@@ -145,6 +149,9 @@ const submit = () => {
       toast.error("Error occurred while proccesing the form!");
     }
   });
+};
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>
     

@@ -1,6 +1,6 @@
 <template>
     <Head title="Trainer Details" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> Trainers / Details
@@ -75,6 +75,10 @@
     setting: { type: Object, required: true },
     user: { type: Object, required: true },
     trainer: { type: Object, required: true },
+    permissions:{
+    type:Array, 
+    required:true, 
+  }
   });
   
   const form = ref({ ...props.trainer });

@@ -1,6 +1,6 @@
 <template>
     <Head title="Gallery List" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.user.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> Gallery / List
@@ -10,7 +10,7 @@
             <div class="card mb-4">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Gallery List</h5>
-                <Link :href="route('galleries.create')" class="btn btn-primary">
+                <Link v-if="hasPermission('gallery.create')" :href="route('galleries.create')" class="btn btn-primary">
                   <i class="bx bx-plus"></i> Add New Image
                 </Link>
               </div>
@@ -39,7 +39,7 @@
                         </h5>
                       </div>
                       <!-- Delete Button -->
-                      <div class="position-absolute top-0 end-0 p-2">
+                      <div v-if="hasPermission('gallery.delete')" class="position-absolute top-0 end-0 p-2">
                         <button
                           @click="deleteGallery(gallery.id)"
                           class="btn btn-outline-danger"
@@ -136,6 +136,10 @@
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
   });
   
   // Track the current page and total pages safely
@@ -203,6 +207,9 @@
       }
     });
   };
+  const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+}; 
   </script>
   
   

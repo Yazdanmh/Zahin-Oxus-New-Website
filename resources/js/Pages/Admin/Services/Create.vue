@@ -1,6 +1,6 @@
 <template>
   <Head title="Create Service" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Services / Create
@@ -190,7 +190,10 @@ import { Head, Link } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import TextEditor from "@/Components/Admin/TextEditor.vue";
-const props = defineProps({ setting: Object, user: Object, categories: Array });
+const props = defineProps({ setting: Object, user: Object, categories: Array,  permissions:{
+    type:Array, 
+    required:true, 
+  } });
 const toast = useToast();
 const form = useForm({
   title: "",
@@ -224,4 +227,5 @@ const submit = () => {
     },
   });
 };
+
 </script>

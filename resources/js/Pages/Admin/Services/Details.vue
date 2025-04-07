@@ -1,6 +1,6 @@
 <template>
   <Head title="Service Details" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Services / Details
@@ -88,14 +88,19 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
-  
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 })
 const service = props.service; // Assume service data is passed as a prop from the backend
 
 const goBack = () => {
   window.history.back(); // Navigate to the previous page
 };
-
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+};
 </script>
   
   <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <Head title="Setting" />
-  <AdminLayout :setting = "props.setting" :user="props.user">
+  <AdminLayout :setting = "props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Settings /</span> Edit
@@ -125,7 +125,12 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  permissions: {
+    type: Array,
+    required: true,
+  },
 });
+console.log(props.permissions);
 const toast = useToast();
 const form = useForm({
   website_name: props.settings.site_name,

@@ -1,6 +1,6 @@
 <template>
   <Head title="About" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> About
@@ -28,7 +28,7 @@
                       class="d-block rounded"
                       style="width: 150px; height: 150px; object-fit: contain"
                     />
-                    <div class="button-wrapper">
+                    <div v-if="hasPermission('site_data.edit')" class="button-wrapper">
                       <label for="upload-one" class="btn btn-primary me-2 mb-4">
                         <span class="d-none d-sm-block">Upload Image One</span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
@@ -61,7 +61,7 @@
                       class="d-block rounded"
                       style="width: 150px; height: 150px; object-fit: contain; border-radius:10px;"
                     />
-                    <div class="button-wrapper">
+                    <div v-if="hasPermission('site_data.edit')" class="button-wrapper">
                       <label for="upload-two" class="btn btn-primary me-2 mb-4">
                         <span class="d-none d-sm-block">Upload Image Two</span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
@@ -133,7 +133,7 @@
                   </div>
                  
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button v-if="hasPermission('site_data.edit')" type="submit" class="btn btn-primary">
                   Update About
                 </button>
               </form>
@@ -165,6 +165,10 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 const toast = useToast();
 const errors = ref({}); 
@@ -216,6 +220,9 @@ const submit = () => {
       toast.error("Error occurred while processing the form!");
     }
   });
+};
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>
 

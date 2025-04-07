@@ -1,6 +1,6 @@
 <template>
   <Head title="Our Vision" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Pages /</span> About / Our Vision
@@ -19,7 +19,7 @@
                 <span v-if="errors.our_vision" class="text-danger mt-2">
                           {{ errors.our_vision }}
                         </span>
-                <button type="submit" class="btn btn-primary mt-3">
+                <button v-if="hasPermission('site_data.edit')" type="submit" class="btn btn-primary mt-3">
                   Update
                 </button>
               </form>
@@ -53,6 +53,10 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 
 // Toast notifications
@@ -78,6 +82,9 @@ const submit = () => {
     },
   });
 };
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+}; 
 </script>
 
 <style scoped>

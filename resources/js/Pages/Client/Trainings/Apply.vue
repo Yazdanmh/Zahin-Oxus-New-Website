@@ -1,4 +1,5 @@
 <template>
+
   <Head :title="props.training.name" />
   <ClientLayout :setting="props.setting" :service="props.service_categories">
     <!-- Breadcrumb Section -->
@@ -14,40 +15,32 @@
               <p>
                 <strong>Start Date:</strong>
                 {{
-                  new Date(props.training.start_date).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )
+                  new Date(
+                    props.training.start_date
+                  ).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
                 }}
                 &nbsp;|&nbsp;
                 <strong>End Date:</strong>
                 {{
-                  new Date(props.training.end_date).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    }
-                  )
+                  new Date(
+                    props.training.end_date
+                  ).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })
                 }}
               </p>
               <h2>{{ props.training.name }}</h2>
               <p v-html="truncatedDescription"></p>
-              <Link
-                :href="route('trainings.show', props.training.slug)"
-                class="tg-btn tg-btn-two"
-              >
-                Read More
-                <img
-                  src="/frontend/assets/img/icons/right_arrow.svg"
-                  alt="right arrow"
-                  class="injectable"
-                />
+              <Link :href="route('trainings.show', props.training.slug)
+                " class="tg-btn tg-btn-two">
+              Read More
+              <img src="/frontend/assets/img/icons/right_arrow.svg" alt="right arrow" class="injectable" />
               </Link>
             </div>
           </div>
@@ -62,122 +55,76 @@
                   <div class="col-md-6">
                     <div class="form-grp">
                       <label for="name">Full Name *</label>
-                      <input
-                        id="name"
-                        v-model="form.name"
-                        type="text"
-                        placeholder="Enter your full name"
-                      />
-                      <span v-if="form.errors.name" class="error-message">{{
-                        form.errors.name[0]
-                      }}</span>
-                      <span v-if="error.name" class="error-message">{{
-                        error.name
-                      }}</span>
+                      <input id="name" v-model="form.name" type="text" placeholder="Enter your full name" />
+                      <span v-if="form.errors.name" class="error-message">{{ form.errors.name[0] }}</span>
+                      <span v-if="error.name" class="error-message">{{ error.name }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-grp">
                       <label for="email">Email *</label>
-                      <input
-                        id="email"
-                        v-model="form.email"
-                        type="email"
-                        placeholder="Enter your email address"
-                      />
+                      <input id="email" v-model="form.email" type="email" placeholder="Enter your email address" />
                       <span v-if="form.errors.email" class="error-message">{{
                         form.errors.email[0]
                       }}</span>
-                      <span v-if="error.email" class="error-message">{{
-                        error.email
-                      }}</span>
+                      <span v-if="error.email" class="error-message">{{ error.email }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-grp">
                       <label for="phone">Phone *</label>
-                      <input
-                        id="phone"
-                        v-model="form.phone"
-                        type="text"
-                        placeholder="Enter your phone number"
-                      />
+                      <input id="phone" v-model="form.phone" type="text" placeholder="Enter your phone number" />
                       <span v-if="form.errors.phone" class="error-message">{{
                         form.errors.phone[0]
                       }}</span>
-                      <span v-if="error.phone" class="error-message">{{
-                        error.phone
-                      }}</span>
+                      <span v-if="error.phone" class="error-message">{{ error.phone }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-grp">
                       <label for="organization">Organization *</label>
-                      <input
-                        id="organization"
-                        v-model="form.organization"
-                        type="text"
-                        placeholder="Enter your organization"
-                      />
+                      <input id="organization" v-model="form.organization" type="text"
+                        placeholder="Enter your organization" />
                       <span v-if="form.errors.organization" class="error-message">{{
                         form.errors.organization[0]
                       }}</span>
-                      <span v-if="error.organization" class="error-message">{{
-                        error.organization
-                      }}</span>
+                      <span v-if="error.organization" class="error-message">{{ error.organization }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-grp">
                       <label for="identity_card_id">Identity Card ID *</label>
-                      <input
-                        id="identity_card_id"
-                        v-model="form.identity_card_id"
-                        type="text"
-                        placeholder="Enter your identity card ID"
-                      />
-                      <span v-if="form.errors.identity_card_id" class="error-message">{{
-                        form.errors.identity_card_id[0]
+                      <input id="identity_card_id" v-model="form.identity_card_id" type="text"
+                        placeholder="Enter your identity card ID" />
+                      <span v-if="
+                        form.errors.identity_card_id
+                      " class="error-message">{{
+                                                  form.errors
+                                                    .identity_card_id[0]
+                                                }}</span>
+                      <span v-if="error.identity_card_id" class="error-message">{{
+                        error.identity_card_id
                       }}</span>
-                      <span
-                        v-if="error.identity_card_id"
-                        class="error-message"
-                        >{{ error.identity_card_id }}</span
-                      >
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-grp">
                       <label for="position">Position *</label>
-                      <input
-                        id="position"
-                        v-model="form.position"
-                        type="text"
-                        placeholder="Enter your position"
-                      />
+                      <input id="position" v-model="form.position" type="text" placeholder="Enter your position" />
                       <span v-if="form.errors.position" class="error-message">{{
                         form.errors.position[0]
                       }}</span>
-                      <span v-if="error.position" class="error-message">{{
-                        error.position
-                      }}</span>
+                      <span v-if="error.position" class="error-message">{{ error.position }}</span>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-grp">
                       <label for="address">Address *</label>
-                      <input
-                        id="address"
-                        v-model="form.address"
-                        type="text"
-                        placeholder="Enter your address"
-                      />
+                      <input id="address" v-model="form.address" type="text" placeholder="Enter your address" />
                       <span v-if="form.errors.address" class="error-message">{{
                         form.errors.address[0]
                       }}</span>
-                      <span v-if="error.address" class="error-message">{{
-                        error.address
-                      }}</span>
+                      <span v-if="error.address" class="error-message">{{ error.address }}</span>
                     </div>
                   </div>
                 </div>
@@ -204,7 +151,8 @@
             <div class="col-lg-6">
               <div class="cta__content-three">
                 <h2 class="title">
-                  Let’s Request a Schedule For Free Consultation
+                  Let’s Request a Schedule For Free
+                  Consultation
                 </h2>
               </div>
             </div>
@@ -216,28 +164,20 @@
                   </div>
                   <div class="content">
                     <span>Call For More Info</span>
-                    <a href="tel:0123456789">{{ props.setting.phone }}</a>
+                    <a href="tel:0123456789">{{
+                      props.setting.phone
+                    }}</a>
                   </div>
                 </div>
-                <Link
-                  :href="route('contact.index')"
-                  class="tg-btn tg-btn-three tg-border-btn"
-                >
-                  Read More
-                  <img
-                    src="/frontend/assets/img/icons/right_arrow.svg"
-                    alt="right arrow"
-                    class="injectable"
-                  />
+                <Link :href="route('contact.index')" class="tg-btn tg-btn-three tg-border-btn">
+                Read More
+                <img src="/frontend/assets/img/icons/right_arrow.svg" alt="right arrow" class="injectable" />
                 </Link>
               </div>
             </div>
           </div>
           <div class="cta__shape-three">
-            <img
-              src="/frontend/assets/img/images/h2_cta_shape.svg"
-              alt="shape"
-            />
+            <img src="/frontend/assets/img/images/h2_cta_shape.svg" alt="shape" />
           </div>
         </div>
       </div>
@@ -245,7 +185,7 @@
     <!-- CTA Area End -->
   </ClientLayout>
 </template>
-  
+
 <script setup>
 import { Link, useForm } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
@@ -377,10 +317,7 @@ const submitForm = async () => {
 };
 </script>
 
-
-
-
-  <style scoped>
+<style scoped>
 .error-message {
   color: red;
   font-size: 12px;
@@ -399,4 +336,3 @@ const submitForm = async () => {
   /* Add additional styling for this variant here */
 }
 </style>
-  

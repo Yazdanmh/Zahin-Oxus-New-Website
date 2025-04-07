@@ -1,12 +1,12 @@
 <template>
   <Head title="Company" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Company
       </h4>
       <div class="row">
-        <div class="col-xl">
+        <div v-if ="hasPermission('site_data.create')" class="col-xl">
           <div class="card mb-4">
             <div
               class="card-header d-flex justify-content-between align-items-center"
@@ -104,7 +104,7 @@
                     <tr>
                       <th>Company Logo</th>
                       <th>Company Name</th>
-                      <th>Action</th>
+                      <th v-if="hasPermission('site_data.delete')">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -125,7 +125,7 @@
                         />
                       </td>
                       <td>{{ company.name }}</td>
-                      <td>
+                      <td v-if="hasPermission('site_data.delete')">
                         <span
                           @click="confirmDelete(company.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer"
@@ -219,6 +219,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 
 const toast = useToast();
@@ -313,6 +317,9 @@ const confirmDelete = (companyId) => {
       deleteCompany(companyId); // Call the delete method if confirmed
     }
   });
+};
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>
   <style scoped>

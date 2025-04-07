@@ -2,7 +2,7 @@
   <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo" style="height: 100px;">
       <div class="d-flex flex-column">
-        <Link :href="route('dashboard')" class="app-brand-link">
+        <Link  class="app-brand-link">
           <span class="app-brand-logo demo">
             <img
               :src="'/storage/' + props.setting.site_logo"
@@ -27,7 +27,7 @@
     <div class="menu-inner-shadow"></div>
     <ul class="menu-inner py-1">
       <!-- Dashboard -->
-      <li
+      <li 
         :class="{ 'menu-item': true, active: isActiveRoute('dashboard') }"
       >
         <Link :href="route('dashboard')" class="menu-link">
@@ -198,6 +198,7 @@
           </li>
         </ul>
       </li>
+     
 
       <!-- Educational Resources (Training & Certificates) -->
       <li
@@ -302,12 +303,52 @@
 
       <!-- Settings -->
       <li
-        :class="{ 'menu-item': true, active: isActiveRoute('settings.index') }"
+        :class="{
+          'menu-item': true,
+          'active open':
+            isActiveRoute('roles.index') ||
+            isActiveRoute('users.index') ||
+            isActiveRoute('settings.index'),
+
+        }"
       >
-        <Link :href="route('settings.index')" class="menu-link">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-cog"></i>
-          <div>Settings</div>
-        </Link>
+          <div>Setting</div>
+        </a>
+        <ul class="menu-sub">
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('roles.index'),
+            }"
+          >
+            <Link :href="route('roles.index')" class="menu-link"
+              ><div>Roles</div></Link
+            >
+          </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('users.index'),
+            }"
+          >
+            <Link :href="route('users.index')" class="menu-link"
+              ><div>Users</div></Link
+            >
+          </li>
+          <li
+            :class="{
+              'menu-item': true,
+              active: isActiveRoute('settings.index'),
+            }"
+          >
+            <Link :href="route('settings.index')" class="menu-link"
+              ><div>Settings</div></Link
+            >
+          </li>
+      
+        </ul>
       </li>
     </ul>
   </aside>
@@ -321,6 +362,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  permissions: {
+    type: Array
+  },
 });
 const { url, currentRouteName } = usePage();
 
@@ -330,4 +374,7 @@ function isActiveRoute(routeName) {
     .replace(/^\/+/, "/");
   return url.includes(routePath);
 }
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+};
 </script>

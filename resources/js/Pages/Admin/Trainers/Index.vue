@@ -1,6 +1,6 @@
 <template>
   <Head title="Trainers" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Trainers / All
@@ -41,7 +41,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" v-if="hasPermission('site_data.create')">
                   <Link
                     :href="route('trainers.create')"
                     class="btn btn-primary"
@@ -61,7 +61,7 @@
                       <th>Name</th>
                       <th>Position</th>
                       <th>Service</th>
-                      <th>Actions</th>
+                      <th v-if="hasPermission('site_data.edit') || hasPermission('site_data.delete')">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -85,13 +85,13 @@
                       <td>{{ trainer.name }}</td>
                       <td>{{ trainer.position }}</td>
                       <td>{{ trainer.service.title }}</td>
-                      <td class="text-center">
-                        <Link :href="route('trainers.edit', trainer.id)">
+                      <td class="text-center" v-if="hasPermission('site_data.edit') || hasPermission('site_data.delete') || hasPermission('site_data.view')">
+                        <Link v-if="hasPermission('site_data.edit')" :href="route('trainers.edit', trainer.id)">
                           <span class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2">
                             <i class="bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span
+                        <span v-if="hasPermission('site_data.delete')"
                           @click="confirmDelete(trainer.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -132,6 +132,10 @@ const props = defineProps({
   services: { type: Array, required: true },
   setting: { type: Object, required: true },
   user: { type: Object, required: true },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 
 const form = useForm({});
@@ -177,6 +181,9 @@ const deleteTrainer = (id) => {
     },
   });
 };
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+}; 
 </script>
 
 <style scoped>

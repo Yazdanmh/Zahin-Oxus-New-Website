@@ -1,6 +1,6 @@
 <template>
   <Head title="Testimonials" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.user.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Testimonial / All
@@ -17,7 +17,7 @@
               >
             </div>
             <div class="card-body">
-              <div class="d-flex justify-content-end mb-3">
+              <div v-if="hasPermission('site_data.create')" class="d-flex justify-content-end mb-3">
                 <Link :href="route('testimonails.create')" class="btn btn-primary">
                   <i class="bx bx-plus"></i> Add Testimonial
                 </Link>
@@ -31,7 +31,7 @@
                     <th>Position</th>
                     <th>Stars</th>
                     <th>Message</th>
-                    <th>Actions</th>
+                    <th v-if="hasPermission('site_data.edit') || hasPermission('site_data.delete')">Actions</th>
                   </tr>
                 </thead>
 
@@ -57,15 +57,15 @@
                     <td>{{ testimonial.position }}</td>
                     <td>{{ testimonial.stars }}</td>
                     <td>{{ testimonial.message.slice(0, 50) }}...</td>
-                    <td>
-                      <Link :href="route('testimonails.edit', testimonial.id)">
+                    <td v-if="hasPermission('site_data.edit') || hasPermission('site_data.delete')">
+                      <Link v-if="hasPermission('site_data.edit')" :href="route('testimonails.edit', testimonial.id)">
                         <span
                          
                           class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                           ><i class="icon-base bx bx-pencil icon-xs"></i
                         ></span>
                       </Link>
-                      <span
+                      <span v-if="hasPermission('site_data.delete')"
                         @click="confirmDelete(testimonial.id)"
                         class="badge bg-label-danger p-1_5 me-3 cursor-pointer"
                         ><i class="icon-base bx bx-trash icon-xs"></i
@@ -102,6 +102,10 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 const form = useForm({
 });
@@ -134,6 +138,9 @@ const confirmDelete = (id) => {
       deleteTestimonial(id); // Call the delete method if confirmed
     }
   });
+};
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>
   

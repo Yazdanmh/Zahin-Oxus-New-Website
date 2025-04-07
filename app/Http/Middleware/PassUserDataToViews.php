@@ -21,10 +21,11 @@ class PassUserDataToViews
         if (Auth::check()) {
             $user = Auth::user();
             $settings = Setting::first();
-    
+            $permissions = auth()->user()->getAllPermissions()->pluck('name')->toArray();
             Inertia::share([
                 'user' => $user,
                 'setting' => $settings,
+                'permissions' => $permissions,
             ]);
         }
     

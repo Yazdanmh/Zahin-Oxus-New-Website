@@ -2,7 +2,7 @@
   <Head title="Dashboard"/>
   <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-        <Sidebar :setting="props.setting"/>
+        <Sidebar :setting="props.setting" :permissions="props.permissions"/>
         <div class="layout-page">
           <Navbar :user="props.user"/>
           <!-- / Navbar -->
@@ -36,6 +36,9 @@ const props = defineProps({
   setting: {
     type: Object,
     required: true,
+  },
+  permissions: {
+    type: Array,
   },
 })
 </script>

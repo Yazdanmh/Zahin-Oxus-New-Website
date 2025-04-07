@@ -1,6 +1,6 @@
 <template>
   <Head title="Hero" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Hero
@@ -27,7 +27,7 @@
                       style="width: 300px; height: 100px; object-fit: contain;"
                       id="uploadedLogo"
                     />
-                    <div class="button-wrapper">
+                    <div v-if="hasPermission('site_data.edit')" class="button-wrapper">
                       <label for="upload" class="btn btn-primary me-2 mb-4">
                         <span class="d-none d-sm-block">Upload New image</span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
@@ -133,7 +133,7 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button v-if="hasPermission('site_data.edit')" type="submit" class="btn btn-primary">
                   Update Hero
                 </button>
               </form>
@@ -165,6 +165,10 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 const toast = useToast();
 
@@ -208,6 +212,10 @@ const submit = () => {
       errors.value = err; 
     }
   });
+};
+
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>
   

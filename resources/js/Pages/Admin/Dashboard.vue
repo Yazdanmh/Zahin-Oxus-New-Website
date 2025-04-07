@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <div class="row">
         <div class="col-lg-12 col-md-12 order-1">
@@ -264,6 +264,10 @@ const props = defineProps({
   },
   messages: {
     type: Object,
+    required: true,
+  },
+  permissions: {
+    type: Array,
     required: true,
   },
 });

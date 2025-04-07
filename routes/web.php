@@ -25,9 +25,12 @@ use App\Http\Controllers\backend\ParticipantsController;
 use App\Http\Controllers\backend\TrainersController;
 use App\Http\Controllers\backend\CEOController;
 
+
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\AcademicController;
+use App\Http\Controllers\backend\RolesController;
+use App\Http\Controllers\backend\UsersController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
@@ -89,11 +92,16 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
     // Settings
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-    Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::get('/settings', [SettingController::class, 'index'])
+        ->name('settings.index');
+
+    
+    Route::post('/settings', [SettingController::class, 'update'])
+        ->name('settings.update');
 
     // Hero
     Route::get('/hero', [HeroController::class, 'index'])->name('hero.index');
@@ -246,6 +254,24 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+
+    //Role and Permsssions
+    Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [RolesController::class, 'create'])->name('roles.create');
+    Route::post('/roles', [RolesController::class, 'store'])->name('roles.store');
+    Route::get('/roles/details/{id}', [RolesController::class, 'show'])->name('roles.show');
+    Route::get('/roles/{id}/edit', [RolesController::class, 'edit'])->name('roles.edit');
+    Route::post('/roles/edit/{id}', [RolesController::class, 'update'])->name('roles.update');
+    Route::post('/roles/{id}/delete', [RolesController::class, 'destroy'])->name('roles.destroy');
+    //Role and Permsssions
+    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::post('/users', [UsersController::class, 'store'])->name('users.store');
+    Route::get('/users/details/{id}', [UsersController::class, 'show'])->name('users.show');
+    Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
+    Route::post('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
+    Route::post('/users/{id}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
+
 
 });
 

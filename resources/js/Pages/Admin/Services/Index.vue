@@ -1,6 +1,6 @@
 <template>
   <Head title="Services" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions=" props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Services
@@ -22,7 +22,7 @@
           </option>
         </select>
 
-        <Link :href="route('services.create')" class="btn btn-primary">
+        <Link v-if="hasPermission('site_data.create')" :href="route('services.create')" class="btn btn-primary">
           <i class="bx bx-plus"></i> Add Service
         </Link>
       </div>
@@ -56,10 +56,10 @@
                         Actions
                       </button>
                       <ul class="dropdown-menu">
-                        <li>
+                        <li v-if="hasPermission('site_data.edit')">
                           <Link :href="route('services.edit', service.id)" class="dropdown-item">Edit</Link>
                         </li>
-                        <li>
+                        <li v-if="hasPermission('site_data.delete')">
                           <a @click="confirmDelete(service.id)" class="dropdown-item">Delete</a>
                         </li>
                         <li>
@@ -109,6 +109,10 @@ const props = defineProps({
   categories: Array,
   setting: Object,
   user: Object,
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 
 const toast = useToast();
@@ -160,11 +164,14 @@ const confirmDelete = (serviceId) => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      useForm().delete(route("services.destroy", serviceId), {
+      useForm().post(route("services.destroy", serviceId), {
         preserveScroll: true,
         onSuccess: () => toast.success("Service Deleted Successfully"),
       });
     }
   });
+};
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>

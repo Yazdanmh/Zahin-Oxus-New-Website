@@ -1,6 +1,6 @@
 <template>
   <Head title="History" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> History
@@ -97,7 +97,7 @@
                           class="d-block rounded"
                           style="width: 300px; height: 100px; object-fit: cover"
                         />
-                        <div class="button-wrapper">
+                        <div v-if="hasPermission('site_data.edit')" class="button-wrapper">
                           <label
                             for="upload-one"
                             class="btn btn-primary me-2 mb-4"
@@ -140,7 +140,7 @@
                           class="d-block rounded"
                           style="width: 300px; height: 100px; object-fit: cover"
                         />
-                        <div class="button-wrapper">
+                        <div v-if="hasPermission('site_data.edit')" class="button-wrapper">
                           <label
                             for="upload-two"
                             class="btn btn-primary me-2 mb-4"
@@ -168,7 +168,7 @@
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3">
+                <button v-if="hasPermission('site_data.edit')" type="submit" class="btn btn-primary mt-3">
                   Update History
                 </button>
               </form>
@@ -200,6 +200,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 const toast = useToast();
 const errors = ref({});
@@ -252,6 +256,10 @@ const submit = () => {
       toast.error("Error occured while processing the form!");
     },
   });
+};
+
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
 };
 </script>
   

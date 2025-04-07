@@ -1,6 +1,6 @@
 <template>
     <Head title="CEO" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">CEO /</span> Edit
@@ -25,7 +25,7 @@
                         width="100"
                         id="uploadedImage"
                       />
-                      <div class="button-wrapper">
+                      <div v-if="hasPermission('site_data.edit')" class="button-wrapper">
                         <label for="upload" class="btn btn-primary me-2 mb-4">
                           <span class="d-none d-sm-block">Upload New Image</span>
                           <i class="bx bx-upload d-block d-sm-none"></i>
@@ -86,7 +86,7 @@
                       </div>
                     </template>
                   </div>
-                  <button type="submit" class="btn btn-primary">
+                  <button v-if="hasPermission('site_data.edit')" type="submit" class="btn btn-primary">
                     Update CEO Info
                   </button>
                 </form>
@@ -118,6 +118,10 @@
       type: Object,
       required: true,
     },
+    permissions:{
+    type:Array, 
+    required:true, 
+  }
   });
   
   const toast = useToast();
@@ -235,5 +239,8 @@
       },
     });
   };
+  const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+}; 
   </script>
   

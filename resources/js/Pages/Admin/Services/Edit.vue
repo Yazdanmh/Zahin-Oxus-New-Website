@@ -1,6 +1,6 @@
 <template>
   <Head title="Edit Service" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Services / Edit
@@ -192,6 +192,10 @@ const props = defineProps({
   user: Object,
   categories: Array,
   service: Object,
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
 
 const toast = useToast();
@@ -239,4 +243,7 @@ const submit = () => {
 watch(() => form.category, (newCategory) => {
   console.log("Selected Category:", newCategory); // Debugging: check if the category is updating correctly
 });
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+};
 </script>

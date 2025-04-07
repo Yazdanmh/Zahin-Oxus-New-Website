@@ -1,6 +1,6 @@
 <template>
   <Head title="News" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> News / All
@@ -15,7 +15,7 @@
               <small class="text-muted float-end">List of all News</small>
             </div>
             <div class="card-body">
-              <div class="d-flex justify-content-end mb-3">
+              <div v-if="hasPermission('events.create')" class="d-flex justify-content-end mb-3">
                 <Link :href="route('news.create')" class="btn btn-primary">
                   <i class="bx bx-plus"></i> Add News
                 </Link>
@@ -34,7 +34,7 @@
                       <th>Image</th>
                       <th>Title</th>
                       <th>Status</th>
-                      <th>Actions</th>
+                      <th v-if="hasPermission('events.edit')  || hasPermission('events.delete')">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -63,15 +63,15 @@
                           {{ news.is_published ? "Published" : "Draft" }}
                         </span>
                       </td>
-                      <td class="text-center">
-                        <Link :href="route('news.edit', news.id)">
+                      <td class="text-center" v-if="hasPermission('events.edit')  || hasPermission('events.delete') || hasPermission('events.view')"> 
+                        <Link v-if="hasPermission('events.edit')" :href="route('news.edit', news.id)">
                           <span
                             class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                           >
                             <i class="icon-base bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span
+                        <span v-if="hasPermission('events.delete')"
                           @click="confirmDelete(news.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -168,6 +168,10 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+    type:Array, 
+    required:true, 
+  }
 });
  
 const form = useForm({});
@@ -201,6 +205,10 @@ const confirmDelete = (id) => {
     }
   });
 };
+
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+}; 
 </script>
   
   <style scoped>
