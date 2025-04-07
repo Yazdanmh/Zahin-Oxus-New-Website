@@ -1,6 +1,6 @@
 <template>
   <Head title="Create MOU" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> MOUs / Create
@@ -186,6 +186,9 @@ const props = defineProps({
     type: Object,
     default: () => ({}), // Default to an empty object if not passed
   },
+  permissions:{
+      type:Array, required:true
+    }
 });
 
 // Initialize Toast for success/error messages

@@ -1,12 +1,12 @@
 <template>
     <Head title="MOUs" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> MOUs
         </h4>
   
-        <div class="mb-3 text-end">
+        <div v-if ="hasPermission('MOUs.create')" class="mb-3 text-end">
           <Link :href="route('mou.create')" class="btn btn-primary">
             <i class="bx bx-plus"></i> Add MOU
           </Link>
@@ -32,7 +32,7 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th v-if ="hasPermission('MOUs.edit') || hasPermission('MOUs.delete') || hasPermission('MOUs.view')" >Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -42,13 +42,13 @@
                     <td>{{ mou.start_date || "N/A" }}</td>
                     <td>{{ mou.end_date || "Ongoing" }}</td>
                     <td>{{ mou.status || "N/A" }}</td>
-                    <td>
-                      <Link :href="route('mou.edit', mou.id)">
+                    <td v-if ="hasPermission('MOUs.edit') || hasPermission('MOUs.delete') || hasPermission('MOUs.view')">
+                      <Link v-if ="hasPermission('MOUs.edit')" :href="route('mou.edit', mou.id)">
                         <span class="badge bg-label-primary p-1.5 me-3 cursor-pointer mb-2">
                           <i class="icon-base bx bx-pencil icon-xs"></i>
                         </span>
                       </Link>
-                      <span @click="confirmDelete(mou.id)" class="badge bg-label-danger p-1.5 me-3 cursor-pointer mb-2">
+                      <span v-if ="hasPermission('MOUs.delete')" @click="confirmDelete(mou.id)" class="badge bg-label-danger p-1.5 me-3 cursor-pointer mb-2">
                         <i class="icon-base bx bx-trash icon-xs"></i>
                       </span>
                       <Link :href="route('mou.show', mou.id)">
@@ -109,6 +109,9 @@
     mou: { type: Object, required: true },
     setting: { type: Object, required: true },
     user: { type: Object, required: true },
+    permissions:{
+      type:Array, required:true
+    }
   });
   
   const toast = useToast();
@@ -162,5 +165,8 @@
       }
     });
   };
+  const hasPermission = (permission) => {
+    return props.permissions.includes(permission)
+  }
   </script>
   

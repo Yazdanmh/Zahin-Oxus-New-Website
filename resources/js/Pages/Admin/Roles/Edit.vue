@@ -1,6 +1,6 @@
 <template>
     <Head title="Edit Role" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions ="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> Roles / Edit
@@ -29,7 +29,7 @@
                       <h5 class="mb-0">Permissions</h5>
                       <small class="text-muted">Assign permissions to this role</small>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -63,7 +63,7 @@
   
                   <!-- Submit Button -->
                   <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                       <i class="bx bx-save"></i> Save Permissions
                     </button>
                   </div>
@@ -86,6 +86,7 @@
     setting: Object,
     user: Object,
     assignedPermissions: Array,
+    permissions :{type:Array, required:true}
   });
   
   const toast = useToast();

@@ -179,8 +179,7 @@
     </div>
   </AdminLayout>
 </template>
-
-  <script setup>
+<script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
@@ -200,18 +199,20 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  permissions:{
-    type:Array, 
-    required:true, 
+  permissions: {
+    type: Array,
+    required: true,
   }
 });
+
 const toast = useToast();
 const errors = ref({});
+// Ensure props.history exists before accessing its properties
 const form = useForm({
-  subtitle: props.history.subtitle,
-  title: props.history.title,
-  description: props.history.description,
-  progress_items: JSON.stringify(props.history.progress_items || {}),
+  subtitle: props.history?.subtitle || '', // Use optional chaining here
+  title: props.history?.title || '',       // Use optional chaining here
+  description: props.history?.description || '',  // Use optional chaining here
+  progress_items: JSON.stringify(props.history?.progress_items || {}),
   image_one: null,
   image_two: null,
 });
@@ -246,6 +247,7 @@ const handleImageTwoUpload = (event) => {
 const submit = () => {
   if (!form.image_one) delete form.image_one;
   if (!form.image_two) delete form.image_two;
+  
   form.post(route("history.update"), {
     preserveScroll: true,
     onSuccess: () => {
@@ -253,7 +255,7 @@ const submit = () => {
     },
     onError: (err) => {
       errors.value = err;
-      toast.error("Error occured while processing the form!");
+      toast.error("Error occurred while processing the form!");
     },
   });
 };
@@ -261,5 +263,11 @@ const submit = () => {
 const hasPermission = (permission) => {
   return props.permissions.includes(permission);
 };
+
+// Helper function to get image source
+const getImageSrc = (imageType) => {
+  return props.history?.[imageType] 
+    ? '/storage/' + props.history[imageType] 
+    : '/default-placeholder.jpg';
+};
 </script>
-  

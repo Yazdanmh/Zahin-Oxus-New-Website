@@ -1,6 +1,6 @@
 <template>
   <Head title="Projects" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Projects / All
@@ -15,7 +15,7 @@
               <small class="text-muted float-end">List of all Projects</small>
             </div>
             <div class="card-body">
-              <div class="d-flex justify-content-end mb-3">
+              <div v-if ="hasPermission('projects.create')" class="d-flex justify-content-end mb-3">
                 <Link :href="route('projects.create')" class="btn btn-primary">
                   <i class="bx bx-plus"></i> Add Project
                 </Link>
@@ -34,7 +34,7 @@
                       <th>Image</th>
                       <th>Name</th>
                       <th>Category</th>
-                      <th>Actions</th>
+                      <th  v-if ="hasPermission('projects.edit') || hasPermission('projects.delete') || hasPermission('projects.view')">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -57,15 +57,15 @@
                       </td>
                       <td>{{ project.name }}</td>
                       <td>{{ project.category.title }}</td>
-                      <td class="text-center">
-                        <Link :href="route('projects.edit', project.id)">
+                      <td class="text-center" v-if ="hasPermission('projects.edit') || hasPermission('projects.delete') || hasPermission('projects.view')">
+                        <Link v-if ="hasPermission('projects.edit')" :href="route('projects.edit', project.id)">
                           <span
                             class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                           >
                             <i class="icon-base bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span
+                        <span v-if ="hasPermission('projects.delete')"
                           @click="confirmDelete(project.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -167,6 +167,9 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+      permissions:{
+      type:Array, required:true
+    }
 });
 
 const form = useForm({});
@@ -200,6 +203,9 @@ const confirmDelete = (id) => {
     }
   });
 };
+const hasPermission = (permission) =>{
+  return props.permissions.includes(permission)
+}
 </script>
 
 <style scoped>

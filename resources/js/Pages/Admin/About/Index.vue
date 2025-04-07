@@ -8,22 +8,17 @@
       <div class="row">
         <div class="col-xl">
           <div class="card mb-4">
-            <div
-              class="card-header d-flex justify-content-between align-items-center"
-            >
+            <div class="card-header d-flex justify-content-between align-items-center">
               <h5 class="mb-0">About</h5>
               <small class="text-muted float-end">Manage About Section</small>
             </div>
             <div class="card-body">
               <form @submit.prevent="submit">
                 <div class="card-body">
-                  <div
-                    class="d-flex align-items-start align-items-sm-center gap-4"
-                  >
+                  <!-- First Image Preview -->
+                  <div class="d-flex align-items-start align-items-sm-center gap-4">
                     <img
-                      :src="
-                        imagePreviewOne || '/storage/' + props.about.image_one
-                      "
+                      :src="imagePreviewOne || '/storage/' + (props.about?.image_one || '')"
                       alt="Image One"
                       class="d-block rounded"
                       style="width: 150px; height: 150px; object-fit: contain"
@@ -46,17 +41,14 @@
                         <span v-if="errors.image_one" class="text-danger mt-2">
                           {{ errors.image_one }}
                         </span>
-
                       </p>
                     </div>
                   </div>
-                  <div
-                    class="d-flex align-items-start align-items-sm-center gap-4 mt-3"
-                  >
+
+                  <!-- Second Image Preview -->
+                  <div class="d-flex align-items-start align-items-sm-center gap-4 mt-3">
                     <img
-                      :src="
-                        imagePreviewTwo || '/storage/' + props.about.image_two
-                      "
+                      :src="imagePreviewTwo || '/storage/' + (props.about?.image_two || '')"
                       alt="Image Two"
                       class="d-block rounded"
                       style="width: 150px; height: 150px; object-fit: contain; border-radius:10px;"
@@ -79,11 +71,12 @@
                         <span v-if="errors.image_two" class="text-danger mt-2">
                           {{ errors.image_two }}
                         </span>
-
                       </p>
                     </div>
                   </div>
                 </div>
+
+                <!-- Form Fields -->
                 <div class="row">
                   <div class="col-md-4">
                     <div class="mb-3">
@@ -101,9 +94,7 @@
                   </div>
                   <div class="col-md-8">
                     <div class="mb-3">
-                      <label for="features" class="form-label"
-                        >Features (Comma Separated)</label
-                      >
+                      <label for="features" class="form-label">Features (Comma Separated)</label>
                       <input
                         class="form-control"
                         type="text"
@@ -117,9 +108,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="mb-3">
-                      <label for="description" class="form-label"
-                        >Description</label
-                      >
+                      <label for="description" class="form-label">Description</label>
                       <textarea
                         class="form-control"
                         id="description"
@@ -131,8 +120,8 @@
                         </span>
                     </div>
                   </div>
-                 
                 </div>
+
                 <button v-if="hasPermission('site_data.edit')" type="submit" class="btn btn-primary">
                   Update About
                 </button>
@@ -157,25 +146,28 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
-  permissions:{
-    type:Array, 
-    required:true, 
+  permissions: {
+    type: Array,
+    required: true,
   }
 });
+
 const toast = useToast();
-const errors = ref({}); 
+const errors = ref({});
+
+// Use optional chaining (?.) and provide fallback/default values
 const form = useForm({
-  title: props.about.title,
-  description: props.about.description,
-  features: props.about.features,
+  title: props.about?.title || "", // Default to empty string if undefined
+  description: props.about?.description || "", // Default to empty string if undefined
+  features: props.about?.features || "", // Default to empty string if undefined
   image_one: null,
   image_two: null,
 });
@@ -183,6 +175,7 @@ const form = useForm({
 const imagePreviewOne = ref(null);
 const imagePreviewTwo = ref(null);
 
+// Handle image upload and preview
 const handleImageOneUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -207,6 +200,7 @@ const handleImageTwoUpload = (event) => {
   }
 };
 
+// Submit form
 const submit = () => {
   if (!form.image_one) delete form.image_one;
   if (!form.image_two) delete form.image_two;
@@ -215,15 +209,18 @@ const submit = () => {
     onSuccess: () => {
       toast.success("About Section Updated Successfully");
     },
-    onError: (err)=>{
-      errors.value = err; 
+    onError: (err) => {
+      errors.value = err;
       toast.error("Error occurred while processing the form!");
     }
   });
 };
+
+// Check if user has permission
 const hasPermission = (permission) => {
   return props.permissions.includes(permission);
 };
 </script>
+
 
 <style scoped></style>

@@ -10,18 +10,18 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\Middleware;
 
-class UsersController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
+class UsersController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            // Apply the 'can:site_data.view' middleware to the 'index' method.
-            new Middleware('can:users.view', only: ['index']),
-            new Middleware('can:users.create', only: ['create', 'store']),
-            new Middleware('can:users.edit', only: ['edit', 'update']),
-            new Middleware('can:users.delete', only: ['destroy']),
-        ];
-    }
+    // public static function middleware(): array
+    // {
+    //     return [
+    //         // Apply the 'can:site_data.view' middleware to the 'index' method.
+    //         new Middleware('can:users.view', only: ['index']),
+    //         new Middleware('can:users.create', only: ['create', 'store']),
+    //         new Middleware('can:users.edit', only: ['edit', 'update']),
+    //         new Middleware('can:users.delete', only: ['destroy']),
+    //     ];
+    // }
     public function index()
     {
         $users = User::with('roles')->get();

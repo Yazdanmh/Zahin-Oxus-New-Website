@@ -1,6 +1,6 @@
 <template>
     <Head title="Edit MOU" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> MOUs / Edit
@@ -183,6 +183,10 @@
       type: Object,
       required: true, // Make sure the MOU data is passed as a prop
     },
+
+    permissions:{
+      type:Array, required:true
+    }
   });
   
   // Initialize Toast for success/error messages

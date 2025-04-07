@@ -1,6 +1,6 @@
 <template>
   <Head title="Certificates" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Certificates
@@ -12,7 +12,7 @@
               class="card-header d-flex justify-content-between align-items-center"
             >
               <h5 class="mb-0">Certificates</h5>
-              <Link :href="route('certificate.create')" class="btn btn-primary">
+              <Link v-if ="hasPermission('certificate.create')" :href="route('certificate.create')" class="btn btn-primary">
                 Add Certificate
               </Link>
             </div>
@@ -68,7 +68,7 @@
                       <th>Issue Date</th>
                       <th>Certificate File</th>
                       <!-- New Column -->
-                      <th>Action</th>
+                      <th v-if ="hasPermission('certificate.edit') || hasPermission('certificate.delete') ">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -82,7 +82,7 @@
                       <td>{{ certificate.for_who || "N/A" }}</td>
                       <td>{{ certificate.training.name || "N/A" }}</td>
                       <td>{{ certificate.issue_date || "N/A" }}</td>
-                      <td>
+                      <td >
                         <a
                           v-if="certificate.certificate_file"
                           :href="'/storage/' + certificate.certificate_file"
@@ -94,15 +94,15 @@
                         </a>
                         <span v-else class="text-muted">No file</span>
                       </td>
-                      <td>
-                        <Link :href="route('certificate.edit', certificate.id)">
+                      <td v-if ="hasPermission('certificate.edit') || hasPermission('certificate.delete') ">
+                        <Link v-if ="hasPermission('certificate.edit')" :href="route('certificate.edit', certificate.id)">
                           <span
                             class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                           >
                             <i class="icon-base bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span
+                        <span v-if ="hasPermission('certificate.delete')"
                           @click="confirmDelete(certificate.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -207,6 +207,9 @@ const props = defineProps({
     type:Object, 
     required:true, 
   },
+  permissions:{
+      type:Array, required:true
+    }
 });
 
 const searchQuery = ref("");
@@ -287,4 +290,7 @@ const confirmDelete = (id) => {
 const applyFilter = () => {
   changePage(1); // Reset to the first page when applying a new filter
 };
+const hasPermission = (permission) =>{
+  return props.permissions.includes(permission)
+}
 </script>

@@ -30,7 +30,7 @@
                       width="100"
                       id="uploadedLogo"
                     />
-                    <div class="button-wrapper">
+                    <div v-if="hasPermission('site_data.edit') "class="button-wrapper">
                       <label for="upload" class="btn btn-primary me-2 mb-4">
                         <span class="d-none d-sm-block">Upload New Logo</span>
                         <i class="bx bx-upload d-block d-sm-none"></i>
@@ -93,7 +93,7 @@
                     </div>
                   </template>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button  v-if="hasPermission('site_data.edit') " type="submit" class="btn btn-primary">
                   Update Settings
                 </button>
               </form>
@@ -273,4 +273,7 @@ const submit = () => {
   });
 };
 
+const hasPermission = (permission) =>{
+  return props.permissions.includes(permission)
+}
 </script>

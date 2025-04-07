@@ -363,7 +363,8 @@ const props = defineProps({
     required: true,
   },
   permissions: {
-    type: Array
+    type: Array,
+    required:true
   },
 });
 const { url, currentRouteName } = usePage();

@@ -1,12 +1,12 @@
 <template>
   <Head title="Academic Calendar" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Academic Calendar
       </h4>
       <div class="row">
-        <div class="col-md-12">
+        <div v-if="hasPermission('site_data.create')" class="col-md-12">
           <div class="card mb-4">
             <div
               class="card-header d-flex justify-content-between align-items-center"
@@ -83,7 +83,7 @@
                       <th>#</th>
                       <th>Title</th>
                       <th>File</th>
-                      <th>Action</th>
+                      <th v-if="hasPermission('site_data.delete')">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -106,8 +106,8 @@
                         </a>
                         <span v-else class="text-muted">No file</span>
                       </td>
-                      <td>
-                        <span
+                      <td v-if="hasPermission('site_data.delete')">
+                        <span v-if="hasPermission('site_data.delete')"
                           @click="confirmDelete(calendar.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -201,6 +201,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  permissions:{
+    type:Array, required:true, 
+  }
 });
 const toast = useToast();
 const form = useForm({
@@ -296,6 +299,9 @@ const confirmDelete = (id) => {
     }
   });
 };
+const hasPermission = (permission) =>{
+  return props.permissions.includes(permission);
+}
 </script>
   
   <style scoped>

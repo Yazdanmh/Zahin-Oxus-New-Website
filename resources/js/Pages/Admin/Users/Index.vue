@@ -1,6 +1,6 @@
 <template>
     <Head title="Users" />
-    <AdminLayout :setting="props.setting" :user="props.user">
+    <AdminLayout :setting="props.setting" :user="props.user" :permissions ="props.permissions">
       <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4">
           <span class="text-muted fw-light">Home /</span> Users
@@ -13,7 +13,7 @@
               <div class="card-header">
                 <h5 class="mb-0">Users</h5>
                 <small class="text-muted">Manage users and their roles</small>
-                <div class="d-flex justify-content-end">
+                <div v-if="hasPermission('users.create') " class="d-flex justify-content-end">
                   <Link :href="route('users.create')" class="btn btn-primary">
                     <i class="bx bx-plus"></i> Create User
                   </Link>
@@ -27,7 +27,7 @@
                       <th>Name</th>
                       <th>Email</th>
                       <th>Role</th>
-                      <th class="text-center">Actions</th>
+                      <th v-if="hasPermission('users.edit') || hasPermission('users.delete') " class="text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -36,14 +36,14 @@
                       <td>{{ user.name }}</td>
                       <td>{{ user.email }}</td>
                       <td>{{ user.roles.length ? user.roles[0].name : 'No Role' }}
-                    </td>
-                      <td class="text-center">
-                        <Link :href="route('users.edit', user.id)">
+                    </td  >
+                      <td v-if="hasPermission('users.edit') || hasPermission('users.delete') " class="text-center">
+                        <Link  v-if="hasPermission('users.edit') ":href="route('users.edit', user.id)">
                           <span class="badge bg-label-primary p-1_5 me-2 cursor-pointer">
                             <i class="bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span
+                        <span v-if="hasPermission('users.delete')"
                           @click="confirmDelete(user.id)"
                           class="badge bg-label-danger p-1_5 me-2 cursor-pointer"
                         >
@@ -72,6 +72,7 @@
     users: Array,
     setting: Object,
     user: Object,
+    permissions :{type:Array, required:true}
   });
   console.log(props.users);
   const form = useForm();
@@ -108,5 +109,8 @@
       }
     });
   };
+  const hasPermission = (permission) =>{
+  return props.permissions.includes(permission)
+}
   </script>
   

@@ -114,46 +114,53 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
-  permissions:{
-    type:Array, 
-    required:true, 
+  permissions: {
+    type: Array,
+    required: true,
   }
 });
+
 const toast = useToast();
 
+// Use optional chaining (?.) to safely access properties of `counter` and provide default values
 const form = useForm({
-  happy_users: props.counter.happy_users ?? 0,
-  case_complete: props.counter.case_complete ?? 0,
-  years_of_experience: props.counter.years_of_experience ?? 0,
-  professional_advisor: props.counter.professional_advisor ?? 0,
+  happy_users: props.counter?.happy_users ?? 0, // Default to 0 if null or undefined
+  case_complete: props.counter?.case_complete ?? 0, // Default to 0 if null or undefined
+  years_of_experience: props.counter?.years_of_experience ?? 0, // Default to 0 if null or undefined
+  professional_advisor: props.counter?.professional_advisor ?? 0, // Default to 0 if null or undefined
 });
 
 const errors = ref({});
+
 const submit = () => {
+  // Assuming you don't need `form.image` in this context, so this line might be unnecessary
   if (!form.image) delete form.image;
+
   form.post(route("counter.update"), {
     preserveScroll: true,
     onSuccess: () => {
       toast.success("Counters Updated Successfully");
     },
-    onError: (err) =>{
-      errors.value = err; 
-      toast.error("Error occurred while proccesing the form!");
+    onError: (err) => {
+      errors.value = err;
+      toast.error("Error occurred while processing the form!");
     }
   });
 };
+
 const hasPermission = (permission) => {
   return props.permissions.includes(permission);
 };
 </script>
+
     
     <style scoped>
 </style>

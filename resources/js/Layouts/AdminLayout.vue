@@ -39,6 +39,7 @@ const props = defineProps({
   },
   permissions: {
     type: Array,
+    required:true,
   },
 })
 </script>

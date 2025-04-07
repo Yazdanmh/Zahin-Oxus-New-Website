@@ -1,6 +1,6 @@
 <template>
   <Head title="Roles" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Roles / All
@@ -15,7 +15,7 @@
             </div>
 
             <div class="card-body">
-              <div class="d-flex justify-content-end mb-3">
+              <div v-if="hasPermission('roles.create')" class="d-flex justify-content-end mb-3">
                 <Link :href="route('roles.create')" class="btn btn-primary">
                   <i class="bx bx-plus"></i> Add Role
                 </Link>
@@ -31,20 +31,20 @@
                     <tr>
                       <th>#</th>
                       <th>Role Name</th>
-                      <th>Actions</th>
+                      <th v-if="hasPermission('roles.edit') || hasPermission('roles.delete')">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(role, index) in props.roles.data" :key="role.id">
                       <td>{{ index + 1 }}</td>
                       <td>{{ role.name }}</td>
-                      <td class="text-center">
-                        <Link :href="route('roles.edit', role.id)">
+                      <td class="text-center" v-if="hasPermission('roles.edit') || hasPermission('roles.delete')">
+                        <Link  v-if="hasPermission('roles.edit') " :href="route('roles.edit', role.id)">
                           <span class="badge bg-label-primary p-1_5 me-2 cursor-pointer">
                             <i class="bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span
+                        <span v-if="hasPermission('roles.delete') "
                           @click="confirmDelete(role.id)"
                           class="badge bg-label-danger p-1_5 me-2 cursor-pointer"
                         >
@@ -113,6 +113,9 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  permissions:{
+    type:Array, required:true, 
+  }
 });
 
 const form = useForm({});
@@ -145,4 +148,7 @@ const confirmDelete = (id) => {
     }
   });
 };
+const hasPermission = (permission) =>{
+  return props.permissions.includes(permission)
+}
 </script>

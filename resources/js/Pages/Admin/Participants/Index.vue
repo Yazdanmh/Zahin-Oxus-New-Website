@@ -1,6 +1,6 @@
 <template>
   <Head title="Participants" />
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Participants
@@ -12,7 +12,7 @@
               class="card-header d-flex justify-content-between align-items-center"
             >
               <h5 class="mb-0">Participants</h5>
-              <Link
+              <Link v-if ="hasPermission('training.create')"
                 :href="route('participants.create')"
                 class="btn btn-primary"
               >
@@ -62,7 +62,7 @@
                       <th>Organization</th>
                       <th>Position</th>
                       <th>Training</th>
-                      <th>Actions</th>
+                      <th v-if ="hasPermission('training.edit') || hasPermission('training.delete')">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,8 +79,8 @@
                       <td>{{ participant.training.name }}</td>
                      
 
-                      <td class="text-center">
-                        <Link :href="route('participants.edit', participant.id)">
+                      <td class="text-center" v-if ="hasPermission('training.edit') || hasPermission('training.delete') ">
+                        <Link v-if ="hasPermission('training.edit')" :href="route('participants.edit', participant.id)">
                           <span
                             class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                           >
@@ -88,7 +88,7 @@
                           </span>
                         </Link>
 
-                        <span
+                        <span v-if ="hasPermission('training.delete')"
                           @click="confirmDelete(participant.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -125,6 +125,9 @@ const props = defineProps({
   trainings: { type: Array, required: true },
   setting: { type: Object, required: true },
   user: { type: Object, required: true },
+  permissions:{
+      type:Array, required:true
+    }
 });
 const form = useForm({});
 const searchQuery = ref("");
@@ -163,5 +166,9 @@ const deleteParticipant = (id) => {
     window.location.reload();
   });
 };
+
+const hasPermission = (permission) =>{
+  return props.permissions.includes(permission)
+}
 </script>
   
