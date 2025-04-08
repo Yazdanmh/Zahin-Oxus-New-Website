@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Inertia\Inertia;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RolesController extends Controller
+class RolesController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:roles.view', only: ['index']),
+            new Middleware('can:roles.create', only: ['create', 'store']),
+            new Middleware('can:roles.edit', only: ['edit', 'update']),
+            new Middleware('can:roles.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $roles = Role::paginate(10);
@@ -16,10 +27,12 @@ class RolesController extends Controller
             'roles' => $roles,
         ]);
     }
+
     public function create()
     {
         return Inertia::render('Admin/Roles/Create');
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -28,6 +41,7 @@ class RolesController extends Controller
         Role::create(['name' => $request->name]);
         return redirect()->route('roles.index')->with('success', 'Role created successfully.');
     }
+
     public function edit($id)
     {
         $role = Role::findOrFail($id);
@@ -36,6 +50,7 @@ class RolesController extends Controller
             'assignedPermissions' => $role->permissions->pluck('name'),
         ]);
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([

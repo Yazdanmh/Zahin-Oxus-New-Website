@@ -10,18 +10,18 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\Middleware;
 
-class UsersController extends Controller
+class UsersController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-    // public static function middleware(): array
-    // {
-    //     return [
-    //         // Apply the 'can:site_data.view' middleware to the 'index' method.
-    //         new Middleware('can:users.view', only: ['index']),
-    //         new Middleware('can:users.create', only: ['create', 'store']),
-    //         new Middleware('can:users.edit', only: ['edit', 'update']),
-    //         new Middleware('can:users.delete', only: ['destroy']),
-    //     ];
-    // }
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:users.view', only: ['index', 'show']),
+            new Middleware('can:users.create', only: ['store', 'create']),
+            new Middleware('can:users.edit', only: ['update', 'edit']),
+            new Middleware('can:users.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $users = User::with('roles')->get();
@@ -30,6 +30,7 @@ class UsersController extends Controller
             'users' => $users
         ]);
     }
+
     public function create()
     {
         $roles = Role::all();
@@ -37,9 +38,9 @@ class UsersController extends Controller
             'roles' => $roles
         ]);
     }
+
     public function store(Request $request)
     {
-        
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -61,6 +62,7 @@ class UsersController extends Controller
         // Return a response or redirect
         return redirect()->route('users.index')->with(['message' => 'User created successfully']);
     }
+
     public function edit($id)
     {
         $user = User::with('roles')->findOrFail($id);
@@ -70,6 +72,7 @@ class UsersController extends Controller
             'roles' => $roles
         ]);
     }
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -96,6 +99,7 @@ class UsersController extends Controller
 
         return redirect()->route('users.index')->with(['message' => 'User updated successfully']);
     }
+
     public function destroy($id)
     {
         $user = User::findOrFail($id);

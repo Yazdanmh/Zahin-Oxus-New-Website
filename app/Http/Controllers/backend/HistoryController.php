@@ -6,16 +6,28 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia; 
 use App\Models\History; 
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\Middleware;
 
-class HistoryController extends Controller
+class HistoryController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-    public function index(){
-        $history = History::first(); 
-        return Inertia::render('Admin/History/Index',[
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:history.view', only: ['index']),
+            new Middleware('can:history.edit', only: ['update']),
+            new Middleware('can:history.create', only: ['update']),
+        ];
+    }
+
+    public function index()
+    {
+        $history = History::first();
+        return Inertia::render('Admin/History/Index', [
             'history' => $history,
         ]);
     }
+
     public function update(Request $request)
     {
         $request->validate([
@@ -26,6 +38,7 @@ class HistoryController extends Controller
             'image_two' => 'nullable|image|mimes:jpg,jpeg,png,svg,webp|max:1024',
             'progress_items' => 'nullable|json',
         ]);
+
         $history = History::firstOrNew([]);
         $history->title = $request->title;
         $history->subtitle = $request->subtitle;
@@ -38,12 +51,14 @@ class HistoryController extends Controller
             }
             $history->image_one = $request->file('image_one')->store('history', 'public');
         }
+
         if ($request->hasFile('image_two')) {
             if ($history->image_two) {
                 Storage::disk('public')->delete($history->image_two);
             }
             $history->image_two = $request->file('image_two')->store('history', 'public');
         }
+
         $history->save();
         return redirect()->route('history.index');
     }

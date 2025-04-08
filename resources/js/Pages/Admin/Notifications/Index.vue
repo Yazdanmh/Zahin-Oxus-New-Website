@@ -16,7 +16,15 @@ const props = defineProps({
     messages:{
         type:Object, 
         required:true, 
-    }
+    }, 
+    permissions:{
+        type:Array, 
+        required:true, 
+    },
+    errors:{
+        type:Object, 
+        required:true, 
+    },
 })
 const displayedMessages = computed(() => props.messages.slice(0, 2));
 
@@ -38,7 +46,7 @@ const formatDate = (date: string) => {
   <Head title="Profile" />
 
   <!-- Pass props to AdminLayout -->
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions" >
     <!-- Content wrapper -->
    
       <!-- Content -->

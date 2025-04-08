@@ -137,7 +137,7 @@
     trainings: { type: Array, required: true },
     setting: { type: Object, required: true },
     user: { type: Object, required: true },
-    participant: { type: Object, required: true }
+    participant: { type: Object, required: true },
     permissions:{
       type:Array, required:true
     }

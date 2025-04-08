@@ -29,6 +29,7 @@ use App\Http\Controllers\backend\CEOController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TeamsController;
 use App\Http\Controllers\AcademicController;
+use App\Http\Controllers\backend\BackupController;
 use App\Http\Controllers\backend\RolesController;
 use App\Http\Controllers\backend\UsersController;
 use App\Http\Controllers\ProjectsController;
@@ -272,6 +273,9 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::post('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
 
+    //Backup
+    Route::get('/backups', [BackupController::class, 'index'])->name('backup.index');
+    Route::post('/backups', [BackupController::class, 'store'])->name('backup.store');
 
 });
 

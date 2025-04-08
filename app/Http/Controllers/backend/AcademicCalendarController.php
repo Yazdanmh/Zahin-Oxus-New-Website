@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcademicCalendar;
@@ -8,9 +8,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AcademicCalendarController extends Controller
+class AcademicCalendarController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:site_data.view', only: ['index']),
+            new Middleware('can:site_data.create', only: ['store']),
+            new Middleware('can:site_data.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $calendars = AcademicCalendar::paginate(10);
@@ -42,6 +52,7 @@ class AcademicCalendarController extends Controller
         $calendar->save();
         return redirect()->route('calendars.index')->with('success', 'Academic Calendar uploaded successfully!');
     }
+
     public function destroy($id)
     {
         $calendar = AcademicCalendar::findOrFail($id);

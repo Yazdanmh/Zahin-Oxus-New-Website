@@ -1,15 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Routing\Controllers\Middleware;
 
-class SettingController extends Controller
+class SettingController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:site_data.view', only: ['index']),
+            new Middleware('can:site_data.edit', only: ['update']),
+            new Middleware('can:site_data.create', only: ['update']),
+        ];
+    }
+
     public function index()
     {
         $settings = Setting::first();
@@ -17,6 +27,7 @@ class SettingController extends Controller
             'settings' => $settings,
         ]);
     }
+
     public function update(Request $request)
     {
         // Validate the request data
@@ -40,7 +51,7 @@ class SettingController extends Controller
             return redirect()->back()->withErrors('Settings not found.');
         }
 
-      
+        // Update the settings data
         $settings->update([
             'site_name' => $validatedData['website_name'],
             'email' => $validatedData['email'] ?? null,

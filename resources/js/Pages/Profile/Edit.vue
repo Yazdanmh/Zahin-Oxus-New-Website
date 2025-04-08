@@ -13,14 +13,18 @@ const props = defineProps<{
   status?: string;
   setting: object;
   user: object;
+  permissions:string[];
 }>();
+const hasPermission = (permission: string) => {
+  return props.permissions.includes(permission);
+};
 </script>
 
 <template>
   <Head title="Profile" />
 
   <!-- Pass props to AdminLayout -->
-  <AdminLayout :setting="props.setting" :user="props.user">
+  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
     <!-- Content wrapper -->
     <div class="content-wrapper">
       <!-- Content -->
@@ -37,7 +41,7 @@ const props = defineProps<{
                   ><i class="bx bx-user me-1"></i> Account</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" v-if="hasPermission('site_data.view')">
                 <Link
                   class="nav-link"
                   :href="route('notifications.index')"

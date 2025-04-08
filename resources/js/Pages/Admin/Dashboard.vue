@@ -15,7 +15,7 @@
                         ><i class="bx bx-cog"></i
                       ></span>
                     </div>
-                    <div class="dropdown">
+                    <div v-if="hasPermission('site_data.view')" class="dropdown">
                       <button
                         class="btn p-0"
                         type="button"
@@ -57,7 +57,7 @@
                         ><i class="bx bx-image"></i
                       ></span>
                     </div>
-                    <div class="dropdown">
+                    <div v-if="hasPermission('gallery.view')" class="dropdown">
                       <button
                         class="btn p-0"
                         type="button"
@@ -97,7 +97,7 @@
                         ><i class="bx bx-news"></i
                       ></span>
                     </div>
-                    <div class="dropdown">
+                    <div v-if="hasPermission('events.view')" class="dropdown">
                       <button
                         class="btn p-0"
                         type="button"
@@ -137,7 +137,7 @@
                         ><i class="bx bx-chalkboard"></i
                       ></span>
                     </div>
-                    <div class="dropdown">
+                    <div v-if="hasPermission('training.view')" class="dropdown">
                       <button
                         class="btn p-0"
                         type="button"
@@ -172,7 +172,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="hasPermission('site_data.view')">
         <!-- Order Statistics -->
         <div class="col-md-12 col-lg-12 col-xl-12 order-0 mb-4">
           <div class="card h-100">
@@ -284,5 +284,8 @@ const formatDate = (date) => {
     year: "numeric",
   });
 };
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+};  
 </script>
   

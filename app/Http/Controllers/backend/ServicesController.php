@@ -9,30 +9,40 @@ use App\Models\Service;
 use App\Models\ServiceCategory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ServicesController extends Controller
+class ServicesController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:site_data.view', only: ['index', 'show']),
+            new Middleware('can:site_data.create', only: ['create', 'store']),
+            new Middleware('can:site_data.edit', only: ['edit', 'update']),
+            new Middleware('can:site_data.delete', only: ['destroy']),
+        ];
+    }
+
     public function index(Request $request)
-{
-    $query = Service::with('category');
+    {
+        $query = Service::with('category');
 
-    if ($request->filled('search')) {
-        $query->where('title', 'like', '%' . $request->search . '%');
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('service_category_id', $request->category);
+        }
+
+        $services = $query->paginate(9);
+        $categories = ServiceCategory::all();
+
+        return Inertia::render('Admin/Services/Index', [
+            'services' => $services,
+            'categories' => $categories,
+        ]);
     }
-
-    if ($request->filled('category')) {
-        $query->where('service_category_id', $request->category);
-    }
-
-    $services = $query->paginate(9);
-    $categories = ServiceCategory::all();
-
-    return Inertia::render('Admin/Services/Index', [
-        'services' => $services,
-        'categories' => $categories,
-    ]);
-}
-
 
     public function create()
     {
@@ -44,7 +54,6 @@ class ServicesController extends Controller
 
     public function store(Request $request)
     {
-        
         $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
@@ -56,7 +65,6 @@ class ServicesController extends Controller
 
         $imagePath = $request->file('image')->store('services', 'public');
 
-        // Generate a unique slug
         $slug = Str::slug($request->input('title'));
         if (Service::where('slug', $slug)->exists()) {
             $slug .= '-' . uniqid();
@@ -112,14 +120,12 @@ class ServicesController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        // Update fields
         $service->title = $validatedData['title'];
         $service->subtitle = $validatedData['subtitle'] ?? $service->subtitle;
         $service->description = $validatedData['description'] ?? $service->description;
         $service->icon = $validatedData['icon'] ?? $service->icon;
         $service->service_category_id = $validatedData['category'] ?? $service->service_category_id;
 
-        // Handle slug update and uniqueness
         if ($service->title !== $validatedData['title']) {
             $slug = Str::slug($validatedData['title']);
             if (Service::where('slug', $slug)->where('id', '!=', $id)->exists()) {
@@ -128,7 +134,6 @@ class ServicesController extends Controller
             $service->slug = $slug;
         }
 
-        // Handle image update
         if ($request->hasFile('image')) {
             if ($service->image) {
                 Storage::disk('public')->delete($service->image);

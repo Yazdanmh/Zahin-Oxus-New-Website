@@ -5,6 +5,23 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
+import { useToast } from "vue-toastification";
+const toast = useToast();
+
+function submitForm() {
+  form.post(route("profile.update"), {
+    preserveScroll: true,
+    onSuccess: () => {
+      toast.success("Profile updated successfully!");
+    },
+    onError: () => {
+      toast.error("Please fix the form errors.");
+    },
+    onFinish: () => {
+      form.reset("profile_image");
+    },
+  });
+}
 
 defineProps<{ mustVerifyEmail?: boolean; status?: string }>();
 
@@ -88,7 +105,7 @@ function resendVerification() {
     </div>
     <hr class="my-0" />
     <div class="card-body">
-      <form @submit.prevent="form.post(route('profile.update'))">
+      <form @submit.prevent="submitForm">
         <div class="row">
           <div class="mb-3 col-md-6">
             <InputLabel for="name" value="Name" />

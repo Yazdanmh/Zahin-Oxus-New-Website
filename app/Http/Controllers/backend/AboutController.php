@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\About;
@@ -9,16 +9,30 @@ use App\Models\OurVision;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AboutController extends Controller
+class AboutController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:site_data.view', only: ['index', 'mission', 'vision']),
+            new Middleware('can:site_data.edit', only: ['update', 'mission_store', 'vision_store']),
+        ];
+    }
+
     public function index()
+
     {
         $about = About::first();
         return Inertia::render('Admin/About/Index', [
             'about' => $about,
         ]);
     }
+
     public function update(Request $request)
     {
         // Validate the incoming request
@@ -56,13 +70,14 @@ class AboutController extends Controller
         return redirect()->route('about.index');
     }
 
-    public function mission(){
-
+    public function mission()
+    {
         $our_mission = OurMission::first(); 
         return Inertia::render('Admin/About/Mission', [
             'our_mission' => $our_mission,
         ]);
     }
+
     public function mission_store(Request $request)
     {
         $request->validate([
@@ -81,12 +96,15 @@ class AboutController extends Controller
         
         return redirect()->back()->with('success', 'Mission statement saved successfully!');
     }
-    public function vision(){
+
+    public function vision()
+    {
         $our_vision = OurVision::first(); 
         return Inertia::render('Admin/About/Vision', [
             'our_vision' => $our_vision,
         ]);
     }
+
     public function vision_store(Request $request)
     {
         $request->validate([
@@ -105,5 +123,4 @@ class AboutController extends Controller
         
         return redirect()->back()->with('success', 'Vision statement saved successfully!');
     }
-
 }

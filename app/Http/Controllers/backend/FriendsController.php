@@ -1,20 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Friend;
 use Illuminate\Support\Facades\Storage;
-class FriendsController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+
+class FriendsController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-    public function index(){
-        $friends = Friend::paginate(5); 
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:site_data.view', only: ['index']),
+            new Middleware('can:site_data.store', only: ['store']),
+            new Middleware('can:site_data.delete', only: ['destroy']),
+        ];
+    }
+
+    public function index()
+    {
+        $friends = Friend::paginate(5);
         return Inertia::render('Admin/Friends/Index', [
             'companies' => $friends
-        ]); 
+        ]);
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -27,13 +40,13 @@ class FriendsController extends Controller
             $imagePath = $request->file('image')->store('companies', 'public');
         }
 
-        // Create the company
         Friend::create([
             'name' => $request->input('name'),
             'image' => $imagePath,
         ]);
         return redirect()->back();
     }
+
     public function destroy($id)
     {
         $company = Friend::findOrFail($id);
@@ -43,6 +56,4 @@ class FriendsController extends Controller
         $company->delete();
         return redirect()->back();
     }
-    
-
 }

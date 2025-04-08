@@ -10,8 +10,20 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Str; 
 use Illuminate\Support\Facades\Storage;
-class TrainingController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+
+class TrainingController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:training.view', only: ['index', 'show']),
+            new Middleware('can:training.create', only: ['store', 'create']),
+            new Middleware('can:training.edit', only: ['update', 'edit']),
+            new Middleware('can:training.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $trainings = Training::with('service')->paginate(10); 
@@ -23,16 +35,13 @@ class TrainingController extends Controller
     public function create()
     {
         $services = Service::select('id', 'title')->get(); 
-        
-        return Inertia::render('Admin/Training/Create',[
+        return Inertia::render('Admin/Training/Create', [
             'services' => $services, 
-            
-        ]); 
+        ]);
     }
 
     public function store(Request $request)
     {
-        
         $request->validate([
             'name' => 'required|string|max:255',
             'start_date' => 'required|date',
@@ -58,7 +67,7 @@ class TrainingController extends Controller
 
         return redirect()->route('training.index');
     }
-    
+
     public function edit($id)
     {
         $training = Training::findOrFail($id);
@@ -71,7 +80,6 @@ class TrainingController extends Controller
 
     public function update(Request $request, $id)
     {
-        
         $training = Training::findOrFail($id);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -82,6 +90,7 @@ class TrainingController extends Controller
             'has_form' => 'nullable|boolean',
             'service_id' => 'required|integer'
         ]);
+        
         if ($request->hasFile('image')) {
             if ($training->image) {
                 Storage::disk('public')->delete($training->image);
@@ -103,21 +112,21 @@ class TrainingController extends Controller
         return redirect()->route('training.index')->with('success', 'Training updated successfully!');
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $training = Training::findOrFail($id);
-        if($training->image){
+        if ($training->image) {
             Storage::disk('public')->delete($training->image);
         }
         $training->delete(); 
         return redirect()->route('training.index');
     }
 
-    public function show($id){
-         $training = Training::with('service')->findOrFail($id);
-        
+    public function show($id)
+    {
+        $training = Training::with('service')->findOrFail($id);
         return Inertia::render('Admin/Training/Details', [
             'training' => $training, 
         ]);
     }
-
 }

@@ -9,9 +9,19 @@ use App\Models\Training;
 use App\Models\TrainingParticipants;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-
-class ParticipantsController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+class ParticipantsController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:training.view', only: ['index', 'show']),
+            new Middleware('can:training.create', only: ['create', 'store']),
+            new Middleware('can:training.edit', only: ['edit', 'update']),
+            new Middleware('can:training.delete', only: ['destroy']),
+        ];
+    }
+
     public function index(Request $request)
     {
         $searchQuery = $request->input('search');
@@ -36,14 +46,16 @@ class ParticipantsController extends Controller
             'trainings' => $trainings
         ]);
     }
-    public function create(){
+
+    public function create()
+    {
         return Inertia::render('Admin/Participants/Create', [
             'trainings' => Training::all()
         ]);
     }
+
     public function store(Request $request)
     {
-        
         $validated = $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:training_participants,email',
@@ -59,26 +71,20 @@ class ParticipantsController extends Controller
 
         return redirect()->route('participants.index')->with('success', 'Participant added successfully!');
     }
-    // Show the edit form
+
     public function edit($id)
     {
-        // Fetch the participant data by ID
         $participant = TrainingParticipants::findOrFail($id);
-
-        // Fetch trainings for the dropdown
         $trainings = Training::all();
 
-        // Return the edit view with the participant and trainings data
         return inertia('Admin/Participants/Edit', [
             'participant' => $participant,
             'trainings' => $trainings,
         ]);
     }
 
-    // Update the participant
     public function update(Request $request, $id)
     {
-        // Validate the incoming data
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -90,12 +96,10 @@ class ParticipantsController extends Controller
             'training_id' => 'required|exists:trainings,id',
         ]);
 
-        // If validation fails, redirect back with errors
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
 
-        // Find the participant by ID and update the data
         $participant = TrainingParticipants::findOrFail($id);
         $participant->update([
             'full_name' => $request->full_name,
@@ -108,23 +112,22 @@ class ParticipantsController extends Controller
             'training_id' => $request->training_id,
         ]);
 
-        // Redirect back to participants index with success message
         return redirect()->route('participants.index')->with('success', 'Participant updated successfully!');
     }
 
-    public function destroy($id){
-        $participant = TrainingParticipants::findOrFail($id); 
-        $participant->delete(); 
+    public function destroy($id)
+    {
+        $participant = TrainingParticipants::findOrFail($id);
+        $participant->delete();
         return redirect()->route('participants.index');
     }
+
     public function show($id)
     {
-        // Fetch all participants with the specific training_id
         $participants = TrainingParticipants::where('training_id', $id)->get();
 
         return inertia('Admin/Participants/See', [
             'participants' => $participants,
         ]);
     }
-    
 }

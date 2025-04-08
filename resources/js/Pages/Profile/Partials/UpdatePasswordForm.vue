@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);
@@ -16,8 +19,10 @@ const updatePassword = () => {
     preserveScroll: true,
     onSuccess: () => {
       form.reset();
+      toast.success("Password updated successfully!");
     },
     onError: () => {
+      toast.error("Please check the form for errors.");
       if (form.errors.password) {
         form.reset("password", "password_confirmation");
         passwordInput.value?.focus();
@@ -30,6 +35,7 @@ const updatePassword = () => {
   });
 };
 </script>
+
 
 <template>
   <div class="card">

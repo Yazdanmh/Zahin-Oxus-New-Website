@@ -1,16 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\CEO;
 use Illuminate\Support\Facades\Storage;
-use Str; 
+use Str;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CEOController extends Controller
+class CEOController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:site_data.view', only: ['index']),
+            new Middleware('can:site_data.edit', only: ['update']),
+            new Middleware('can:site_data.create', only: ['update']),
+        ];
+    }
+
     public function index()
     {
         $ceo = CEO::first(); // Retrieve the first CEO record
@@ -21,7 +31,6 @@ class CEOController extends Controller
 
     public function update(Request $request)
     {
-        // Validate the request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'position' => 'required|string|max:255',
@@ -32,11 +41,9 @@ class CEOController extends Controller
             'skills' => 'nullable|json',
         ]);
     
-        // Check if a CEO record already exists
         $ceo = CEO::first();
     
         if ($ceo) {
-            // If CEO exists, update the CEO's data
             $ceo->update([
                 'name' => $validatedData['name'],
                 'position' => $validatedData['position'],
@@ -47,7 +54,6 @@ class CEOController extends Controller
                 'slug' => \Str::slug($validatedData['name']),
             ]);
         } else {
-            // If no CEO record exists, create a new CEO
             $ceo = CEO::create([
                 'name' => $validatedData['name'],
                 'position' => $validatedData['position'],
@@ -59,19 +65,15 @@ class CEOController extends Controller
             ]);
         }
     
-        // Handle the image upload if provided
         if ($request->hasFile('image')) {
-            // If a new image is uploaded, delete the old one
             if ($ceo->image) {
                 Storage::disk('public')->delete($ceo->image);
             }
     
-            // Store the new image and update the path
             $imagePath = $request->file('image')->store('ceo_images', 'public');
             $ceo->update(['image' => $imagePath]);
         }
-        // Redirect back with a success message
+
         return redirect()->back()->with('success', $ceo->wasRecentlyCreated ? 'CEO information added successfully!' : 'CEO information updated successfully!');
     }
-    
 }

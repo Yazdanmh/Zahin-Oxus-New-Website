@@ -4,27 +4,43 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inertia\Inertia; 
-use App\Models\News; 
-use Str; 
+use Inertia\Inertia;
+use App\Models\News;
+use Str;
 use Illuminate\Support\Facades\Storage;
-class NewsController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+
+class NewsController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-    public function index(){
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:events.view', only: ['index', 'show']),
+            new Middleware('can:events.create', only: ['create', 'store']),
+            new Middleware('can:events.edit', only: ['edit', 'update']),
+            new Middleware('can:events.delete', only: ['destroy']),
+        ];
+    }
+
+    public function index()
+    {
         return Inertia::render('Admin/News/Index', [
             'news' => News::paginate(10),
         ]);
     }
-    public function create(){
+
+    public function create()
+    {
         return Inertia::render('Admin/News/Create');
     }
+
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'is_published' => 'required|boolean',
-            'tags' => 'required|string|max:255', 
+            'tags' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
 
@@ -42,10 +58,11 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
-    public function edit($id){
-        $news = News::findOrFail($id); 
-        return Inertia::render('Admin/News/Edit',[
-            'news' => $news, 
+    public function edit($id)
+    {
+        $news = News::findOrFail($id);
+        return Inertia::render('Admin/News/Edit', [
+            'news' => $news,
         ]);
     }
 
@@ -56,7 +73,7 @@ class NewsController extends Controller
             'description' => 'required|string',
             'tags' => 'required|string|max:255',
             'is_published' => 'required|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG,svg,webp',  
+            'image' => 'nullable|image|mimes:jpeg,png,gif,PNG,svg,webp',
         ]);
 
         $news = News::findOrFail($id);
@@ -65,7 +82,7 @@ class NewsController extends Controller
             Storage::disk('public')->delete($news->image);
 
             $imagePath = $request->file('image')->store('news', 'public');
-            $news->image = $imagePath;  
+            $news->image = $imagePath;
         }
 
         $news->update([
@@ -73,23 +90,27 @@ class NewsController extends Controller
             'content' => $request->input('description'),
             'tags' => $request->input('tags'),
             'is_published' => $request->input('is_published'),
-            'slug' => Str::slug($request->input('title')), 
+            'slug' => Str::slug($request->input('title')),
         ]);
+
         return redirect()->route('news.index')->with('success', 'News updated successfully');
     }
 
-    public function show($id){
-        $news = News::findOrFail($id); 
-        return Inertia::render('Admin/News/Details',[
-            'news' => $news, 
+    public function show($id)
+    {
+        $news = News::findOrFail($id);
+        return Inertia::render('Admin/News/Details', [
+            'news' => $news,
         ]);
     }
-    public function destroy($id){
+
+    public function destroy($id)
+    {
         $news = News::findOrFail($id);
-        if($news->image){
+        if ($news->image) {
             Storage::disk('public')->delete($news->image);
         }
-        $news->delete(); 
+        $news->delete();
         return redirect()->route('news.index');
     }
 }

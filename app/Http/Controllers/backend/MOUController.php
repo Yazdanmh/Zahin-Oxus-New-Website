@@ -10,11 +10,19 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Str;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Routing\Controllers\Middleware;
 
-
-class MOUController extends Controller
+class MOUController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:MOUs.view', only: ['index', 'show']),
+            new Middleware('can:MOUs.create', only: ['create', 'store']),
+            new Middleware('can:MOUs.edit', only: ['edit', 'update']),
+            new Middleware('can:MOUs.delete', only: ['destroy']),
+        ];
+    }
 
     public function index(Request $request)
     {
@@ -42,6 +50,7 @@ class MOUController extends Controller
     {
         return Inertia::render('Admin/MOU/Create');
     }
+
     public function store(Request $request)
     {
         // Validate the incoming request
@@ -76,7 +85,6 @@ class MOUController extends Controller
             'mou_file' => $mouFilePath,
             'slug' => Str::slug($request->input('title')),
         ]);
-
 
         // Redirect back to the MOU list or a success page using Inertia
         return redirect()->route('mou.index')->with('success', 'MOU created successfully!');
@@ -115,6 +123,7 @@ class MOUController extends Controller
             $mouFile = $request->file('mou_file');
             $mouFilePath = $mouFile->storeAs('mou_files', time() . '-' . $mouFile->getClientOriginalName(), 'public');
         }
+
         $mou->update([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -125,8 +134,10 @@ class MOUController extends Controller
             'mou_file' => $mouFilePath,
             'slug' => Str::slug($request->input('title')),
         ]);
+
         return redirect()->route('mou.index')->with('success', 'MOU updated successfully!');
     }
+
     public function destroy($id)
     {
         $mou = MOU::findOrFail($id);

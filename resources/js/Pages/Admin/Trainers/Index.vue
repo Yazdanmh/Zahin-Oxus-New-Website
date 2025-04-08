@@ -41,7 +41,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-md-3" v-if="hasPermission('site_data.create')">
+                <div class="col-md-3" v-if="hasPermission('training.create')">
                   <Link
                     :href="route('trainers.create')"
                     class="btn btn-primary"
@@ -61,7 +61,7 @@
                       <th>Name</th>
                       <th>Position</th>
                       <th>Service</th>
-                      <th v-if="hasPermission('site_data.edit') || hasPermission('site_data.delete')">Actions</th>
+                      <th v-if="hasPermission('training.edit') || hasPermission('training.delete')">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -85,13 +85,13 @@
                       <td>{{ trainer.name }}</td>
                       <td>{{ trainer.position }}</td>
                       <td>{{ trainer.service.title }}</td>
-                      <td class="text-center" v-if="hasPermission('site_data.edit') || hasPermission('site_data.delete') || hasPermission('site_data.view')">
-                        <Link v-if="hasPermission('site_data.edit')" :href="route('trainers.edit', trainer.id)">
+                      <td class="text-center" v-if="hasPermission('training.edit') || hasPermission('training.delete') || hasPermission('training.view')">
+                        <Link v-if="hasPermission('training.edit')" :href="route('trainers.edit', trainer.id)">
                           <span class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2">
                             <i class="bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span v-if="hasPermission('site_data.delete')"
+                        <span v-if="hasPermission('training.delete')"
                           @click="confirmDelete(trainer.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >

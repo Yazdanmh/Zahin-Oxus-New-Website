@@ -21,7 +21,7 @@ class DashboardController extends Controller implements \Illuminate\Routing\Cont
     {
         return [
             // Apply the 'can:site_data.view' middleware to the 'index' method.
-            new Middleware('can:site_data.view', only: ['index']),
+            // new Middleware('can:site_data.view', only: ['index']),
             // Add other middlewares here if needed, for example:
             // new Middleware('log', only: ['index']),
             // new Middleware('subscribed', except: ['store']),

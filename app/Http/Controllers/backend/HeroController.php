@@ -1,15 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hero;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\Middleware;
 
-class HeroController extends Controller
+class HeroController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:hero.view', only: ['index']),
+            new Middleware('can:hero.edit', only: ['update']),
+            new Middleware('can:hero.create', only: ['update']),
+        ];
+    }
+
     public function index()
     {
         $hero = Hero::first();
