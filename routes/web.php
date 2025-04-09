@@ -264,7 +264,7 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::get('/roles/{id}/edit', [RolesController::class, 'edit'])->name('roles.edit');
     Route::post('/roles/edit/{id}', [RolesController::class, 'update'])->name('roles.update');
     Route::post('/roles/{id}/delete', [RolesController::class, 'destroy'])->name('roles.destroy');
-    //Role and Permsssions
+    //Users
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
     Route::post('/users', [UsersController::class, 'store'])->name('users.store');
@@ -272,6 +272,7 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
     Route::post('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
+    Route::post('/users/{id}/reset-password', [UsersController::class, 'resetPassword'])->name('users.reset-password');
 
     //Backup
     Route::get('/backups', [BackupController::class, 'index'])->name('backup.index');

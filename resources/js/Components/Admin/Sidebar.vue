@@ -408,7 +408,7 @@
                         >
                     </li>
                     <li
-                        v-if="hasPermission('site_data.view')"
+                        v-if="hasPermission('system.backup')"
                         :class="{
                             'menu-item': true,
                             active: isActiveRoute('settings.index'),

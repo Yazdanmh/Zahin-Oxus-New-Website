@@ -19,13 +19,14 @@ class UsersController extends Controller implements \Illuminate\Routing\Controll
             new Middleware('can:users.create', only: ['store', 'create']),
             new Middleware('can:users.edit', only: ['update', 'edit']),
             new Middleware('can:users.delete', only: ['destroy']),
+            new Middleware('can:system.change_user_password', only: ['resetPassword']),
         ];
     }
 
     public function index()
     {
         $users = User::with('roles')->get();
-    
+
         return Inertia::render('Admin/Users/Index', [
             'users' => $users
         ]);
@@ -105,5 +106,13 @@ class UsersController extends Controller implements \Illuminate\Routing\Controll
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('users.index')->with(['message' => 'User deleted successfully']);
+    }
+    public function resetPassword($id)
+    {
+        $user = User::findOrFail($id);
+        $user->password = Hash::make('Zahin@2022');
+        $user->save();
+
+        return back()->with('message', 'Password reset to default.');
     }
 }
