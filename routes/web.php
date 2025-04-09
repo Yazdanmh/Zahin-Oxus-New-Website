@@ -48,6 +48,10 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Exports\TrainingExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
@@ -277,6 +281,12 @@ Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(
     //Backup
     Route::get('/backups', [BackupController::class, 'index'])->name('backup.index');
     Route::post('/backups', [BackupController::class, 'store'])->name('backup.store');
+    
+    //Exports
+    Route::get('/trainings/export/{fileType}', [TrainingController::class, 'export'])->name('trainings.export');
+    Route::get('/trainers/export/{fileType}', [TrainersController::class, 'export'])->name('trainers.export');
+    Route::get('/participants/export/{fileType}', [ParticipantsController::class, 'export'])->name('participants.export');
+    Route::get('/certificate/export/{fileType}', [CertificatesControlller::class, 'export'])->name('certificate.export');
 
 });
 

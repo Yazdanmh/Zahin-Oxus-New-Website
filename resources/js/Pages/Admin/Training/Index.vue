@@ -15,12 +15,37 @@
                     class="card-header d-flex justify-content-between align-items-center"
                 >
                     <h5 class="mb-0">Trainings List</h5>
-                    <Link
-                        v-if="hasPermission('training.create')"
-                        :href="route('training.create')"
-                        class="btn btn-primary"
-                        >Add Training</Link
-                    >
+                    <div class="d-flex align-items-center">
+                        <Link
+                            v-if="hasPermission('training.create')"
+                            :href="route('training.create')"
+                            class="btn btn-primary me-2"
+                            >Add Training</Link
+                        >
+                        <div class="dropdown">
+                            <button
+                                class="btn btn-secondary dropdown-toggle"
+                                type="button"
+                                id="exportDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                Export
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                <li>
+                                    <button class="dropdown-item" @click="downloadExcel">
+                                        Export Excel
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" @click="downloadPDF">
+                                        Export PDF
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="table-responsive">
@@ -29,7 +54,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Has Form</th>
@@ -58,7 +82,6 @@
                                     }}
                                 </td>
                                 <td>{{ training.name || "Untitled" }}</td>
-
                                 <td>{{ training.start_date }}</td>
                                 <td>{{ training.end_date }}</td>
                                 <td class="text-center">
@@ -76,9 +99,15 @@
                                 <td class="">
                                     {{ training.service.title }}
                                 </td>
-                                <td v-if="hasPermission('training.edit') || hasPermission('training.delete') || hasPermission('training.view')">
+                                <td
+                                    v-if="
+                                        hasPermission('training.edit') ||
+                                        hasPermission('training.delete') ||
+                                        hasPermission('training.view')
+                                    "
+                                >
                                     <Link
-                                    v-if="hasPermission('training.edit')"
+                                        v-if="hasPermission('training.edit')"
                                         :href="
                                             route('training.edit', training.id)
                                         "
@@ -92,7 +121,7 @@
                                         </span>
                                     </Link>
                                     <span
-                                    v-if="hasPermission('training.delete')"
+                                        v-if="hasPermission('training.delete')"
                                         @click="deleteTraining(training.id)"
                                         class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                                     >
@@ -223,6 +252,9 @@ import { ref, computed } from "vue";
 import { useToast } from "vue-toastification";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { usePage } from '@inertiajs/vue3';
+// import { route } from '@inertiajs/vue3';
+
 
 const toast = useToast();
 const form = useForm({});
@@ -294,6 +326,17 @@ const deleteTraining = (id) => {
 };
 const hasPermission = (permission) => {
     return props.permissions.includes(permission);
+};
+const downloadFile = (fileType) => {
+  window.location.href = route('trainings.export', { fileType });
+};
+// Usage
+const downloadExcel = () => {
+  downloadFile('excel');
+};
+
+const downloadPDF = () => {
+  downloadFile('pdf');
 };
 </script>
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exports\CertificateExport;
+use App\Exports\ParticipantExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,6 +12,8 @@ use App\Models\Training;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Routing\Controllers\Middleware;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CertificatesControlller extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
@@ -17,7 +21,7 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
     public static function middleware(): array
     {
         return [
-            new Middleware('can:certificate.view', only: ['index']),
+            new Middleware('can:certificate.view', only: ['index', 'export']),
             new Middleware('can:certificate.create', only: ['create', 'store']),
             new Middleware('can:certificate.edit', only: ['edit', 'update']),
             new Middleware('can:certificate.delete', only: ['destroy']),
@@ -153,5 +157,18 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
         $certificate->delete();
 
         return redirect()->route('certificate.index')->with('success', 'Certificate deleted successfully!');
+    }
+    public function export($fileType)
+    {
+        // Handle the file export based on the file type
+        if ($fileType === 'excel') {
+            return Excel::download(new CertificateExport, 'certificates.xlsx');
+        } elseif ($fileType === 'pdf') {
+            $certificates = Certificate::with('training')->get(); // Fetch the training data
+            $pdf = Pdf::loadView('exports.certificates', compact('certificates'));
+            return $pdf->download('certificates.pdf');
+        } else {
+            return redirect()->route('certificate.index')->with('error', 'Invalid file type');
+        }
     }
 }

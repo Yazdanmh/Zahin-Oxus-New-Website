@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Exports\ParticipantExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,12 +11,15 @@ use App\Models\TrainingParticipants;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Routing\Controllers\Middleware;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class ParticipantsController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
     public static function middleware(): array
     {
         return [
-            new Middleware('can:training.view', only: ['index', 'show']),
+            new Middleware('can:training.view', only: ['index', 'show', 'export']),
             new Middleware('can:training.create', only: ['create', 'store']),
             new Middleware('can:training.edit', only: ['edit', 'update']),
             new Middleware('can:training.delete', only: ['destroy']),
@@ -129,5 +133,18 @@ class ParticipantsController extends Controller implements \Illuminate\Routing\C
         return inertia('Admin/Participants/See', [
             'participants' => $participants,
         ]);
+    }
+    public function export($fileType)
+    {
+        // Handle the file export based on the file type
+        if ($fileType === 'excel') {
+            return Excel::download(new ParticipantExport, 'participants.xlsx');
+        } elseif ($fileType === 'pdf') {
+            $participants = TrainingParticipants::with('training')->get(); // Fetch the training data
+            $pdf = Pdf::loadView('exports.participants', compact('participants'));
+            return $pdf->download('participants.pdf');
+        } else {
+            return redirect()->route('participants.index')->with('error', 'Invalid file type');
+        }
     }
 }

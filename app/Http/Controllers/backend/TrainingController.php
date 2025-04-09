@@ -4,20 +4,23 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Training; 
-use App\Models\Service; 
-use Inertia\Inertia; 
+use App\Models\Training;
+use App\Models\Service;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
-use Str; 
+use Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controllers\Middleware;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TrainingExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TrainingController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
     public static function middleware(): array
     {
         return [
-            new Middleware('can:training.view', only: ['index', 'show']),
+            new Middleware('can:training.view', only: ['index', 'show', 'export']),
             new Middleware('can:training.create', only: ['store', 'create']),
             new Middleware('can:training.edit', only: ['update', 'edit']),
             new Middleware('can:training.delete', only: ['destroy']),
@@ -26,7 +29,7 @@ class TrainingController extends Controller implements \Illuminate\Routing\Contr
 
     public function index()
     {
-        $trainings = Training::with('service')->paginate(10); 
+        $trainings = Training::with('service')->paginate(10);
         return Inertia::render('Admin/Training/Index', [
             'trainings' => $trainings,
         ]);
@@ -34,9 +37,9 @@ class TrainingController extends Controller implements \Illuminate\Routing\Contr
 
     public function create()
     {
-        $services = Service::select('id', 'title')->get(); 
+        $services = Service::select('id', 'title')->get();
         return Inertia::render('Admin/Training/Create', [
-            'services' => $services, 
+            'services' => $services,
         ]);
     }
 
@@ -71,10 +74,10 @@ class TrainingController extends Controller implements \Illuminate\Routing\Contr
     public function edit($id)
     {
         $training = Training::findOrFail($id);
-        $services = Service::select("id", 'title')->get(); 
+        $services = Service::select("id", 'title')->get();
         return Inertia::render('Admin/Training/Edit', [
-            'training' => $training, 
-            'services' => $services, 
+            'training' => $training,
+            'services' => $services,
         ]);
     }
 
@@ -90,7 +93,7 @@ class TrainingController extends Controller implements \Illuminate\Routing\Contr
             'has_form' => 'nullable|boolean',
             'service_id' => 'required|integer'
         ]);
-        
+
         if ($request->hasFile('image')) {
             if ($training->image) {
                 Storage::disk('public')->delete($training->image);
@@ -118,7 +121,7 @@ class TrainingController extends Controller implements \Illuminate\Routing\Contr
         if ($training->image) {
             Storage::disk('public')->delete($training->image);
         }
-        $training->delete(); 
+        $training->delete();
         return redirect()->route('training.index');
     }
 
@@ -126,7 +129,20 @@ class TrainingController extends Controller implements \Illuminate\Routing\Contr
     {
         $training = Training::with('service')->findOrFail($id);
         return Inertia::render('Admin/Training/Details', [
-            'training' => $training, 
+            'training' => $training,
         ]);
+    }
+    public function export($fileType)
+    {
+        // Handle the file export based on the file type
+        if ($fileType === 'excel') {
+            return Excel::download(new TrainingExport, 'trainings.xlsx');
+        } elseif ($fileType === 'pdf') {
+            $trainings = Training::with('service')->get(); // Fetch the training data
+            $pdf = Pdf::loadView('exports.trainings', compact('trainings'));
+            return $pdf->download('trainings.pdf');
+        } else {
+            return redirect()->route('trainings.index')->with('error', 'Invalid file type');
+        }
     }
 }

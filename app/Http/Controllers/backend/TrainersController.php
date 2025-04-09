@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Exports\TrainerExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,13 +11,15 @@ use App\Models\Service;
 use Illuminate\Support\Facades\Storage;
 use Str;
 use Illuminate\Routing\Controllers\Middleware;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TrainersController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
     public static function middleware(): array
     {
         return [
-            new Middleware('can:training.view', only: ['index', 'show']),
+            new Middleware('can:training.view', only: ['index', 'show', 'export']),
             new Middleware('can:training.create', only: ['create', 'store']),
             new Middleware('can:training.edit', only: ['edit', 'update']),
             new Middleware('can:training.delete', only: ['destroy']),
@@ -158,5 +161,18 @@ class TrainersController extends Controller implements \Illuminate\Routing\Contr
         $trainer->delete();
 
         return redirect()->route('trainers.index');
+    }
+    public function export($fileType)
+    {
+        // Handle the file export based on the file type
+        if ($fileType === 'excel') {
+            return Excel::download(new TrainerExport, 'trainers.xlsx');
+        } elseif ($fileType === 'pdf') {
+            $trainers = Trainer::with('service')->get(); // Fetch the training data
+            $pdf = Pdf::loadView('exports.trainers', compact('trainers'));
+            return $pdf->download('trainers.pdf');
+        } else {
+            return redirect()->route('trainers.index')->with('error', 'Invalid file type');
+        }
     }
 }

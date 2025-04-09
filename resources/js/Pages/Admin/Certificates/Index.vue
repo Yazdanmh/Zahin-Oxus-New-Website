@@ -1,6 +1,10 @@
 <template>
   <Head title="Certificates" />
-  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
+  <AdminLayout
+    :setting="props.setting"
+    :user="props.user"
+    :permissions="props.permissions"
+  >
     <div class="container-xxl flex-grow-1 container-p-y">
       <h4 class="fw-bold py-3 mb-4">
         <span class="text-muted fw-light">Home /</span> Certificates
@@ -12,7 +16,11 @@
               class="card-header d-flex justify-content-between align-items-center"
             >
               <h5 class="mb-0">Certificates</h5>
-              <Link v-if ="hasPermission('certificate.create')" :href="route('certificate.create')" class="btn btn-primary">
+              <Link
+                v-if="hasPermission('certificate.create')"
+                :href="route('certificate.create')"
+                class="btn btn-primary"
+              >
                 Add Certificate
               </Link>
             </div>
@@ -53,6 +61,29 @@
                     class="form-control"
                   />
                 </div>
+                <div class="dropdown w-100" style="max-width: 150px">
+                  <button
+                    class="btn btn-secondary dropdown-toggle w-100"
+                    type="button"
+                    id="exportDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Export
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                    <li>
+                      <button class="dropdown-item" @click="downloadExcel">
+                        Export Excel
+                      </button>
+                    </li>
+                    <li>
+                      <button class="dropdown-item" @click="downloadPDF">
+                        Export PDF
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
               <!-- Table -->
@@ -68,7 +99,14 @@
                       <th>Issue Date</th>
                       <th>Certificate File</th>
                       <!-- New Column -->
-                      <th v-if ="hasPermission('certificate.edit') || hasPermission('certificate.delete') ">Action</th>
+                      <th
+                        v-if="
+                          hasPermission('certificate.edit') ||
+                          hasPermission('certificate.delete')
+                        "
+                      >
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -77,12 +115,22 @@
                       :key="certificate.id"
                     >
                       <td>{{ certificate.id }}</td>
-                      <td>{{ certificate.certificate_code || "N/A" }}</td>
-                      <td>{{ certificate.certificate_name || "Untitled" }}</td>
-                      <td>{{ certificate.for_who || "N/A" }}</td>
-                      <td>{{ certificate.training.name || "N/A" }}</td>
-                      <td>{{ certificate.issue_date || "N/A" }}</td>
-                      <td >
+                      <td>
+                        {{ certificate.certificate_code || "N/A" }}
+                      </td>
+                      <td>
+                        {{ certificate.certificate_name || "Untitled" }}
+                      </td>
+                      <td>
+                        {{ certificate.for_who || "N/A" }}
+                      </td>
+                      <td>
+                        {{ certificate.training.name || "N/A" }}
+                      </td>
+                      <td>
+                        {{ certificate.issue_date || "N/A" }}
+                      </td>
+                      <td>
                         <a
                           v-if="certificate.certificate_file"
                           :href="'/storage/' + certificate.certificate_file"
@@ -94,15 +142,24 @@
                         </a>
                         <span v-else class="text-muted">No file</span>
                       </td>
-                      <td v-if ="hasPermission('certificate.edit') || hasPermission('certificate.delete') ">
-                        <Link v-if ="hasPermission('certificate.edit')" :href="route('certificate.edit', certificate.id)">
+                      <td
+                        v-if="
+                          hasPermission('certificate.edit') ||
+                          hasPermission('certificate.delete')
+                        "
+                      >
+                        <Link
+                          v-if="hasPermission('certificate.edit')"
+                          :href="route('certificate.edit', certificate.id)"
+                        >
                           <span
                             class="badge bg-label-primary p-1_5 me-3 cursor-pointer mb-2"
                           >
                             <i class="icon-base bx bx-pencil icon-xs"></i>
                           </span>
                         </Link>
-                        <span v-if ="hasPermission('certificate.delete')"
+                        <span
+                          v-if="hasPermission('certificate.delete')"
                           @click="confirmDelete(certificate.id)"
                           class="badge bg-label-danger p-1_5 me-3 cursor-pointer mb-2"
                         >
@@ -129,7 +186,9 @@
                   <ul class="pagination">
                     <li
                       class="page-item"
-                      :class="{ disabled: !props.certificates.prev_page_url }"
+                      :class="{
+                        disabled: !props.certificates.prev_page_url,
+                      }"
                     >
                       <a
                         class="page-link"
@@ -145,7 +204,12 @@
                     <li
                       v-for="page in totalPages"
                       :key="page"
-                      :class="['page-item', { active: currentPage === page }]"
+                      :class="[
+                        'page-item',
+                        {
+                          active: currentPage === page,
+                        },
+                      ]"
                     >
                       <a
                         class="page-link"
@@ -158,7 +222,9 @@
 
                     <li
                       class="page-item"
-                      :class="{ disabled: !props.certificates.next_page_url }"
+                      :class="{
+                        disabled: !props.certificates.next_page_url,
+                      }"
                     >
                       <a
                         class="page-link"
@@ -188,7 +254,7 @@ import { Head, useForm, Link } from "@inertiajs/vue3";
 import { ref, computed, watch } from "vue";
 import { useToast } from "vue-toastification";
 
-const form = useForm({}); 
+const form = useForm({});
 const toast = useToast({});
 const props = defineProps({
   certificates: {
@@ -199,17 +265,18 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  setting:{
-    type:Object, 
-    required:true, 
+  setting: {
+    type: Object,
+    required: true,
   },
-  user:{
-    type:Object, 
-    required:true, 
+  user: {
+    type: Object,
+    required: true,
   },
-  permissions:{
-      type:Array, required:true
-    }
+  permissions: {
+    type: Array,
+    required: true,
+  },
 });
 
 const searchQuery = ref("");
@@ -290,7 +357,19 @@ const confirmDelete = (id) => {
 const applyFilter = () => {
   changePage(1); // Reset to the first page when applying a new filter
 };
-const hasPermission = (permission) =>{
-  return props.permissions.includes(permission)
-}
+const hasPermission = (permission) => {
+  return props.permissions.includes(permission);
+};
+const downloadFile = (fileType) => {
+  window.location.href = route("certificate.export", { fileType });
+};
+
+// Usage
+const downloadExcel = () => {
+  downloadFile("excel");
+};
+
+const downloadPDF = () => {
+  downloadFile("pdf");
+};
 </script>
