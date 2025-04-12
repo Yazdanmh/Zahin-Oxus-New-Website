@@ -14,9 +14,9 @@ class HeroController extends Controller implements \Illuminate\Routing\Controlle
     public static function middleware(): array
     {
         return [
-            new Middleware('can:hero.view', only: ['index']),
-            new Middleware('can:hero.edit', only: ['update']),
-            new Middleware('can:hero.create', only: ['update']),
+            new Middleware('can:site_data.view', only: ['index']),
+            new Middleware('can:site_data.edit', only: ['update']),
+            new Middleware('can:site_data.create', only: ['update']),
         ];
     }
 

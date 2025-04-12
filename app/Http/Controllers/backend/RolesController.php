@@ -8,17 +8,17 @@ use Spatie\Permission\Models\Role;
 use Inertia\Inertia;
 use Illuminate\Routing\Controllers\Middleware;
 
-class RolesController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
+class RolesController extends Controller// implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('can:roles.view', only: ['index']),
-            new Middleware('can:roles.create', only: ['create', 'store']),
-            new Middleware('can:roles.edit', only: ['edit', 'update']),
-            new Middleware('can:roles.delete', only: ['destroy']),
-        ];
-    }
+    // public static function middleware(): array
+    // {
+    //     // return [
+    //     //     new Middleware('can:roles.view', only: ['index']),
+    //     //     new Middleware('can:roles.create', only: ['create', 'store']),
+    //     //     new Middleware('can:roles.edit', only: ['edit', 'update']),
+    //     //     new Middleware('can:roles.delete', only: ['destroy']),
+    //     // ];
+    // }
 
     public function index()
     {

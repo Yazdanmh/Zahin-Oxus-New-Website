@@ -10,18 +10,18 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\Middleware;
 
-class UsersController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
+class UsersController extends Controller //implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('can:users.view', only: ['index', 'show']),
-            new Middleware('can:users.create', only: ['store', 'create']),
-            new Middleware('can:users.edit', only: ['update', 'edit']),
-            new Middleware('can:users.delete', only: ['destroy']),
-            new Middleware('can:system.change_user_password', only: ['resetPassword']),
-        ];
-    }
+    // public static function middleware(): array
+    // {
+    //     return [
+    //         // new Middleware('can:users.view', only: ['index', 'show']),
+    //         // new Middleware('can:users.create', only: ['store', 'create']),
+    //         // new Middleware('can:users.edit', only: ['update', 'edit']),
+    //         // new Middleware('can:users.delete', only: ['destroy']),
+    //         // new Middleware('can:system.change_user_password', only: ['resetPassword']),
+    //     ];
+    // }
 
     public function index()
     {

@@ -14,9 +14,9 @@ class HistoryController extends Controller implements \Illuminate\Routing\Contro
     public static function middleware(): array
     {
         return [
-            new Middleware('can:history.view', only: ['index']),
-            new Middleware('can:history.edit', only: ['update']),
-            new Middleware('can:history.create', only: ['update']),
+            new Middleware('can:site_data.view', only: ['index']),
+            new Middleware('can:site_data.edit', only: ['update']),
+            new Middleware('can:site_data.create', only: ['update']),
         ];
     }
 

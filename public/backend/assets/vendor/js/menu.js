@@ -2,7 +2,7 @@ jQuery(document).ready(function () {
     jQuery("body").on("click", ".menu-item", function () {
         $(this).toggleClass("open").siblings().removeClass("open");
     });
-    jQuery("body").on("click", ".close-menu", function () {
+    jQuery("body").on("click", ".menu-link", function () {
         $("html").toggleClass(
             "light-style layout-menu-fixed layout-menu-expanded"
         );

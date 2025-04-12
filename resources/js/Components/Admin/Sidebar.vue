@@ -411,7 +411,7 @@
                         v-if="hasPermission('system.backup')"
                         :class="{
                             'menu-item': true,
-                            active: isActiveRoute('settings.index'),
+                            active: isActiveRoute('backup.index'),
                         }"
                     >
                         <Link :href="route('backup.index')" class="menu-link"
