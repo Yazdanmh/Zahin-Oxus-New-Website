@@ -52,7 +52,7 @@ use App\Exports\TrainingExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-Route::middleware([ShareGlobalData::class])->group(function () {
+Route::middleware([ShareGlobalData::class, 'throttle:5,1'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
@@ -94,7 +94,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 
 });
 
-Route::middleware(['auth', PassUserDataToViews::class])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'throttle:10,1', PassUserDataToViews::class])->prefix('admin')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])
