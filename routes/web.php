@@ -51,11 +51,12 @@ use Inertia\Inertia;
 use App\Exports\TrainingExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use GuzzleHttp\Middleware;
 
-Route::middleware([ShareGlobalData::class, 'throttle:5,1'])->group(function () {
+Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
-    Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
+    Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store')->middleware('throttle:5,1');
     Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
     Route::get('/our-mission', [HomeController::class, 'OurMission'])->name('about.mission');
     Route::get('/our-vision', [HomeController::class, 'OurVision'])->name('about.vision');
@@ -78,9 +79,9 @@ Route::middleware([ShareGlobalData::class, 'throttle:5,1'])->group(function () {
     Route::get('/ceo/{slug}', [TrainerController::class, 'getCEO'])->name('ceo.show');
 
     Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
-    Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify');
+    Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify')->middleware('throttle:10,1');
 
-    Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe');
+    Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:10,1');
     Route::get('/gallery/all', [GalleryController::class, 'index'])->name('gallery.index');
 
     Route::get('events', [EventsController::class, 'index'])->name('events.index');
@@ -89,8 +90,6 @@ Route::middleware([ShareGlobalData::class, 'throttle:5,1'])->group(function () {
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
     Route::get('/mous', [MOUsController::class, 'index'])->name('mous.index');
     Route::get('/mous/{slug}', [MOUsController::class, 'show'])->name('mous.show');
-
-
 
 });
 

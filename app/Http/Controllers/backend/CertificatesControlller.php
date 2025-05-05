@@ -72,7 +72,6 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
             'issue_date' => 'required|date',
             'for_who' => 'required|string|max:255',
             'training_id' => 'required|exists:trainings,id',
-            'certificate_file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -85,14 +84,6 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
         $certificate->issue_date = $request->issue_date;
         $certificate->for_who = $request->for_who;
         $certificate->training_id = $request->training_id;
-
-        if ($request->hasFile('certificate_file')) {
-            $file = $request->file('certificate_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('certificates', $fileName, 'public');
-            $certificate->certificate_file = $filePath;
-        }
-
         $certificate->save();
         return redirect()->route('certificate.index')->with('success', 'Certificate created successfully!');
     }
@@ -115,7 +106,6 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
             'issue_date' => 'required|date',
             'for_who' => 'required|string|max:255',
             'training_id' => 'required|exists:trainings,id',
-            'certificate_file' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
         ]);
 
         if ($validator->fails()) {
@@ -130,17 +120,6 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
         $certificate->for_who = $request->for_who;
         $certificate->training_id = $request->training_id;
 
-        if ($request->hasFile('certificate_file')) {
-            if ($certificate->certificate_file) {
-                \Storage::disk('public')->delete($certificate->certificate_file);
-            }
-
-            $file = $request->file('certificate_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('certificates', $fileName, 'public');
-            $certificate->certificate_file = $filePath;
-        }
-
         $certificate->save();
 
         return redirect()->route('certificate.index')->with('success', 'Certificate updated successfully!');
@@ -149,11 +128,6 @@ class CertificatesControlller extends Controller implements \Illuminate\Routing\
     public function destroy($id)
     {
         $certificate = Certificate::findOrFail($id);
-
-        if ($certificate->certificate_file) {
-            \Storage::disk('public')->delete($certificate->certificate_file);
-        }
-
         $certificate->delete();
 
         return redirect()->route('certificate.index')->with('success', 'Certificate deleted successfully!');

@@ -15,8 +15,8 @@ class CertificateController extends Controller
 
     public function verify_post(Request $request)
     {
-        $certificate = Certificate::where('certificate_code', $request->certificate_number)->first();
-    
+        $certificate = Certificate::where('certificate_code', $request->certificate_number)->with('training')->first();
+        // return $certificate;
         if ($certificate) {
             return Inertia::render('Client/Certificates/CertificateVerified', [
                 'verified' => true,

@@ -127,27 +127,7 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Upload File or Image -->
-                  <div class="col-md-4">
-                    <div class="mb-3">
-                      <label for="certificate_file" class="form-label"
-                        >Upload File/Image</label
-                      >
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="certificate_file"
-                        @change="handleFileUpload"
-                      />
-                      <!-- Display error for certificate_file -->
-                      <div
-                        v-if="errors.certificate_file"
-                        class="text-danger mt-2"
-                      >
-                        {{ errors.certificate_file }}
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
 
                 <div class="d-flex justify-content-end gap-3 mt-4">
@@ -197,12 +177,8 @@ const form = useForm({
   issue_date: "",
   for_who: "",
   training_id: "",
-  certificate_file: null, 
 });
 
-const handleFileUpload = (event) => {
-  form.certificate_file = event.target.files[0];
-};
 const errors = ref({});
 
 const submit = () => {

@@ -97,7 +97,6 @@
                       <th>For Who</th>
                       <th>Training</th>
                       <th>Issue Date</th>
-                      <th>Certificate File</th>
                       <!-- New Column -->
                       <th
                         v-if="
@@ -130,18 +129,8 @@
                       <td>
                         {{ certificate.issue_date || "N/A" }}
                       </td>
-                      <td>
-                        <a
-                          v-if="certificate.certificate_file"
-                          :href="'/storage/' + certificate.certificate_file"
-                          target="_blank"
-                          download
-                          class="btn btn-sm btn-outline-primary"
-                        >
-                          Download
-                        </a>
-                        <span v-else class="text-muted">No file</span>
-                      </td>
+                     
+
                       <td
                         v-if="
                           hasPermission('certificate.edit') ||
