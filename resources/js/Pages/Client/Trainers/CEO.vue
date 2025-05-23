@@ -15,7 +15,7 @@
                 alt="img"
                 style="width: 100%; height: auto"
               />
-              <div class="progress__wrap py-5">
+              <div class="progress__wrap py-5" v-if="props.trainer.skills">
                 <h5 class="text-start mb-3">Skills</h5>
                 <!-- Dynamically generate progress items -->
                 <div

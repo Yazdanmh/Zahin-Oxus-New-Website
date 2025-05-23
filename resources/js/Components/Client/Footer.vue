@@ -72,7 +72,7 @@
               <h4 class="footer__widget-title">About Company</h4>
               <ul class="footer__widget-link list-wrap">
                 <li><Link :href="route('home.about')">About ZOCS</Link></li>
-                <li><Link :href="route('about.mission')">Our Missions</Link></li>
+                <li><Link :href="route('about.mission')">Our Mission</Link></li>
                 <li><Link :href="route('about.vision')">Our Vision</Link></li>
                 <li><Link :href="route('project.index')">Projects</Link></li>
               </ul>

@@ -13,7 +13,7 @@
                 <div class="col-lg-6">
                     <div class="choose__content">
                         <div class="section__title mb-20">
-                            <span class="sub-title">Learn About CEO</span>
+                            <span class="sub-title">Message from CEO</span>
                             <h2 class="title">{{ props.ceo.name }}</h2>
                         </div>
                         <p v-if="!showFullDescription">

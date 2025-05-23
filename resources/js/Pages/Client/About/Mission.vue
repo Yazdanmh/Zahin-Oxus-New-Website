@@ -5,55 +5,15 @@
     <Breadcrumb :title="'Our Mission'" :nav="nav" />
 
     <!-- team-details -->
-    <section class="team__details-area section-py-130">
+    <section class="team__details-area section-py-100" style="padding:60px 0px 60px; 0px;">
       <div class="container">
         <div class="row justify-content-center">
           
           <div class="col-12">
             <div class="team__details-info-wrap">
-              <h2 class="title">Our Mission</h2>
-              <span>{{ props.setting.site_name }}</span>
-              <div class="team__details-social">
-                <ul class="list-wrap">
-                  <li>
-                    <a :href="props.setting.facebook_url" target="_blank"
-                      ><img
-                        src="/frontend/assets/img/icons/facebook.svg"
-                        alt=""
-                        class="injectable"
-                        style="width:50px;height: 30px;"
-                    /></a>
-                  </li>
-                  <li>
-                    <a :href="props.setting.twitter_url" target="_blank"
-                      ><img
-                        src="/frontend/assets/img/icons/twitter.svg"
-                        alt=""
-                        class="injectable"
-                         style="width:50px;height: 30px;"
-                    /></a>
-                  </li>
-                  <li>
-                    <a :href="props.setting.instagram_url" target="_blank"
-                      ><img
-                        src="/frontend/assets/img/icons/instagram.svg"
-                        alt=""
-                        class="injectable"
-                         style="width:50px;height: 30px;"
-                    /></a>
-                  </li>
-                  
-                  <li>
-                    <a :href="props.setting.youtube_url" target="_blank"
-                      ><img
-                        src="/frontend/assets/img/icons/youtube.svg"
-                        alt=""
-                        class="injectable"
-                         style="width:40px;height: 30px;"
-                    /></a>
-                  </li>
-                </ul>
-              </div>
+              
+              <span>OUR MISSION</span>
+              
               <p v-html="props.our_mission.our_mission">
             
               </p>

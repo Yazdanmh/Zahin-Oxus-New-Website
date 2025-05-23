@@ -129,7 +129,7 @@
                             active: isActiveRoute('trainer.index'),
                           }"
                         >
-                          <Link :href="route('trainer.index')">Trainers</Link>
+                          <Link :href="route('trainer.index')">Our Teams</Link>
                         </li>
                       </ul>
                     </li>
@@ -169,7 +169,7 @@
                       }"
                     >
                       <a href="#">Services</a>
-                      <ul class="sub-menu">
+                      <ul class="sub-menu" style="min-width:370px;">
                         <li
                           v-for="item in service"
                           :key="item.id"
@@ -177,7 +177,7 @@
                             active: isActiveSlug(item.slug),
                           }"
                         >
-                          <Link :href="route('service.category', item.slug)">
+                          <Link :href="route('service.category', item.slug)" style="text-transform: none">
                             {{ item.name }}
                           </Link>
                         </li>
@@ -209,7 +209,7 @@
                           }"
                         >
                           <Link :href="route('trainings.category', 'previous')">
-                            Previous
+                            Completed
                           </Link>
                         </li>
                       </ul>

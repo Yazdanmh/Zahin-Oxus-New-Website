@@ -62,12 +62,7 @@
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="title" class="form-label">Title</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="title"
-                        v-model="form.title"
-                      />
+                      <TextEditor v-model="form.title" />
                       <div v-if="errors.title" class="text-danger mt-2">
                         {{ errors.title }}
                       </div>
@@ -76,12 +71,7 @@
                   <div class="col-md-6">
                     <div class="mb-3">
                       <label for="subtitle" class="form-label">Subtitle</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="subtitle"
-                        v-model="form.subtitle"
-                      />
+                     <TextEditor v-model="form.subtitle" />
                       <div v-if="errors.subtitle" class="text-danger mt-2">
                         {{ errors.subtitle }}
                       </div>
@@ -91,12 +81,7 @@
                     <div class="mb-3">
                       <label for="description" class="form-label"
                         >Description</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="description"
-                        v-model="form.description"
-                      ></textarea>
+                      ><TextEditor v-model="form.description" />
                       <div v-if="errors.description" class="text-danger mt-2">
                         {{ errors.description }}
                       </div>
@@ -151,6 +136,7 @@ import { Head } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
+import TextEditor from "@/Components/Admin/TextEditor.vue";
 
 const props = defineProps({
   hero: {
@@ -221,4 +207,5 @@ const hasPermission = (permission) => {
   
   <style scoped>
 </style>
+
   

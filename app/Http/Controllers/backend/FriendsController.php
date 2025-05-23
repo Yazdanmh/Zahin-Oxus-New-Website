@@ -15,7 +15,7 @@ class FriendsController extends Controller implements \Illuminate\Routing\Contro
     {
         return [
             new Middleware('can:site_data.view', only: ['index']),
-            new Middleware('can:site_data.store', only: ['store']),
+            // new Middleware('can:site_data.store', only: ['store']),
             new Middleware('can:site_data.delete', only: ['destroy']),
         ];
     }

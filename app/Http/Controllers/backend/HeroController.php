@@ -33,7 +33,7 @@ class HeroController extends Controller implements \Illuminate\Routing\Controlle
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'button' => 'nullable|string|max:255',
             'link' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
