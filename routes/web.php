@@ -93,7 +93,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
 
 });
 
-Route::middleware(['auth', 'throttle:10,1', PassUserDataToViews::class])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'throttle:50,1', PassUserDataToViews::class])->prefix('admin')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])

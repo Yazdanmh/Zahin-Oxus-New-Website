@@ -1,22 +1,29 @@
 <template>
-  <Head title="Home" />
-  <ClientLayout :setting="props.setting" :service="service_categories">
-  
-    <Hero :hero="props.hero" />
-    <Friends :friends="props.friends" />
-    <About :about="props.about" :counter="props.counter" :fulltext="false" />
-    <Services :services="services" />
-    <CTA />
-    <History v-if="props.history" :history="props.history" />
-    <Counter :counter="props.counter" />
-    <Video />
-    <Projects :projects="props.projects" :categories="props.categories" />
-    <Teams v-if="props.teams.length>0" :teams="props.teams"/>
-    <CTA2 v-else />
-    <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
-    <Trainings v-if="props.trainings.length>0" :trainings="props.trainings" />
-
-  </ClientLayout>
+    <Head title="Home" />
+    <ClientLayout :setting="props.setting" :service="service_categories">
+        <Hero :hero="props.hero" />
+        <Friends :friends="props.friends" />
+        <About
+            :about="props.about"
+            :counter="props.counter"
+            :fulltext="false"
+        />
+        <Services :services="services" />
+        <CTA />
+        <History v-if="props.history" :history="props.history" />
+        <Counter :counter="props.counter" />
+        <Video />
+        <Testimonial
+            v-if="
+                props.testimonials && Object.keys(props.testimonials).length > 0
+            "
+            :testimonials="props.testimonials"
+        />
+        <Trainings
+            v-if="props.trainings && Object.keys(props.trainings).length > 0"
+            :trainings="props.trainings"
+        />
+    </ClientLayout>
 </template>
 
 <script setup>
@@ -36,57 +43,57 @@ import Trainings from "@/Pages/Client/Home/Trainings.vue";
 import Projects from "@/Pages/Client/Home/Projects.vue";
 import Teams from "@/Components/Client/Teams.vue";
 const props = defineProps({
-  teams: {
-    type: Object, 
-    required: true,
-  },
-  hero: {
-    type: Object,
-    required: true,
-  },
-  setting: {
-    type: Object,
-    required: true,
-  },
-  friends: {
-    type: Object,
-    required: true,
-  },
-  services: {
-    type: Object,
-    required: true,
-  },
-  counter: {
-    type: Object,
-    required: true,
-  },
-  projects: {
-    type: Object,
-    required: true,
-  },
-  categories: {
-    type: Object,
-    required: true,
-  },
-  testimonials: {
-    type: Object,
-    required: true,
-  },
-  about: {
-    type: Object,
-    required: true,
-  },
-  trainings: {
-    type: Object,
-    required: true,
-  },
-  history: {
-    type: Object,
-    required: true,
-  },
-  service_categories:{
-    type:Object, 
-    required:true,  
-  }
+    teams: {
+        type: Object,
+        required: true,
+    },
+    hero: {
+        type: Object,
+        required: true,
+    },
+    setting: {
+        type: Object,
+        required: true,
+    },
+    friends: {
+        type: Object,
+        required: true,
+    },
+    services: {
+        type: Object,
+        required: true,
+    },
+    counter: {
+        type: Object,
+        required: true,
+    },
+    projects: {
+        type: Object,
+        required: true,
+    },
+    categories: {
+        type: Object,
+        required: true,
+    },
+    testimonials: {
+        type: Object,
+        required: true,
+    },
+    about: {
+        type: Object,
+        required: true,
+    },
+    trainings: {
+        type: Object,
+        required: true,
+    },
+    history: {
+        type: Object,
+        required: true,
+    },
+    service_categories: {
+        type: Object,
+        required: true,
+    },
 });
 </script>

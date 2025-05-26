@@ -48,7 +48,7 @@
     </section>
     <!-- cta-area-end -->
     <CEO :ceo="props.ceo" v-if="props.ceo"/>
-    <Testimonial :testimonials="props.testimonials" v-if="props.testimonials" />
+    <Testimonial :testimonials="props.testimonials" v-if="props.testimonials && Object.keys(props.testimonials).length > 0" />
     <Teams v-if="props.teams.length> 0" :teams="props.teams"/>
     <Friends :friends="props.friends" />
   </ClientLayout>

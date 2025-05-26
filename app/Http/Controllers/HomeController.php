@@ -24,17 +24,20 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $hero = Hero::select('title', 'subtitle', 'description', 'image', 'button', 'link')->first();
+        $hero = Hero::select('title', 'subtitle', 'description', 'image_1', 'image_2', 'image_3', 'button', 'link')->first();
         $friends = Friend::all();
-        $services = Service::select('title', 'subtitle', 'description', 'image','icon', 'slug')->paginate(5);
+        $services = Service::select('title', 'subtitle', 'description', 'image', 'icon', 'slug')->paginate(5);
         $counter = Counter::first();
         $projects = Project::paginate(4);
         $categories = Category::all();
         $testimonials = Testimonial::all();
         $about = About::first();
-        $trainings = Training::orderBy('start_date')->paginate(4);
-        $history = History::first(); 
-        $teams = Trainer::where('show_on_home', 1)->get(); 
+        $trainings = Training::where('start_date', '>', now())
+            ->orderBy('start_date')
+            ->paginate(4);
+
+        $history = History::first();
+        $teams = Trainer::where('show_on_home', 1)->get();
 
         return Inertia::render('Client/Home/Index', [
             'hero' => $hero,
@@ -45,9 +48,9 @@ class HomeController extends Controller
             'categories' => $categories,
             'testimonials' => $testimonials,
             'about' => $about,
-            'trainings' => $trainings, 
-            'history' => $history, 
-            'teams' => $teams, 
+            'trainings' => $trainings,
+            'history' => $history,
+            'teams' => $teams,
         ]);
     }
     public function about()
@@ -56,25 +59,27 @@ class HomeController extends Controller
         $counter = Counter::first();
         $testimonials = Testimonial::all();
         $friends = Friend::all();
-        $teams = Trainer::where('show_on_home',1)->get();
-        $ceo = CEO::first(); 
+        $teams = Trainer::where('show_on_home', 1)->get();
+        $ceo = CEO::first();
         return Inertia::render('Client/About/Index', [
             'about' => $about,
             'counter' => $counter,
             'testimonials' => $testimonials,
             'friends' => $friends,
-            'teams' => $teams, 
+            'teams' => $teams,
             'ceo' => $ceo,
         ]);
     }
-    public function OurMission(){
-        return Inertia::render('Client/About/Mission',[
-            'our_mission' => OurMission::first(), 
+    public function OurMission()
+    {
+        return Inertia::render('Client/About/Mission', [
+            'our_mission' => OurMission::first(),
         ]);
     }
-    public function OurVision(){
-        return Inertia::render('Client/About/Vision',[
-            'our_vision' => OurVision::first(), 
+    public function OurVision()
+    {
+        return Inertia::render('Client/About/Vision', [
+            'our_vision' => OurVision::first(),
         ]);
     }
     public function subscribe(Request $request)
@@ -90,6 +95,4 @@ class HomeController extends Controller
 
         return back()->with('success', 'Thank you for subscribing to our newsletter!');
     }
-
-    
 }

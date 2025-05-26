@@ -1,13 +1,15 @@
 <template>
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="hero-container">
+        <div class="hero-container" >
             <!-- Text Content -->
-            <div class="hero-content">
+            <div class="hero-content" style="padding-top: 50px;">
                 <span class="hero-subtitle" 
                       data-aos="fade-up"
                       data-aos-delay="0"
-                      v-html="props.hero.subtitle"></span>
+                      v-html="props.hero.subtitle"
+                      style=""
+                      ></span>
                 <h1 class="hero-title"
                     data-aos="fade-up"
                     data-aos-delay="300"
@@ -15,11 +17,12 @@
                 <p class="hero-description"
                    data-aos="fade-up"
                    data-aos-delay="500"
-                   v-html="props.hero.description"></p>
+                   v-html="props.hero.description" style="margin-bottom: 0px;"></p>
                 <div v-if="props.hero.button"
                      class="hero-button"
                      data-aos="fade-up"
-                     data-aos-delay="700">
+                     data-aos-delay="700"
+                     style="margin-bottom: 40px;">
                     <Link :href="props.hero.link" class="btn-primary">
                         {{ props.hero.button }}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -47,6 +50,15 @@
 
             <!-- Controls Container (absolute positioned at bottom) -->
             <div class="slider-controls-container">
+                <!-- Navigation Arrows - Left Side -->
+                <div class="slider-arrows">
+                    <button class="slider-arrow prev" @click="prevSlide">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                </div>
+
                 <!-- Bullet Indicators - Centered -->
                 <div class="slider-bullets">
                     <button v-for="(image, index) in sliderImages" 
@@ -56,12 +68,7 @@
                 </div>
 
                 <!-- Navigation Arrows - Right Side -->
-                <div class="slider-arrows">
-                    <button class="slider-arrow prev" @click="prevSlide">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 18l-6-6 6-6"/>
-                        </svg>
-                    </button>
+                <div class="slider-arrows-right">
                     <button class="slider-arrow next" @click="nextSlide">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M9 18l6-6-6-6"/>
@@ -86,9 +93,9 @@ const props = defineProps({
 
 // Sample slider images - replace with your actual images
 const sliderImages = ref([
-    '/frontend/assets/img/banner/hero_bg.jpg',
-    '/frontend/assets/img/banner/hero_bg1.png',
-    '/frontend/assets/img/banner/hero_bg2.jpg'
+    '/storage/'+ props.hero.image_1,
+    '/storage/'+ props.hero.image_2,
+    '/storage/'+ props.hero.image_3,
 ]);
 
 const activeSlide = ref(0);
@@ -133,7 +140,7 @@ onUnmounted(() => {
 /* Base Styles */
 .hero-section {
     position: relative;
-    height: 65vh;
+    height: 85vh;
     min-height: 500px;
     max-height: 650px;
     color: #fff;
@@ -272,24 +279,24 @@ onUnmounted(() => {
     left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 20px;
     padding: 0 30px;
-    z-index: 4; /* Highest z-index to ensure it's on top */
-    pointer-events: none; /* Allows clicks to pass through to buttons */
+    z-index: 4;
+    pointer-events: none;
 }
 
 /* Navigation Arrows */
-.slider-arrows {
+.slider-arrows, .slider-arrows-right {
     display: flex;
-    gap: 10px;
-    pointer-events: auto; /* Re-enable pointer events for buttons */
+    pointer-events: auto;
 }
 
 .slider-bullets {
     display: flex;
     gap: 8px;
-    pointer-events: auto; /* Re-enable pointer events for bullets */
+    pointer-events: auto;
 }
 
 .slider-arrow {
@@ -305,7 +312,6 @@ onUnmounted(() => {
     cursor: pointer;
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
-    pointer-events: auto; /* Ensure arrows are clickable */
 }
 
 .slider-arrow:hover {
@@ -327,7 +333,6 @@ onUnmounted(() => {
     cursor: pointer;
     transition: all 0.3s ease;
     padding: 0;
-    pointer-events: auto; /* Ensure bullets are clickable */
 }
 
 .slider-bullets button.active {
