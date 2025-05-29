@@ -78,7 +78,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/trainers-details/{slug}', [TrainerController::class, 'show'])->name('trainer.show');
     Route::get('/ceo/{slug}', [TrainerController::class, 'getCEO'])->name('ceo.show');
 
-    Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
+    Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.show.verify');
     Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify')->middleware('throttle:10,1');
 
     Route::post('/newsletter/subscribe', [HomeController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:10,1');
