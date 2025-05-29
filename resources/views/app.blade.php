@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/assets/img/favicon.png') }}">
     @if (request()->is('admin/*') || request()->is('auth/*'))
         <!-- Admin-specific styles -->
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/css/pages/page-auth.css') }}" />
@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
     @else
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontend/assets/img/favicon.png') }}">
+
         <!-- Frontend styles -->
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}">
@@ -51,7 +51,6 @@
         <script src="{{ asset('backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
         <script src="{{ asset('backend/assets/vendor/js/menu.js') }}"></script>
         <script src="{{ asset('backend/assets/js/main.js') }}"></script>
-
     @else
         <!-- Frontend scripts without defer -->
         <script src="{{ asset('backend/assets/vendor/libs/jquery/jquery.js') }}"></script>
