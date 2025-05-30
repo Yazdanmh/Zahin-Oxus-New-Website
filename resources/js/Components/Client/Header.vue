@@ -78,6 +78,7 @@
                       alt="Logo"
                     />
                   </Link>
+                  <span class="mx-2 " style='font-weight:bold; color:#1a377c;'>{{props.setting.site_name}}</span>
                 </div>
                 <div
                   class="tgmenu__navbar-wrap tgmenu__main-menu d-none d-lg-flex"
@@ -286,6 +287,7 @@
               alt="Logo"
               style="max-width: 50px"
           /></a>
+          <span class="mx-2 " style='font-weight:bold; color:#1a377c;'>{{props.setting.site_name}}</span>
         </div>
         <div class="p-2">
           <a

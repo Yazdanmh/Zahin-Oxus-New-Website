@@ -15,6 +15,7 @@
                     style="max-width: 70px"
                   />
                 </a>
+                <span class="mx-2 " style='font-weight:bold; color:#1a377c;'>{{props.setting.site_name}}</span>
               </div>
               <div class="footer__content">
                 <p>{{ props.setting.about }}</p>
