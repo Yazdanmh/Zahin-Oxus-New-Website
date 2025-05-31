@@ -251,7 +251,7 @@
                   <ul class="list-wrap">
                     <li class="header-btn" data-aos="fade-left" data-aos-delay="0">
                       <Link
-                        :href="route('certificate.show.verify')"
+                        :href="route('certificate.verify')"
                         class="tg-btn"
                         data-toggle="popover"
                         title="Verify Certificate"
