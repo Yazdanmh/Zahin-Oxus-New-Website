@@ -42,8 +42,8 @@ const filteredCounter = computed(() =>
 const getLabel = (key) => {
   const labels = {
     happy_users: "Happy Users",
-    case_complete: "Case Completed",
-    professional_advisor: "Professional Advisor",
+    case_complete: "Cases Completed",
+    professional_advisor: "Professional Advisors",
     years_of_experience: "Years of Experience",
   };
   return labels[key] || key;

@@ -30,6 +30,23 @@ class CertificateController extends Controller
             ]);
         }
     }
+    public function verify_get( $code)
+    {
+        $certificate = Certificate::where('certificate_code', $code)->with('training')->first();
+        // return $certificate;
+        if ($certificate) {
+            return Inertia::render('Client/Certificates/CertificateVerified', [
+                'verified' => true,
+                'certificate' => $certificate,
+            ]);
+        } else {
+            return Inertia::render('Client/Certificates/CertificateVerified', [
+                'verified' => false,
+                'certificate' => null, // Ensuring consistency
+                'message' => 'Certificate not found',
+            ]);
+        }
+    }
 
     }
     
