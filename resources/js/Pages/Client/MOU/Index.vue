@@ -148,9 +148,7 @@
                                             </div>
                                         </div>
 
-                                        <p v-else class="text-warning">
-                                            No MOUs available at the moment.
-                                        </p>
+                                       
 
                                         <!-- Pagination Links -->
                                         <div
@@ -261,6 +259,64 @@
                                 </div>
                             </div>
                         </section>
+                        <div class="brand__area">
+                            <div class="container">
+                                <div
+                                    class="swiper-container brand-active fix swiper-initialized swiper-horizontal swiper-backface-hidden"
+                                >
+                                    <div
+                                        class="swiper-wrapper"
+                                        id="swiper-wrapper-312e1b9f07958b52"
+                                        aria-live="polite"
+                                    >
+                                        <div
+                                            class="swiper-slide swiper-slide-active"
+                                            role="group"
+                                            aria-label="1 / 7"
+                                            style="
+                                                width: 216px;
+                                                margin-right: 24px;
+                                            "
+                                            data-swiper-slide-index="0"
+                                        >
+                                            <div class="brand-item">
+                                                <img
+                                                    src="/frontend/assets/img/brands/ghazanfar.jpg"
+                                                    alt="img"
+                                                    style="width:188px; max-height:102px;object-fit: contain;"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="swiper-slide swiper-slide-next"
+                                            role="group"
+                                            aria-label="2 / 7"
+                                            style="
+                                                width: 216px;
+                                                margin-right: 24px;
+                                            "
+                                            data-swiper-slide-index="1"
+                                        >
+                                            <div class="brand-item">
+                                                <img
+                                                    src="/frontend/assets/img/brands/pashtany.jpg"
+                                                    alt="img"
+                                                    style="width:188px; max-height:102px;object-fit: contain;"
+                                                />
+                                            </div>
+                                        </div>
+                                      
+                                      
+                                      
+                                    </div>
+                                    <span
+                                        class="swiper-notification"
+                                        aria-live="assertive"
+                                        aria-atomic="true"
+                                    ></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
