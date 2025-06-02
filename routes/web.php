@@ -77,7 +77,7 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/trainers/all', [TrainerController::class, 'index'])->name('trainer.index');
     Route::get('/trainers-details/{slug}', [TrainerController::class, 'show'])->name('trainer.show');
     Route::get('/ceo/{slug}', [TrainerController::class, 'getCEO'])->name('ceo.show');
-    
+
     Route::get('/certificate/verify', [CertificateController::class, 'verify'])->name('certificate.verify');
     Route::post('/certificate/verify', [CertificateController::class, 'verify_post'])->name('certificate.verify.post')->middleware('throttle:10,1');
     Route::get('/certificate/verify/{code}', [CertificateController::class, 'verify_get'])->name('certificate.verify.get')->middleware('throttle:10,1');
@@ -91,7 +91,6 @@ Route::middleware([ShareGlobalData::class])->group(function () {
     Route::get('/academic-calendar', [AcademicController::class, 'index'])->name('calendar.index');
     Route::get('/mous', [MOUsController::class, 'index'])->name('mous.index');
     Route::get('/mous/{slug}', [MOUsController::class, 'show'])->name('mous.show');
-
 });
 
 Route::middleware(['auth', 'throttle:50,1', PassUserDataToViews::class])->prefix('admin')->group(function () {
@@ -104,7 +103,7 @@ Route::middleware(['auth', 'throttle:50,1', PassUserDataToViews::class])->prefix
     Route::get('/settings', [SettingController::class, 'index'])
         ->name('settings.index');
 
-    
+
     Route::post('/settings', [SettingController::class, 'update'])
         ->name('settings.update');
 
@@ -278,16 +277,22 @@ Route::middleware(['auth', 'throttle:50,1', PassUserDataToViews::class])->prefix
     Route::post('/users/{id}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/{id}/reset-password', [UsersController::class, 'resetPassword'])->name('users.reset-password');
 
-    //Backup
-    Route::get('/backups', [BackupController::class, 'index'])->name('backup.index');
-    Route::post('/backups', [BackupController::class, 'store'])->name('backup.store');
-    
+
+    Route::get('/backup/list', [BackupController::class, 'listBackups'])->name('backup.index');
+    Route::get('/backups/download/{filename}', [BackupController::class, 'downloadBackup']);
+    Route::post('/backups/delete', [BackupController::class, 'deleteBackup'])->name('backup.delete');
+
+
+    // Your existing backup routes
+    Route::post('/backup/db/now', [BackupController::class, 'backup'])->name('backup.db');
+    Route::post('/backup/full/now', [BackupController::class, 'fullBackup'])->name('backup.full');
+    Route::post('/backup/file/now', [BackupController::class, 'filebackup']);
+
     //Exports
     Route::get('/trainings/export/{fileType}', [TrainingController::class, 'export'])->name('trainings.export');
     Route::get('/trainers/export/{fileType}', [TrainersController::class, 'export'])->name('trainers.export');
     Route::get('/participants/export/{fileType}', [ParticipantsController::class, 'export'])->name('participants.export');
     Route::get('/certificate/export/{fileType}', [CertificatesControlller::class, 'export'])->name('certificate.export');
-
 });
 
 

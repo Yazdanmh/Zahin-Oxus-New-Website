@@ -3,83 +3,85 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use App\Models\Backup;
-use Illuminate\Support\Facades\Artisan;
-
+use App\Jobs\ProcessDbBackup;
+use App\Jobs\ProcessFullBackup;
+use App\Models\DatabaseBackup;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
-use function Pest\Laravel\get;
+use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class BackupController extends Controller
 {
-
-    public function index()
+    public function listBackups()
     {
-        $backupFiles = Storage::disk('public')->files('Zahin-Oxus');
-
-        usort($backupFiles, function ($a, $b) {
-            return Storage::disk('public')->lastModified($b) - Storage::disk('public')->lastModified($a);
-        });
-
-        $backups = array_map(function ($file) {
-            return [
-                'file' => $file,
-                'file_url' => Storage::disk('public')->url($file), // This will generate the correct URL
-                'created_at' => date('Y-m-d H:i:s', Storage::disk('public')->lastModified($file)), // Format the timestamp
-                'type' => strpos($file, '.zip') !== false ? 'full' : 'database', // Detect type based on file extension
-            ];
-        }, $backupFiles);
-
-        return Inertia::render("Admin/Backup/Index", [
+        $backups = DatabaseBackup::query()
+            ->where('user_id', auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return Inertia::render('Admin/Backup/Index', [
             'backups' => $backups,
         ]);
     }
-
-
-    // Store a new backup (via Inertia)
-    public function store(Request $request)
+    public function downloadBackup($filename)
     {
-        $request->validate([
-            'backup_type' => 'required|string|in:full,database,files',
-        ]);
+        $filePath = 'backups/' . $filename;
 
+        if (!Storage::exists($filePath)) {
+            abort(404, 'Backup file not found.');
+        }
+
+        return Storage::download($filePath);
+    }
+    public function deleteBackup(Request $request)
+    {
         try {
-            $backupType = $request->input('backup_type');
+            $fileName = $request->input('path');
+            $backupDir = storage_path('app/public/backups');
+            $backupPath = $backupDir . '/' . $fileName;
 
-            // Correct Artisan call format
-            if ($backupType === 'full') {
-                // Running the backup:run command for full backup
-                $output = Artisan::call('backup:run', ['--env' => env('APP_ENV')]);
-            } elseif ($backupType === 'database') {
-                // Running the backup:run command for database-only backup
-                $output = Artisan::call('backup:run', ['--only-db' => true, '--env' => env('APP_ENV')]);
-            } elseif ($backupType === 'files') {
-                // Running the backup:run command for files-only backup
-                $output = Artisan::call('backup:run', ['--only-files' => true, '--env' => env('APP_ENV')]);
+            // Verify the file exists and is within the backup directory
+            if (file_exists($backupPath) && is_file($backupPath)) {
+                // Delete the file
+                if (unlink($backupPath)) {
+                    // Also delete the database record if needed
+                    DatabaseBackup::where('name', $fileName)->delete();
+
+                    \Log::info('Backup file deleted successfully', ['file' => $fileName]);
+                    return redirect()->back()->with('message', 'Backup file deleted successfully.');
+                }
             }
 
-            // Get the command output for debugging or logging
-            $result = Artisan::output();
-            return dd($result);
-            // You can log the output or handle it as needed
-            \Log::debug('Backup command output: ' . $result);
-
-            // Returning a response indicating success
-            return response()->json([
-                'message' => 'Backup started successfully.',
-                'output' => $result
-            ]);
+            \Log::warning('Backup file could not be deleted or not found', ['file' => $fileName]);
+            return redirect()->back()->with('message', 'Backup file not found or could not be deleted.');
         } catch (\Exception $e) {
-            return dd($e.getMessage());
-            // Log the error and return a response with the error message
-            \Log::error('Backup failed: ' . $e->getMessage());
-
-            return response()->json([
-                'message' => 'Backup failed.',
+            \Log::error('Failed to delete backup file', [
+                'file' => $fileName,
                 'error' => $e->getMessage()
-            ], 500);
+            ]);
+            return redirect()->back()->with('message', 'Failed to delete backup file: ' . $e->getMessage());
+            throw $e;
         }
+    }
+
+    public function backup()
+    {
+        try {
+            $userId = Auth::id();
+            ProcessDbBackup::dispatch($userId);
+            return redirect()->back()->with('message', 'Failed to delete backup file: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed: ' . $e->getMessage());
+        }
+    }
+
+
+
+    // Full Laravel application backup
+    public function fullBackup()
+    {
+        $userId = Auth::id();
+        ProcessFullBackup::dispatch($userId);
+        return redirect()->back()->with('message', 'Files backup has been started. It may take a few minutes to complete.');
     }
 }

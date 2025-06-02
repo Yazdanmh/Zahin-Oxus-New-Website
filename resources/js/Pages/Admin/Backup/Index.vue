@@ -1,73 +1,117 @@
 <template>
-  <Head title="Backup Management" />
-  <AdminLayout :setting="props.setting" :user="props.user" :permissions="props.permissions">
-    <div class="container-xxl flex-grow-1 container-p-y">
-      <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">Admin /</span> Backup Management
-      </h4>
-      
-      <!-- Backup Form -->
-      <div class="row">
-        <div class="col-xl">
-          <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">Create Backup</h5>
-              <small class="text-muted float-end">Initiate Manual Backup</small>
-            </div>
-            <div class="card-body">
-              <form @submit.prevent="submitBackup">
-                <!-- Backup Type Selection -->
-                <div class="form-group">
-                  <label for="backup_type" class="form-label">Select Backup Type</label>
-                  <select v-model="form.backup_type" class="form-control" id="backup_type" required>
-                    <option value="full">Full Backup</option>
-                    <option value="database">Database Backup</option>
-                  </select>
-                </div>
-                
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary mt-3">
-                  Start Backup
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    <Head title="Backup Management" />
+    <AdminLayout
+        :setting="props.setting"
+        :user="props.user"
+        :permissions="props.permissions"
+    >
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Admin /</span> Backup
+                Management
+            </h4>
 
-      <!-- Backup History -->
-      <div class="row mt-4">
-        <div class="col-xl">
-          <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <h5 class="mb-0">Backup History</h5>
-              <small class="text-muted float-end">List of all backups</small>
+            <!-- Backup History -->
+            <div class="row mt-4">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div
+                            class="card-header d-flex justify-content-between align-items-center"
+                        >
+                            <h5 class="mb-0">Backup History</h5>
+                            <div class="btn-group">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Backup Options
+                                </button>
+                                <ul class="dropdown-menu" style="">
+                                    <li>
+                                        <a
+                                            class="dropdown-item"
+                                            href="javascript:void(0);"
+                                            @click="startFullBackup"
+                                            >Files</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            @click="startDbBackup"
+                                            :disabled="isBackingUp"
+                                            class="dropdown-item"
+                                            href="javascript:void(0);"
+                                            >Database</a
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Date Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="(backup, index) in backups"
+                                        :key="backup.file"
+                                    >
+                                        <td>{{ index + 1 }}</td>
+                                        <td>{{ backup.name }}</td>
+                                        <td>
+                                            {{
+                                                new Date(
+                                                    backup.created_at
+                                                ).toLocaleString("en-GB", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "2-digit",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                })
+                                            }}
+                                        </td>
+                                        <td>
+                                            <a
+                                                :href="
+                                                    '/admin/backups/download/' +
+                                                    backup.name
+                                                "
+                                                class="btn btn-icon btn-outline-primary m-1"
+                                            >
+                                                <span
+                                                    class="tf-icons bx bx-download"
+                                                ></span>
+                                            </a>
+                                            <button
+                                                type="button"
+                                                @click="
+                                                    confirmDelete(backup.name)
+                                                "
+                                                class="btn btn-icon btn-outline-danger m-1"
+                                            >
+                                                <span
+                                                    class="tf-icons bx bx-trash"
+                                                ></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Backup Type</th>
-                    <th>Date Created</th>
-                    <th>Download</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(backup, index) in backups" :key="backup.file">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ backup.type }}</td>
-                    <td>{{ new Date(backup.created_at * 1000).toLocaleString() }}</td>
-                    <td><a :href="backup.file_url" class="btn btn-success btn-sm" download>Download</a></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </AdminLayout>
+    </AdminLayout>
 </template>
 
 <script setup>
@@ -76,53 +120,107 @@ import { Head } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toastification";
 import { ref } from "vue";
+const isBackingUp = ref(false);
+import Swal from "sweetalert2";
 
-// Props passed from the server
 const props = defineProps({
-  setting: {
-    type: Object,
-    required: true,
-  },
-  user: {
-    type: Object,
-    required: true,
-  },
-  permissions: {
-    type: Array,
-    required: true,
-  },
-  backups: {
-    type: Array,
-    required: true,
-  }
+    setting: Object,
+    user: Object,
+    permissions: Array,
+    backups: Object,
+    errors: Object
 });
 
-// Toast notifications
 const toast = useToast();
-const errors = ref({});
-const form = useForm({
-  backup_type: "full", // Default backup type
+const dbForm = useForm({});
+const fullForm = useForm({});
+const deleteForm = useForm({
+    path: ""
 });
 
-// Handle backup submission
-const submitBackup = () => {
-  form.post(route("backup.store"), {
-    preserveScroll: true,
-    onSuccess: () => {
-      toast.success("Backup started successfully.");
-    },
-    onError: (err) => {
-      errors.value = err;
-      toast.error("An error occurred while initiating the backup.");
-    },
-  });
+const startDbBackup = () => {
+    if (isBackingUp.value) return;
+
+    isBackingUp.value = true;
+
+    dbForm.post("/admin/backup/db/now", {
+        onSuccess: () => {
+            toast.success("Database backup has started. This may take a few minutes. Please check back shortly.");
+            setTimeout(() => {
+                window.location.reload();
+            }, 4000);
+        },
+        onError: () => {
+            toast.error("Failed to start database backup. Please try again later.");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        },
+        onFinish: () => {
+            isBackingUp.value = false;
+        }
+    });
 };
 
-// Initialize backups list
-const backups = ref(props.backups);
 
-// Check if the user has permission
+const startFullBackup = () => {
+    if (isBackingUp.value) return;
+
+    isBackingUp.value = true;
+
+    fullForm.post("/admin/backup/full/now", {
+        onSuccess: () => {
+            toast.success("Full files backup has started. This may take several minutes. Please check back shortly.");
+            setTimeout(() => {
+                window.location.reload();
+            }, 10000);
+        },
+        onError: () => {
+            toast.error("Failed to start full files backup. Please try again later.");
+            setTimeout(() => {
+                window.location.reload();
+            }, 7000);
+        },
+        onFinish: () => {
+            isBackingUp.value = false;
+        }
+    });
+};
+
+
+
+const confirmDelete = (path) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteFile(path);
+        }
+    });
+};
+
+const deleteFile = (path) => {
+    deleteForm.path = path;
+    deleteForm.post(route("backup.delete"), {
+        preserveScroll: true,
+        onSuccess: (msg) => {
+            toast.success('file deleted successfully');
+        },
+        onError: (errors) => {
+            const message = errors.message || "Failed to delete backup";
+            toast.error(message);
+            console.error("Delete error:", errors);
+        }
+    });
+};
+
 const hasPermission = (permission) => {
-  return props.permissions.includes(permission);
+    return props.permissions.includes(permission);
 };
 </script>
