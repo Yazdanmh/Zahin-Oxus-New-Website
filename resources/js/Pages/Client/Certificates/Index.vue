@@ -23,7 +23,7 @@
                     :href="route('contact.index')"
                     class="tg-btn tg-btn-three"
                   >
-                    Contact With Us
+                    Get in Touch 
                     <img
                       src="/frontend/assets/img/icons/right_arrow.svg"
                       alt=""

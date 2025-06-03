@@ -7,7 +7,7 @@
       <div class="row justify-content-center">
         <div class="col-xl-6 col-lg-8">
           <div class="section__title text-center mb-50">
-            <h2 class="title">What We Will Provide For Clients</h2>
+            <h2 class="title">What We Provide For Clients</h2>
             <span class="">
               The founders of ZOCS envisioned a company that could offer a comprehensive range of products and services that could add value to the overall performances of our clients.
             </span>
