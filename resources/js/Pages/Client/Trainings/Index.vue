@@ -17,7 +17,7 @@
           <div class="col-lg-6 col-md-4">
             <div class="section__btn text-end mb-30">
               <Link
-                :href="route('certificate.show.verify')"
+                :href="route('certificate.verify')"
                 class="tg-btn tg-btn-four tg-btn-six tg-btn-lavender"
                 >Verify Certificates
                 <img
