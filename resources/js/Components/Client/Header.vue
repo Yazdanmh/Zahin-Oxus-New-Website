@@ -28,36 +28,7 @@
                   ><a href="tel:0123456789">{{ props.setting.phone }}</a>
                 </li>
                 <li><i class=""></i><a href="/auth/login">Login</a></li>
-                <li>
-                  <div class="tg-header__top-social">
-                    <ul class="list-wrap">
-                      <li>
-                        <a :href="props.setting.facebook_url" target="_blank"
-                          ><img
-                            src="/frontend/assets/img/icons/facebook.svg"
-                            alt=""
-                            class="injectable"
-                        /></a>
-                      </li>
-                      <li>
-                        <a :href="props.setting.twitter_url" target="_blank"
-                          ><img
-                            src="/frontend/assets/img/icons/twitter.svg"
-                            alt=""
-                            class="injectable"
-                        /></a>
-                      </li>
-                      <li>
-                        <a :href="props.setting.instagram_url" target="_blank"
-                          ><img
-                            src="/frontend/assets/img/icons/instagram.svg"
-                            alt=""
-                            class="injectable"
-                        /></a>
-                      </li>
-                    </ul>
-                  </div>
-                </li>
+               
               </ul>
             </div>
           </div>
@@ -312,15 +283,11 @@
               ></a>
             </li>
             <li>
-              <a :href="props.setting.twitter_url"
-                ><i class="fab fa-twitter"></i
+              <a :href="'tel:' + props.setting.phone"
+                ><i class="fab fa-whatsapp"></i
               ></a>
             </li>
-            <li>
-              <a :href="props.setting.instagram_url"
-                ><i class="fab fa-instagram"></i
-              ></a>
-            </li>
+           
             <li>
               <a :href="props.setting.youtube_url"
                 ><i class="fab fa-youtube"></i

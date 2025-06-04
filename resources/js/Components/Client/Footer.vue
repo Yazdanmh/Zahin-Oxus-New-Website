@@ -33,25 +33,16 @@
                     </a>
                   </li>
                   <li>
-                    <a :href="props.setting.twitter_url" target="_blank">
+                    <a :href="'tel:' + props.setting.phone">
                       <img
-                        src="/frontend/assets/img/icons/twitter.svg"
+                        src="/frontend/assets/img/icons/whatsapp.png"
                         alt="Twitter"
                         class="injectable"
-                        style="width: 30px; height: 20px"
+                        style="width: 25px; height: 25px"
                       />
                     </a>
                   </li>
-                  <li>
-                    <a :href="props.setting.instagram_url" target="_blank">
-                      <img
-                        src="/frontend/assets/img/icons/instagram.svg"
-                        alt="Instagram"
-                        class="injectable"
-                         style="width: 30px; height: 20px"
-                      />
-                    </a>
-                  </li>
+
                   <li>
                     <a :href="props.setting.youtube_url" target="_blank">
                       <img

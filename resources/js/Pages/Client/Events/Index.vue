@@ -13,7 +13,7 @@
           <div class="col-30">
             <aside class="blog__sidebar">
               <!-- Search Form -->
-              <div class="sidebar__widget">
+              <div class="sidebar__widget" >
                 <form
                   action="#"
                   class="shop__search blog__search"
@@ -57,7 +57,7 @@
                     distracted.
                   </p>
                   <a :href="route('contact.index')" class="tg-btn tg-btn-three"
-                    >Contact With Us
+                    >Get in Touch
                     <img
                       src="/frontend/assets/img/icons/right_arrow.svg"
                       alt=""

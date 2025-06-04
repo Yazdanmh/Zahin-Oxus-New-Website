@@ -69,7 +69,7 @@
 
         <!-- No Images Message -->
         <div v-else class="text-center">
-          <p class="text-warning">No images yet</p>
+          <p class="text-warning">We're in the process of capturing amazing moments — check back soon to explore our gallery.</p>
         </div>
       </div>
     </section>

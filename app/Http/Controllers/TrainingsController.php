@@ -15,11 +15,12 @@ class TrainingsController extends Controller
     {
         // Base query
         $trainings = Training::query();
-        
+        $type = "upcoming"; 
         if ($q === 'upcoming') {
             $trainings->where('start_date', '>=', now())->orderBy('start_date', 'asc');
         } elseif ($q === 'previous') {
             // Filter past trainings (start date is in the past)
+            $type = 'previous'; 
             $trainings->where('start_date', '<', now())->orderBy('start_date', 'desc');
         }
     
@@ -28,6 +29,7 @@ class TrainingsController extends Controller
     
         return Inertia::render('Client/Trainings/Index', [
             'trainings' => $trainings,
+            'type' => $type, 
         ]);
     }
     

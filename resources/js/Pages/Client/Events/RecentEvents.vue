@@ -28,7 +28,7 @@
       
       <!-- Display message if no events -->
       <div v-else>
-        <p class="text-warning">No events found.</p>
+        <p class="text-warning">Events will be announced soon.</p>
       </div>
     </div>
   </div>

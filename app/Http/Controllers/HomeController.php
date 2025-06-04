@@ -35,7 +35,6 @@ class HomeController extends Controller
         $trainings = Training::where('start_date', '>', now())
             ->orderBy('start_date')
             ->paginate(4);
-
         $history = History::first();
         $teams = Trainer::where('show_on_home', 1)->get();
 

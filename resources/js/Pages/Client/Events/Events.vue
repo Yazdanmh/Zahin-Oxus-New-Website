@@ -32,7 +32,7 @@
     
     <!-- Display message if no events -->
     <div v-else>
-      <p class='text-warning'>No events have been added yet. Please check again later.</p>
+      <p class='text-warning'>Please check back soon for upcoming events and updates.</p>
 
     </div>
   </div>

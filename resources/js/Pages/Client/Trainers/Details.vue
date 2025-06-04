@@ -15,18 +15,7 @@
                   alt="img"
                   style="width: 100%; height: auto"
                 />
-                <ul class="team__details-inner list-wrap">
-                  <li >
-                    <div class="icon">
-                      <i class="fas fa-wrench"></i>
-                    </div>
-                    <div class="content text-start">
-                      <span>Service</span>
-                      {{ props.trainer.service.title }}
-                    </div>
-                  </li>
-                  
-                </ul>
+                
   
                 <div class="progress__wrap py-5">
                   <!-- Dynamically generate progress items -->

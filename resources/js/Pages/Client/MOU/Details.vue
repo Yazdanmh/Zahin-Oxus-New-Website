@@ -101,7 +101,7 @@
                 <Link
                   :href="route('contact.index')"
                   class="tg-btn tg-btn-three tg-border-btn"
-                  >Read More
+                  >Get in touch
                   <img
                     src="/frontend/assets/img/icons/right_arrow.svg"
                     alt=""

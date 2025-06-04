@@ -13,14 +13,12 @@
         <History v-if="props.history" :history="props.history" />
         <Counter :counter="props.counter" />
         <Video />
-        <Testimonial
-            v-if="
-                props.testimonials && Object.keys(props.testimonials).length > 0
-            "
-            :testimonials="props.testimonials"
-        />
         <Trainings
-            v-if="props.trainings && Object.keys(props.trainings).length > 0"
+            v-if="
+                props.trainings &&
+                Array.isArray(props.trainings.data) &&
+                props.trainings.data.length > 0
+            "
             :trainings="props.trainings"
         />
     </ClientLayout>

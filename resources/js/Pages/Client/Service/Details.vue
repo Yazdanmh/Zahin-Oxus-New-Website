@@ -57,7 +57,7 @@
                     :href="route('contact.index')"
                     class="tg-btn tg-btn-three"
                   >
-                    Contact With Us
+                    get in touch
                     <img
                       src="/frontend/assets/img/icons/right_arrow.svg"
                       alt=""

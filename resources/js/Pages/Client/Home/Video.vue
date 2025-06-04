@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="video__content">
-                        <span class="sub-title">Let’s Make A Tour</span>
+                        <span class="sub-title">Let’s Take A Tour</span>
                         <h2 class="title">
                             Offering The Best Experience Of Business Consulting
                         </h2>
