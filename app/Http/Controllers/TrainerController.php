@@ -13,7 +13,7 @@ class TrainerController extends Controller
 {
     public function index(){
         return Inertia::render('Client/Trainers/Index',[
-            'trainers' => Trainer::paginate(10), 
+            'trainers' => Trainer::paginate(50), 
         ]);
     }
 

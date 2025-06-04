@@ -61,7 +61,10 @@
                                     </Link>
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <div class="dropdown w-100" style="max-width: 100px;">
+                                    <div
+                                        class="dropdown w-100"
+                                        style="max-width: 100px"
+                                    >
                                         <button
                                             class="btn btn-secondary dropdown-toggle w-100"
                                             type="button"
@@ -224,6 +227,88 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <!-- Pagination -->
+                            <div
+                                class="card-footer d-flex justify-content-between align-items-center"
+                            >
+                                <span>
+                                    Showing {{  trainers.from }} to
+                                    {{ trainers.to }} of
+                                    {{ trainers.total }} trainings
+                                </span>
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <!-- Previous Page Link -->
+                                        <li
+                                            class="page-item"
+                                            :class="{
+                                                disabled:
+                                                    !props.trainers
+                                                        .prev_page_url,
+                                            }"
+                                        >
+                                            <a
+                                                class="page-link"
+                                                href="#"
+                                                @click.prevent="
+                                                    changePage(
+                                                        props.trainers
+                                                            .prev_page_url
+                                                    )
+                                                "
+                                            >
+                                                Previous
+                                            </a>
+                                        </li>
+
+                                        <!-- Loop through Pages (handling page numbers) -->
+                                        <li
+                                            v-for="page in totalPages"
+                                            :key="page"
+                                            :class="[
+                                                'page-item',
+                                                {
+                                                    active:
+                                                        currentPage === page,
+                                                },
+                                            ]"
+                                        >
+                                            <a
+                                                class="page-link"
+                                                href="#"
+                                                @click.prevent="
+                                                    changePageTo(page)
+                                                "
+                                            >
+                                                {{ page }}
+                                            </a>
+                                        </li>
+
+                                        <!-- Next Page Link -->
+                                        <li
+                                            class="page-item"
+                                            :class="{
+                                                disabled:
+                                                    !props.trainers
+                                                        .next_page_url,
+                                            }"
+                                        >
+                                            <a
+                                                class="page-link"
+                                                href="#"
+                                                @click.prevent="
+                                                    changePage(
+                                                        props.trainers
+                                                            .next_page_url
+                                                    )
+                                                "
+                                            >
+                                                Next
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -251,6 +336,28 @@ const props = defineProps({
         required: true,
     },
 });
+const currentPage = ref(props.trainers.current_page);
+const totalPages = computed(() => {
+    return Array.from({ length: props.trainers.last_page }, (_, i) => i + 1);
+});
+const changePage = (url) => {
+    if (url) {
+        form.get(
+            route("trainers.index", {
+                page: new URL(url).searchParams.get("page"),
+            }),
+            {
+                preserveScroll: true,
+            }
+        );
+    }
+};
+
+const changePageTo = (page) => {
+    form.get(route("trainers.index", { page }), {
+        preserveScroll: true,
+    });
+};
 
 const form = useForm({});
 const searchQuery = ref("");
@@ -303,17 +410,16 @@ const hasPermission = (permission) => {
     return props.permissions.includes(permission);
 };
 const downloadFile = (fileType) => {
-  window.location.href = route('trainers.export', { fileType });
+    window.location.href = route("trainers.export", { fileType });
 };
-
 
 // Usage
 const downloadExcel = () => {
-  downloadFile('excel');
+    downloadFile("excel");
 };
 
 const downloadPDF = () => {
-  downloadFile('pdf');
+    downloadFile("pdf");
 };
 </script>
 
